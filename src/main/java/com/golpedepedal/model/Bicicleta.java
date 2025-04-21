@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,11 +24,11 @@ public class Bicicleta {
     private BigDecimal precioTotal;
     private String imagenUrl;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "tipo_bicicleta_id")
     private TipoBicicleta tipoBicicleta;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
