@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -42,8 +42,9 @@ public class Usuario {
     @NotBlank
     private String telefono;
 
-    @Enumerated(EnumType.STRING)
-    private Rol rol;
+    @ManyToOne
+    @JoinColumn(name = "rol_id")
+    private Role rol;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Direccion> direcciones;
@@ -124,11 +125,12 @@ public class Usuario {
 		this.telefono = telefono;
 	}
 
-	public Rol getRol() {
+
+	public Role getRol() {
 		return rol;
 	}
 
-	public void setRol(Rol rol) {
+	public void setRol(Role rol) {
 		this.rol = rol;
 	}
 
