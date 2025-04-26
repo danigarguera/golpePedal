@@ -1,3 +1,4 @@
+package com.golpedepedal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class BCryptGenerator {
