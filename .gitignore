@@ -12,7 +12,7 @@ yarn-error.log
 /.angular/cache
 
 # Build output (permitimos la carpeta de producción)
-#/dist ← COMENTADO PARA permitir build
+/dist
 !dist/golpe-pedal-frontend/browser/
 !dist/golpe-pedal-frontend/browser/**
 
@@ -44,7 +44,7 @@ application.yml
 
 # === IDEs & Editor Configs ===
 
-# VSCode
+# Visual Studio Code
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -73,12 +73,13 @@ application.yml
 /nbdist/
 /.nb-gradle/
 
-# Misc
-.DS_Store
-Thumbs.db
+# === Miscellaneous ===
 .history/
 .sass-cache/
 .connect.lock
-testem.log
+coverage/
 libpeerconnection.log
+testem.log
 typings/
+.DS_Store
+Thumbs.db
