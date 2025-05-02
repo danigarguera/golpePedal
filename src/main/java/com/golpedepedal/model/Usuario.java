@@ -53,9 +53,7 @@ public class Usuario {
     @JsonIgnore
     private List<Pedido> pedidos;
 
-    public enum Rol {
-        CLIENTE, ADMIN
-    }
+
 
 	public Usuario() {
 

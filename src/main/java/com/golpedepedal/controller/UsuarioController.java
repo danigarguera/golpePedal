@@ -3,6 +3,7 @@ package com.golpedepedal.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import com.golpedepedal.service.UsuarioService;
 
 @RestController
 @RequestMapping("/api/usuarios")
+@PreAuthorize("hasRole('ADMIN')")
 @CrossOrigin(origins = "*") // Para pruebas desde Postman o frontend
 
 public class UsuarioController {

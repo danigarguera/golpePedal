@@ -1,30 +1,41 @@
 package com.golpedepedal.controller;
 
+import com.golpedepedal.dto.LoginRequest;
 import com.golpedepedal.dto.RegistroRequest;
 import com.golpedepedal.model.Usuario;
 import com.golpedepedal.model.Role;
 import com.golpedepedal.repository.UsuarioRepository;
 import com.golpedepedal.repository.RoleRepository;
+import com.golpedepedal.security.JwtUtil;
 
 import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthController(UsuarioRepository usuarioRepository,
+                           RoleRepository roleRepository,
+                           PasswordEncoder passwordEncoder,
+                           JwtUtil jwtUtil) {
+        this.usuarioRepository = usuarioRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+    }
 
     @PostMapping("/register")
     public String registerUser(@Valid @RequestBody RegistroRequest request) {
@@ -38,10 +49,9 @@ public class AuthController {
         usuario.setApellido2(request.getApellido2());
         usuario.setDni(request.getDni());
         usuario.setEmail(request.getEmail());
-        usuario.setPassword(passwordEncoder.encode(request.getPassword())); // 💥 ciframos
+        usuario.setPassword(passwordEncoder.encode(request.getPassword()));
         usuario.setTelefono(request.getTelefono());
 
-        // Por defecto siempre se registrará como cliente
         Role clienteRole = roleRepository.findByNombre("ROLE_CLIENTE")
                 .orElseThrow(() -> new RuntimeException("Rol CLIENTE no encontrado"));
 
@@ -50,5 +60,22 @@ public class AuthController {
         usuarioRepository.save(usuario);
 
         return "Usuario registrado correctamente.";
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest request) {
+        Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+        if (!passwordEncoder.matches(request.getPassword(), usuario.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "❌ Credenciales incorrectas."));
+        }
+
+        String token = jwtUtil.generateToken(usuario.getEmail(), usuario.getRol().getNombre());
+
+        return ResponseEntity.ok(Map.of(
+                "token", token
+        ));
     }
 }
