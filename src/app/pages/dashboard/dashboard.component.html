@@ -1,0 +1,16 @@
+<h2>Bienvenido, {{ email }}</h2>
+<p>Rol: {{ rol }}</p>
+
+<div class="list-group mt-4">
+  <a routerLink="/componentes" class="list-group-item list-group-item-action">
+    🧩 Ver todos los componentes
+  </a>
+  <a routerLink="/componentes/filtro" class="list-group-item list-group-item-action">
+    🔍 Filtrar componentes por tipo o marca
+  </a>
+  <a *ngIf="roleService.isAdmin()" routerLink="/admin/clientes" class="list-group-item list-group-item-action">
+    👥 Gestión de clientes (solo admin)
+  </a>
+</div>
+
+<button class="btn btn-danger mt-4" (click)="logout()">Cerrar sesión</button>
