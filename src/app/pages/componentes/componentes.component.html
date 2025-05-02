@@ -1,0 +1,20 @@
+<div class="container mt-4">
+    <h2>Lista de Componentes</h2>
+  
+    <div *ngIf="componentes.length > 0; else noComponentes">
+      <ul class="list-group">
+        <li *ngFor="let componente of componentes" class="list-group-item">
+          {{ componente.nombre }}
+        </li>
+      </ul>
+    </div>
+  
+    <ng-template #noComponentes>
+      <p>No hay componentes disponibles.</p>
+    </ng-template>
+  
+    <div *ngIf="error" class="alert alert-danger mt-3">
+      {{ error }}
+    </div>
+  </div>
+  
