@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { environment } from '../../environments/environment'; // ✅ ruta relativa
 
 export interface Componente {
   id: number;
@@ -11,13 +11,13 @@ export interface Componente {
   descripcion: string;
   precio: number;
 }
-   
+
 @Injectable({
   providedIn: 'root'
 })
 export class ComponentesService {
 
-  private apiUrl = 'http://localhost:8080/api/componentes';
+  private apiUrl = `${environment.apiUrl}/componentes`; // ✅ URL del entorno
 
   constructor(private http: HttpClient) {}
 
@@ -32,5 +32,4 @@ export class ComponentesService {
   filtrarPorMarca(marca: string): Observable<Componente[]> {
     return this.http.get<Componente[]>(`${this.apiUrl}?marca=${marca}`);
   }
-  
 }
