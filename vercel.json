@@ -1,5 +1,5 @@
 {
-  "outputDirectory": "dist/golpe-pedal-frontend",
+  "distDir": "dist/golpe-pedal-frontend",
   "rewrites": [
     {
       "source": "/(.*)",
