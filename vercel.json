@@ -11,8 +11,12 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "src": "/",
+      "dest": "/"
+    },
+    {
+      "src": "/ test",
+      "dest": "/"
     }
   ]
 }
