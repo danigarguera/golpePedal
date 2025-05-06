@@ -1,0 +1,14 @@
+<div *ngIf="componente">
+    <h2>{{ componente.nombre }}</h2>
+    <p><strong>ID:</strong> {{ componente.id }}</p>
+    <p><strong>Tipo:</strong> {{ componente.tipo }}</p>
+    <p><strong>Marca:</strong> {{ componente.marca }}</p>
+    <p><strong>Descripción:</strong> {{ componente.descripcion }}</p>
+    <p><strong>Precio:</strong> {{ componente.precio | currency:'EUR' }}</p>
+    <app-boton-volver></app-boton-volver>
+
+</div>
+  
+  <div *ngIf="!componente">
+    <p class="text-muted">Cargando componente...</p>
+  </div>
