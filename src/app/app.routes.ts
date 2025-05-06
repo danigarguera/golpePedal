@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
-import { ComponentesComponent } from './pages/componentes/componentes.component'; // 👈 importa el nuevo componente
-import { AuthGuard } from './guards/auth.guard'; // 👈 importa el guard
+import { ComponentesComponent } from './pages/componentes/componentes.component'; 
+import { AuthGuard } from './guards/auth.guard'; 
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,7 +12,7 @@ export const routes: Routes = [
   { 
     path: 'componentes', 
     component: ComponentesComponent, 
-    canActivate: [AuthGuard] // 👈 protegemos la ruta
+    canActivate: [AuthGuard] 
   },
   {
     path: 'dashboard',
@@ -29,8 +29,8 @@ export const routes: Routes = [
     path: 'componentes/:id',
     loadComponent: () =>
       import('./pages/detalle-componente/detalle-componente.component').then(m => m.DetalleComponenteComponent),
-    canActivate: [AuthGuard] // ✅ si usas protección
+    canActivate: [AuthGuard] 
   },
   
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
