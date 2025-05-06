@@ -1,20 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router'; 
+import { BotonVolverComponent } from '../../shared/boton-volver/boton-volver.component';
 import { ComponentesService, Componente } from '../../services/componentes.service';
-import { Router } from '@angular/router';
-import { RoleService } from '../../services/role.service';
 import { ProtectedComponent } from '../../shared/protected.component';
 
 @Component({
   selector: 'app-componentes',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, BotonVolverComponent], // ✅ AÑADIR RouterModule AQUÍ
   templateUrl: './componentes.component.html'
 })
 export class ComponentesComponent extends ProtectedComponent {
-  componentesService = inject(ComponentesService); // ✅
+  componentesService = inject(ComponentesService);
+
   constructor() {
-    super(); // ✅ usando inject() ya en la clase base
+    super();
   }
 
   componentes: Componente[] = [];

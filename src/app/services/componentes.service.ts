@@ -6,8 +6,12 @@ import { Observable } from 'rxjs';
 export interface Componente {
   id: number;
   nombre: string;
+  tipo: string;
+  marca: string;
+  descripcion: string;
+  precio: number;
 }
-
+   
 @Injectable({
   providedIn: 'root'
 })
@@ -28,4 +32,5 @@ export class ComponentesService {
   filtrarPorMarca(marca: string): Observable<Componente[]> {
     return this.http.get<Componente[]>(`${this.apiUrl}?marca=${marca}`);
   }
+  
 }

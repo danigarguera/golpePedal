@@ -23,6 +23,14 @@ export const routes: Routes = [
     path: 'admin/usuarios',
     loadComponent: () => import('./pages/usuarios/usuarios.component').then(m => m.UsuariosComponent),
     canActivate: [AuthGuard]
-  },  
+  }, 
+  
+  {
+    path: 'componentes/:id',
+    loadComponent: () =>
+      import('./pages/detalle-componente/detalle-componente.component').then(m => m.DetalleComponenteComponent),
+    canActivate: [AuthGuard] // ✅ si usas protección
+  },
+  
   { path: '**', redirectTo: '' }
 ];
