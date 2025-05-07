@@ -67,11 +67,12 @@ public class ComponenteController {
     @GetMapping("/buscar")
     public List<Componente> buscarComponentes(
         @RequestParam(required = false) String nombre,
-        @RequestParam(required = false) String tipo,
+        @RequestParam(required = false) Long tipoComponenteId,
         @RequestParam(required = false) Long marcaId) {
 
-        return service.buscar(nombre, tipo, marcaId);
+        return service.buscar(nombre, tipoComponenteId, marcaId);
     }
+
 
 
 }

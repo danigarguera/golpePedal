@@ -17,7 +17,7 @@ public interface ComponenteService {
     
     List<Componente> buscarPorMarcaId(Long marcaId);
     
-    List<Componente> buscar(String nombre, String tipo, Long marcaId);
+    List<Componente> buscar(String nombre, Long tipoComponenteId, Long marcaId);
 
 
 }

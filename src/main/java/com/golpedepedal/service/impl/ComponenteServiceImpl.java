@@ -49,8 +49,8 @@ public class ComponenteServiceImpl implements ComponenteService {
 	}
 
 	@Override
-	public List<Componente> buscar(String nombre, String tipo, Long marcaId) {
-	    return componenteRepository.buscar(nombre, tipo, marcaId);
+	public List<Componente> buscar(String nombre, Long tipoComponenteId, Long marcaId) {
+	    return componenteRepository.buscar(nombre, tipoComponenteId, marcaId);
 	}
 
 
