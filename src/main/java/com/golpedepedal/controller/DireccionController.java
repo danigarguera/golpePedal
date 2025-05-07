@@ -26,9 +26,17 @@ public class DireccionController {
     }
 
     @GetMapping
-    public List<Direccion> listar() {
-        return service.obtenerTodas();
+    public List<Direccion> listar(Principal principal) {
+        Usuario usuario = usuarioRepository.findByEmail(principal.getName())
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (usuario.getRol().getNombre().equals("ROLE_ADMIN")) {
+            return service.obtenerTodas();  // ADMIN puede ver todas
+        } else {
+            return service.buscarPorUsuarioId(usuario.getId());  // CLIENTE solo sus direcciones
+        }
     }
+
 
     @GetMapping("/{id}")
     public Optional<Direccion> get(@PathVariable Long id) {

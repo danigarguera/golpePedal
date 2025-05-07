@@ -42,4 +42,8 @@ public class DireccionServiceImpl implements DireccionService {
 		direccionRepository.deleteById(id);		
 	}
     
+	@Override
+	public List<Direccion> buscarPorUsuarioId(Long usuarioId) {
+	    return direccionRepository.findByUsuarioId(usuarioId);
+	}
 }

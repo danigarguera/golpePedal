@@ -14,4 +14,7 @@ public interface DireccionService {
     Optional<Direccion> buscarPorId(Long id);
     
     void eliminar(Long id);
+    
+    List<Direccion> buscarPorUsuarioId(Long usuarioId);
+
 }
