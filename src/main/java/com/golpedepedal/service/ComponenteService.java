@@ -16,5 +16,8 @@ public interface ComponenteService {
     void eliminar(Long id);
     
     List<Componente> buscarPorMarcaId(Long marcaId);
+    
+    List<Componente> buscar(String nombre, String tipo, Long marcaId);
+
 
 }

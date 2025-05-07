@@ -48,5 +48,10 @@ public class ComponenteServiceImpl implements ComponenteService {
 	    return componenteRepository.findByMarcaId(marcaId);
 	}
 
+	@Override
+	public List<Componente> buscar(String nombre, String tipo, Long marcaId) {
+	    return componenteRepository.buscar(nombre, tipo, marcaId);
+	}
+
 
 }

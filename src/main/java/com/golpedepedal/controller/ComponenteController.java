@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.golpedepedal.model.Componente;
@@ -62,5 +63,15 @@ public class ComponenteController {
     public List<Componente> listarPorMarca(@PathVariable Long id) {
         return service.buscarPorMarcaId(id);
     }
+    
+    @GetMapping("/buscar")
+    public List<Componente> buscarComponentes(
+        @RequestParam(required = false) String nombre,
+        @RequestParam(required = false) String tipo,
+        @RequestParam(required = false) Long marcaId) {
+
+        return service.buscar(nombre, tipo, marcaId);
+    }
+
 
 }
