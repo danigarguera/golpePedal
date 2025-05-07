@@ -43,11 +43,11 @@ public class SecurityConfig {
             .and()
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()                          // login, registro
-                .requestMatchers("/api/usuarios/**").hasRole("ADMIN")                // solo admin
-                .requestMatchers("/api/componentes/**").authenticated()              // acceso GET para todos los logueados
-                .requestMatchers("/api/**").authenticated()                          // el resto requiere login
-                .anyRequest().permitAll()
+                .requestMatchers("/api/auth/**").permitAll()                     // 👈 Permite registro/login
+                .requestMatchers("/api/usuarios/**").hasRole("ADMIN")           // Solo ADMIN
+                .requestMatchers("/api/componentes/**").authenticated()         // Autenticado
+                .requestMatchers("/api/pedidos/**").authenticated()             // (si tienes pedidos)
+                .anyRequest().permitAll()                                       // Todo lo demás permitido
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -57,6 +57,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
