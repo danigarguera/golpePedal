@@ -43,4 +43,10 @@ public class ComponenteServiceImpl implements ComponenteService {
 		componenteRepository.deleteById(id);		
 	}
 
+	@Override
+	public List<Componente> buscarPorMarcaId(Long marcaId) {
+	    return componenteRepository.findByMarcaId(marcaId);
+	}
+
+
 }

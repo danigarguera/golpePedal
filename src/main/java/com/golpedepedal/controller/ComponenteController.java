@@ -57,4 +57,10 @@ public class ComponenteController {
     public void eliminar(@PathVariable Long id) {
         service.eliminar(id);
     }
+    
+    @GetMapping("/marca/{id}")
+    public List<Componente> listarPorMarca(@PathVariable Long id) {
+        return service.buscarPorMarcaId(id);
+    }
+
 }

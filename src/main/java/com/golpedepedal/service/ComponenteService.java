@@ -14,4 +14,7 @@ public interface ComponenteService {
     Optional<Componente> buscarPorId(Long id);
     
     void eliminar(Long id);
+    
+    List<Componente> buscarPorMarcaId(Long marcaId);
+
 }
