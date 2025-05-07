@@ -7,9 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.golpedepedal.model.Direccion;
 
 public interface DireccionRepository extends JpaRepository<Direccion, Long> {
-	
-	List<Direccion> buscarPorUsuarioId(Long usuarioId);
-	
+		
 	List<Direccion> findByUsuarioId(Long usuarioId);
 
 
