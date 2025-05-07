@@ -56,10 +56,25 @@ public class DireccionController {
 
 
     @PutMapping("/{id}")
-    public Direccion actualizar(@PathVariable Long id, @RequestBody Direccion d) {
+    public Direccion actualizar(@PathVariable Long id, @RequestBody DireccionDTO dto, Principal principal) {
+        Usuario usuario = usuarioRepository.findByEmail(principal.getName())
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Direccion d = new Direccion();
         d.setId(id);
+        d.setAlias(dto.getAlias());
+        d.setCalle(dto.getCalle());
+        d.setNumero(dto.getNumero());
+        d.setPiso(dto.getPiso());
+        d.setCiudad(dto.getCiudad());
+        d.setProvincia(dto.getProvincia());
+        d.setCodigoPostal(dto.getCodigoPostal());
+        d.setPais(dto.getPais());
+        d.setUsuario(usuario);
+
         return service.guardar(d);
     }
+
 
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) {
