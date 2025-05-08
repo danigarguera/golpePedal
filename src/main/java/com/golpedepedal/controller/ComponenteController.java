@@ -31,7 +31,7 @@ public class ComponenteController {
 
     @GetMapping
     public List<Componente> listar() {
-        System.out.println("✅ Acceso permitido al endpoint /api/componentes");
+        System.out.println(" Acceso permitido al endpoint /api/componentes");
         return service.obtenerTodos();
     }
 

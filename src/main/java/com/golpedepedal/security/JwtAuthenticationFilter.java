@@ -38,14 +38,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        final String token = authHeader.substring(7); // Quitar "Bearer "
+        final String token = authHeader.substring(7); 
 
         try {
             Jws<Claims> claimsJws = jwtUtil.parseToken(token);
             String email = claimsJws.getBody().getSubject();
             String rol = claimsJws.getBody().get("rol", String.class);
 
-            // 👇 AQUI añadimos las autoridades
+            
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(rol);
 
             UsernamePasswordAuthenticationToken authentication =

@@ -20,7 +20,7 @@ import com.golpedepedal.service.UsuarioService;
 @RestController
 @RequestMapping("/api/usuarios")
 @PreAuthorize("hasRole('ADMIN')")
-@CrossOrigin(origins = "*") // Para pruebas desde Postman o frontend
+@CrossOrigin(origins = "*") 
 
 public class UsuarioController {
 

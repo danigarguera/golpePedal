@@ -10,8 +10,8 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String secret = "claveultrasecretademomentoparajwtspringbootgolpedepedal"; // Cambia por algo mejor luego
-    private final long expirationMillis = 86400000; // 24 horas
+    private final String secret = "claveultrasecretademomentoparajwtspringbootgolpedepedal"; // Cambiar por algo mejor luego
+    private final long expirationMillis = 86400000; // 24 horas de duuracion para el token
 
     private Key getKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());

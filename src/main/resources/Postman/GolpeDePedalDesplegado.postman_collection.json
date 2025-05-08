@@ -1,0 +1,1246 @@
+{
+	"info": {
+		"_postman_id": "8194990c-6e44-4b3f-b0c6-01212b7f1ce5",
+		"name": "GolpeDePedalDesplegado",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44275024",
+		"_collection_link": "https://cloudy-desert-517227.postman.co/workspace/Daniel-Guill%C3%A9n's-Workspace~0e41d788-39ed-4a4c-8560-0c9129cc78ed/collection/44275024-8194990c-6e44-4b3f-b0c6-01212b7f1ce5?action=share&source=collection_link&creator=44275024"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Get all usuarios",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/usuarios",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nuevo usuario",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Juan\",\r\n  \"apellido1\": \"Pérez\",\r\n  \"apellido2\": \"Gómez\",\r\n  \"dni\": \"11345678A\",\r\n  \"email\": \"juanperez@example.com\",\r\n  \"password\": \"password123\",\r\n  \"telefono\": \"600123456\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/auth/register",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get usuario by ID",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/usuarios/6",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar usuario por id",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"NombreModificado\",\r\n  \"apellido1\": \"ApellidoNuevo\",\r\n  \"apellido2\": \"Apellido2Nuevo\",\r\n  \"dni\": \"98765432Z\",\r\n  \"email\": \"nuevo.email@example.com\",\r\n  \"password\": \"password123\",\r\n  \"telefono\": \"611223344\",\r\n  \"rol\": {\r\n    \"id\": 2,\r\n    \"nombre\": \"ROLE_CLIENTE\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/usuarios/1",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete usuario",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/usuarios/2",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Direcciones",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"alias\": \"Casa\",\r\n  \"calle\": \"Avenida Principal\",\r\n  \"numero\": \"42\",\r\n  \"piso\": \"3B\",\r\n  \"ciudad\": \"Valencia\",\r\n  \"provincia\": \"Valencia\",\r\n  \"codigoPostal\": \"46001\",\r\n  \"pais\": \"España\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/direcciones",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"direcciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Todas Direcciones",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/direcciones",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"direcciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get direcciones del usuario",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "juanperez@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/direcciones",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"direcciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Direccion",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "juanperez@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"alias\": \"Casa actualizada\",\r\n  \"calle\": \"Calle Nueva\",\r\n  \"numero\": \"99\",\r\n  \"piso\": \"1A\",\r\n  \"ciudad\": \"Madrid\",\r\n  \"provincia\": \"Madrid\",\r\n  \"codigoPostal\": \"28001\",\r\n  \"pais\": \"España\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/direcciones/1",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"direcciones",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Direccion",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "juanperez@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/direcciones/2",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"direcciones",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Componentes",
+			"item": [
+				{
+					"name": "Get all componentes",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/componentes",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"componentes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post nuevo Componente",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"Cuadro carbono\",\r\n        \"descripcion\": \"Cuadro de carretera carbono\",\r\n        \"precio\": 799.99,\r\n        \"tipoComponente\": {\r\n            \"id\": 3,\r\n            \"nombre\": \"Cuadro\"\r\n        },\r\n        \"tipoBicicleta\": {\r\n            \"id\": 2,\r\n            \"nombre\": \"Carretera\"\r\n        },\r\n        \"marca\": {\r\n            \"id\": 7,\r\n            \"nombre\": \"Orbea\"\r\n        }\r\n    }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/componentes",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"componentes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete componente por id",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/componentes/13",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"componentes",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get componente por id",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/componentes/1",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"componentes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Componente por id",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"Cuadro carbono\",\r\n        \"descripcion\": \"Cuadro de carretera carbono\",\r\n        \"precio\": 799.00,\r\n        \"tipoComponente\": {\r\n            \"id\": 3,\r\n            \"nombre\": \"Cuadro\"\r\n        },\r\n        \"tipoBicicleta\": {\r\n            \"id\": 2,\r\n            \"nombre\": \"Carretera\"\r\n        },\r\n        \"marca\": {\r\n            \"id\": 7,\r\n            \"nombre\": \"Orbea\"\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/componentes/14",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"componentes",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bicicletas",
+			"item": [
+				{
+					"name": "Get all Bicicletas",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/bicicletas",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"bicicletas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bicicleta por id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/bicicletas/1",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"bicicletas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear nueva Bicicleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Bianchi Infinito CV\",\r\n  \"descripcion\": \"Bicicleta de carretera para largas distancias con sistema antivibraciones\",\r\n  \"precioTotal\": 4499.00,\r\n  \"imagenUrl\": \"https://example.com/images/bianchi.jpg\",\r\n  \"tipoBicicleta\": { \"id\": 2 },\r\n  \"usuario\": { \"id\": 1 }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/bicicletas",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"bicicletas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Bicicleta",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Bianchi Infinito CV Disc\",\r\n  \"descripcion\": \"Actualización con frenos de disco y mejoras en el cuadro\",\r\n  \"precioTotal\": 4799.00,\r\n  \"imagenUrl\": \"https://example.com/images/bianchi-disc.jpg\",\r\n  \"tipoBicicleta\": { \"id\": 2 },\r\n  \"usuario\": { \"id\": 1 }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/bicicletas/5",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"bicicletas",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bicicleta por id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/bicicletas/5",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"bicicletas",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Gel all Pedidos",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/pedidos",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pedido por id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/pedidos/1",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"pedidos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un nuevo Pedido",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fecha\": \"2025-04-21T00:00:00\",\r\n  \"estado\": \"PENDIENTE\",\r\n  \"usuario\": { \"id\": 1 }\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/pedidos",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Pedido",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fecha\": \"2025-04-21T12:00:00\",\r\n  \"estado\": \"ENVIADO\",\r\n  \"usuario\": { \"id\": 1 }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/pedidos/2",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"pedidos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Pedido por id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/pedidos/1",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"pedidos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Registro",
+			"item": [
+				{
+					"name": "Registro como admin",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@golpedepedal.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@golpedepedal.com\",\r\n  \"password\": \"password123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Marcas",
+			"item": [
+				{
+					"name": "Listar marcas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/marcas",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"marcas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Componentes por marca",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "juanperez@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/componentes/marca/1",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"componentes",
+								"marca",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Busquedas",
+			"item": [
+				{
+					"name": "Busqueda por texto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/componentes/buscar?nombre=cuadro",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"componentes",
+								"buscar"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "cuadro"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busqueda por marcaId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/componentes/buscar?tipo=bicicleta&marcaId=2",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"componentes",
+								"buscar"
+							],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "bicicleta"
+								},
+								{
+									"key": "marcaId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busqueda por nombre marca y tipo de componente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api/componentes/buscar?tipoComponenteId=3",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"componentes",
+								"buscar"
+							],
+							"query": [
+								{
+									"key": "tipoComponenteId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busqueda por marcaId y tipoComponenteId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://golpepedal-production.up.railway.app/api//componentes/buscar?nombre=disco&marcaId=2&tipoComponenteId=1",
+							"protocol": "https",
+							"host": [
+								"golpepedal-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"",
+								"componentes",
+								"buscar"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "disco"
+								},
+								{
+									"key": "marcaId",
+									"value": "2"
+								},
+								{
+									"key": "tipoComponenteId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
