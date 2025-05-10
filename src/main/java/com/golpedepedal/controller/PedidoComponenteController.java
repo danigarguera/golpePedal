@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.golpedepedal.dto.PedidoComponenteDTO;
 import com.golpedepedal.model.PedidoComponente;
 import com.golpedepedal.service.PedidoComponenteService;
 
@@ -58,4 +59,17 @@ public class PedidoComponenteController {
     	service.eliminar(id); 
     	
     }
+    @GetMapping("/pedido/{pedidoId}")
+    public List<PedidoComponenteDTO> obtenerComponentesPorPedido(@PathVariable Long pedidoId) {
+        return service.obtenerPorPedidoId(pedidoId).stream()
+            .map(pc -> new PedidoComponenteDTO(
+                pc.getComponente().getId(),
+                pc.getComponente().getNombre(),
+                pc.getComponente().getDescripcion(),
+                pc.getComponente().getPrecio().doubleValue(),
+                pc.getCantidad()
+            ))
+            .toList();
+    }
+
 }

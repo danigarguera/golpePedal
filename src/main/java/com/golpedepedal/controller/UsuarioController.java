@@ -1,59 +1,116 @@
 package com.golpedepedal.controller;
 
+import java.net.PasswordAuthentication;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
+import com.golpedepedal.dto.UsuarioRequest;
+import com.golpedepedal.model.Role;
 import com.golpedepedal.model.Usuario;
+import com.golpedepedal.repository.RoleRepository;
 import com.golpedepedal.service.UsuarioService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@PreAuthorize("hasRole('ADMIN')")
-@CrossOrigin(origins = "*") 
-
+@CrossOrigin(origins = "*")
 public class UsuarioController {
 
-	
     private final UsuarioService usuarioService;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
+    // ✅ Disponible solo para ADMIN
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Usuario> listarTodos() {
         return usuarioService.obtenerTodos();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Optional<Usuario> obtenerPorId(@PathVariable Long id) {
         return usuarioService.buscarPorId(id);
     }
 
     @PostMapping
-    public Usuario crear(@RequestBody Usuario usuario) {
-        return usuarioService.guardar(usuario);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Usuario> crear(@Valid @RequestBody UsuarioRequest request) {
+        Usuario usuario = usuarioService.convertirDesdeDto(request);
+        Usuario guardado = usuarioService.guardar(usuario);
+        return ResponseEntity.ok(guardado);
     }
 
     @PutMapping("/{id}")
-    public Usuario actualizar(@PathVariable Long id, @RequestBody Usuario usuario) {
-        usuario.setId(id);
-        return usuarioService.guardar(usuario);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @Valid @RequestBody UsuarioRequest request) {
+    	System.out.println("→ Entrando en PUT /api/usuarios/" + id);
+
+        Usuario usuarioExistente = usuarioService.buscarPorId(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        System.out.println("usuario con id" + id);
+
+        usuarioExistente.setNombre(request.getNombre());
+        usuarioExistente.setApellido1(request.getApellido1());
+        usuarioExistente.setApellido2(request.getApellido2());
+        usuarioExistente.setDni(request.getDni());
+        usuarioExistente.setEmail(request.getEmail());
+        usuarioExistente.setTelefono(request.getTelefono());
+        usuarioExistente.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        Role rol = roleRepository.findById(request.getRolId())
+            .orElseThrow(() -> new RuntimeException("Rol no válido"));
+        System.out.println("ID del rol asignado: " + rol.getId());
+
+        usuarioExistente.setRol(rol);
+
+        System.out.println("ID del usuario antes de guardar: " + usuarioExistente.getId());
+
+        Usuario actualizado = usuarioService.guardar(usuarioExistente);
+        return ResponseEntity.ok(actualizado);
     }
 
+
+
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void eliminar(@PathVariable Long id) {
         usuarioService.eliminar(id);
     }
+
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Usuario> getDatosPropios() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(401).build();
+        }
+
+        String email = authentication.getName(); // Aquí está el username/email del token
+        Usuario usuario = usuarioService.buscarPorEmail(email);
+
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(usuario);
+    }
+
 }

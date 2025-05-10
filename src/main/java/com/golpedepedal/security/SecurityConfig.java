@@ -43,11 +43,12 @@ public class SecurityConfig {
             .and()
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()                     
-                .requestMatchers("/api/usuarios/**").hasRole("ADMIN")           
-                .requestMatchers("/api/componentes/**").authenticated()         
-                .requestMatchers("/api/pedidos/**").authenticated()            
-                .anyRequest().permitAll()                                       
+            	    .requestMatchers("/api/auth/**").permitAll()                     
+            	    .requestMatchers("/api/usuarios/me").authenticated()             
+            	    .requestMatchers("/api/usuarios/**").hasRole("ADMIN")            
+            	    .requestMatchers("/api/componentes/**").authenticated()         
+            	    .requestMatchers("/api/pedidos/**").authenticated()            
+            	    .anyRequest().permitAll()                                    
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

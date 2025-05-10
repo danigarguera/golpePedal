@@ -5,21 +5,21 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class RegistroRequest {
-
-    @NotBlank
+public class UsuarioRequest {
+	
+    @NotBlank 
     private String nombre;
-
-    @NotBlank
+    
+    @NotBlank 
     private String apellido1;
-
+    
     private String apellido2;
-
-    @NotBlank
+    
+    @NotBlank 
     private String dni;
-
-    @NotBlank
-    @Email
+    
+    @Email 
+    @NotBlank 
     private String email;
 
     @NotBlank
@@ -27,9 +27,10 @@ public class RegistroRequest {
     @Pattern(regexp = "^[^\\s]+$", message = "La contraseña no puede contener espacios")
     private String password;
 
-
-    @NotBlank
+    @NotBlank 
     private String telefono;
+    
+    private Long rolId;
 
 	public String getNombre() {
 		return nombre;
@@ -87,6 +88,13 @@ public class RegistroRequest {
 		this.telefono = telefono;
 	}
 
+	public Long getRolId() {
+		return rolId;
+	}
+
+	public void setRolId(Long rolId) {
+		this.rolId = rolId;
+	}
+
     
 }
-
