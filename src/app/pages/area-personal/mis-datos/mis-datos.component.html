@@ -1,0 +1,15 @@
+<div *ngIf="usuario">
+  <h2>Mis datos</h2>
+  <p><strong>ID:</strong> {{ usuario.id }}</p>
+  <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+  <p><strong>Apellidos:</strong> {{ usuario.apellido1 }} {{ usuario.apellido2 }}</p>
+  <p><strong>Email:</strong> {{ usuario.email }}</p>
+  <p><strong>DNI:</strong> {{ usuario.dni }}</p>
+  <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+
+  <app-boton-volver></app-boton-volver>
+</div>
+
+<div *ngIf="!usuario">
+  <p class="text-muted">Cargando datos del usuario...</p>
+</div>

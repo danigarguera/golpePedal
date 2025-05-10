@@ -3,6 +3,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { ComponentesComponent } from './pages/componentes/componentes.component'; 
+import { MisDatosComponent } from './pages/area-personal/mis-datos/mis-datos.component';
+import { MisDireccionesComponent } from './pages/area-personal/mis-direcciones/mis-direcciones.component';
+import { MisPedidosComponent } from './pages/area-personal/mis-pedidos/mis-pedidos.component';
+import { AreaPersonalComponent } from './pages/area-personal/area-personal/area-personal.component';
 import { AuthGuard } from './guards/auth.guard'; 
 
 export const routes: Routes = [
@@ -24,13 +28,24 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/usuarios/usuarios.component').then(m => m.UsuariosComponent),
     canActivate: [AuthGuard]
   }, 
-  
   {
     path: 'componentes/:id',
     loadComponent: () =>
       import('./pages/detalle-componente/detalle-componente.component').then(m => m.DetalleComponenteComponent),
     canActivate: [AuthGuard] 
   },
-  
+
+  {
+    path: 'area-personal',
+    component: AreaPersonalComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'datos', pathMatch: 'full' },
+      { path: 'datos', component: MisDatosComponent },
+      { path: 'direcciones', component: MisDireccionesComponent },
+      { path: 'pedidos', component: MisPedidosComponent }
+    ]
+  },
+
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

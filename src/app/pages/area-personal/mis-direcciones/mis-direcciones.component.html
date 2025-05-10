@@ -1,0 +1,34 @@
+<h2>Mis direcciones</h2>
+
+<ul *ngIf="direcciones.length > 0; else sinDirecciones">
+  <li *ngFor="let dir of direcciones">
+    <strong>{{ dir.alias }}</strong>: {{ dir.calle }}, {{ dir.numero }}
+    <span *ngIf="dir.piso">, Piso {{ dir.piso }}</span> -
+    {{ dir.ciudad }}, {{ dir.provincia }} ({{ dir.codigoPostal }}), {{ dir.pais }}
+
+    <button (click)="editarDireccion(dir)">Editar</button>
+    <button (click)="eliminarDireccion(dir.id)">Eliminar</button>
+  </li>
+</ul>
+
+<ng-template #sinDirecciones>
+  <p class="text-muted">No tienes direcciones registradas.</p>
+</ng-template>
+
+<button (click)="iniciarNueva()">Añadir dirección</button>
+
+<form *ngIf="mostrarFormulario" [formGroup]="formDireccion" (ngSubmit)="onSubmit()">
+  <label>Alias: <input formControlName="alias"></label><br>
+  <label>Calle: <input formControlName="calle"></label><br>
+  <label>Número: <input formControlName="numero"></label><br>
+  <label>Piso: <input formControlName="piso"></label><br>
+  <label>Ciudad: <input formControlName="ciudad"></label><br>
+  <label>Provincia: <input formControlName="provincia"></label><br>
+  <label>Código postal: <input formControlName="codigoPostal"></label><br>
+  <label>País: <input formControlName="pais"></label><br>
+  <button type="submit" [disabled]="formDireccion.invalid">
+    {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+  </button>
+</form>
+
+<app-boton-volver></app-boton-volver>
