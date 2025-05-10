@@ -60,12 +60,8 @@ public class UsuarioController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @Valid @RequestBody UsuarioRequest request) {
-    	System.out.println("→ Entrando en PUT /api/usuarios/" + id);
-
         Usuario usuarioExistente = usuarioService.buscarPorId(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        System.out.println("usuario con id" + id);
-
         usuarioExistente.setNombre(request.getNombre());
         usuarioExistente.setApellido1(request.getApellido1());
         usuarioExistente.setApellido2(request.getApellido2());
@@ -79,8 +75,6 @@ public class UsuarioController {
         System.out.println("ID del rol asignado: " + rol.getId());
 
         usuarioExistente.setRol(rol);
-
-        System.out.println("ID del usuario antes de guardar: " + usuarioExistente.getId());
 
         Usuario actualizado = usuarioService.guardar(usuarioExistente);
         return ResponseEntity.ok(actualizado);
