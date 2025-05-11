@@ -1,17 +1,27 @@
-<a [routerLink]="['/componentes', producto.id]" class="text-decoration-none text-dark">
-  <div class="card h-100">
+<div class="card h-100">
+  <a [routerLink]="['/componentes', producto.id]" class="text-decoration-none text-dark">
     <img
       [src]="producto.imagenUrl || 'https://placehold.co/300x200?text=Producto'"
       class="card-img-top"
       alt="Imagen del producto"
     />
-    <div class="card-body">
+  </a>
+  <div class="card-body">
+    <a [routerLink]="['/componentes', producto.id]" class="text-decoration-none text-dark">
       <h5 class="card-title">{{ producto.nombre }}</h5>
-      <p class="card-text text-muted">
-        {{ producto.descripcion || 'Descripción no disponible' }}
-      </p>
-      <p class="fw-bold">{{ producto.precio | currency: 'EUR' }}</p>
-      <button class="btn btn-sm btn-outline-primary">Ver detalle</button>
+    </a>
+    <p class="card-text text-muted">
+      {{ producto.descripcion || 'Descripción no disponible' }}
+    </p>
+    <p class="fw-bold">{{ producto.precio | currency: 'EUR' }}</p>
+
+    <div class="d-flex justify-content-between">
+      <a [routerLink]="['/componentes', producto.id]" class="btn btn-sm btn-outline-primary">
+        Ver detalle
+      </a>
+      <button class="btn btn-sm btn-success" (click)="agregarAlCarrito($event)">
+        Añadir al carrito
+      </button>
     </div>
   </div>
-</a>
+</div>

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CarritoService } from '../../services/carrito.service'; // Asegúrate que esta ruta sea correcta
 
 @Component({
   selector: 'app-tarjeta-producto',
@@ -17,4 +18,11 @@ export class TarjetaProductoComponent {
     precio: number;
     imagenUrl?: string;
   };
+
+  constructor(private carritoService: CarritoService) {}
+
+  agregarAlCarrito(event: MouseEvent): void {
+    event.stopPropagation(); 
+    this.carritoService.agregarProducto(this.producto);
+  }
 }

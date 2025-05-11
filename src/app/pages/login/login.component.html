@@ -1,14 +1,32 @@
-<form (ngSubmit)="login()" #formLogin="ngForm">
+<form (ngSubmit)="login()" #formLogin="ngForm" novalidate>
   <!-- Email -->
   <div class="mb-3">
     <label for="email" class="form-label">Correo Electrónico</label>
-    <input type="email" id="email" name="email" [(ngModel)]="email" class="form-control" required>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="email"
+      class="form-control"
+      required
+      [class.is-invalid]="formLogin.submitted && !formLogin.controls['email'].valid"
+    />
+    <div class="invalid-feedback">Introduce un correo válido.</div>
   </div>
 
   <!-- Password -->
   <div class="mb-3">
     <label for="password" class="form-label">Contraseña</label>
-    <input type="password" id="password" name="password" [(ngModel)]="password" class="form-control" required>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      [(ngModel)]="password"
+      class="form-control"
+      required
+      [class.is-invalid]="formLogin.submitted && !formLogin.controls['password'].valid"
+    />
+    <div class="invalid-feedback">Introduce tu contraseña.</div>
   </div>
 
   <!-- Mensajes -->

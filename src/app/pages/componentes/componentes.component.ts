@@ -1,10 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router'; 
 import { FormsModule } from '@angular/forms';
 import { BotonVolverComponent } from '../../shared/boton-volver/boton-volver.component';
 import { ComponentesService, Componente } from '../../services/componentes.service';
-import { ProtectedComponent } from '../../shared/protected.component';
 import { TarjetaProductoComponent } from '../../componentes/tarjeta-producto/tarjeta-producto.component';
 
 @Component({
@@ -20,13 +19,9 @@ import { TarjetaProductoComponent } from '../../componentes/tarjeta-producto/tar
   templateUrl: './componentes.component.html',
   styleUrls: ['./componentes.component.css']
 })
-export class ComponentesComponent extends ProtectedComponent {
+export class ComponentesComponent implements OnInit {
   componentesService = inject(ComponentesService);
   route = inject(ActivatedRoute);
-
-  constructor() {
-    super();
-  }
 
   componentes: Componente[] = [];
   componentesOriginales: Componente[] = [];
@@ -37,7 +32,7 @@ export class ComponentesComponent extends ProtectedComponent {
   tiposDisponibles: string[] = [];
   marcasDisponibles: string[] = [];
 
-  override onInitAfterAuth(): void {
+  ngOnInit(): void {
     // Leer parámetros de la URL
     this.route.queryParams.subscribe(params => {
       this.filtroTipo = params['tipo'] || '';
@@ -51,7 +46,7 @@ export class ComponentesComponent extends ProtectedComponent {
         this.tiposDisponibles = [...new Set(data.map(c => c.tipo))];
         this.marcasDisponibles = [...new Set(data.map(c => c.marca))];
 
-        this.aplicarFiltros(); // aplicar filtros si había en la URL
+        this.aplicarFiltros();
         console.log('✅ Componentes recibidos:', data);
       },
       error: (err) => {

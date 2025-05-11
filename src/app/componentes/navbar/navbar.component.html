@@ -2,24 +2,44 @@
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">Golpe de Pedal</a>
 
-    <div class="ms-auto" *ngIf="isLoggedIn()">
-      <div class="dropdown">
-        <button
-          class="btn btn-outline-secondary dropdown-toggle"
-          type="button"
-          id="userDropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
+    <div class="ms-auto d-flex align-items-center">
+      <!-- Carrito visible siempre -->
+      <a class="btn position-relative me-3" routerLink="/carrito" title="Carrito">
+        🛒
+        <span
+          *ngIf="carritoCantidad > 0"
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
         >
-          {{ getEmail() }}
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <li><a class="dropdown-item" routerLink="/area-personal">Área personal</a></li>
-          <li><hr class="dropdown-divider" /></li>
-          <li><a class="dropdown-item" (click)="logout()">Cerrar sesión</a></li>
-        </ul>
-      </div>
+          {{ carritoCantidad }}
+          <span class="visually-hidden">productos en el carrito</span>
+        </span>
+      </a>
+
+      <!-- Dinámico: dropdown si logueado, botón si no -->
+      <ng-container *ngIf="isLoggedIn(); else loginBtn">
+        <!-- Dropdown del usuario -->
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-secondary dropdown-toggle"
+            type="button"
+            id="userDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ getEmail() }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" routerLink="/area-personal">Área personal</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" (click)="logout()">Cerrar sesión</a></li>
+          </ul>
+        </div>
+      </ng-container>
+
+      <!-- Botón "Iniciar sesión" si no logueado -->
+      <ng-template #loginBtn>
+        <a class="btn btn-outline-primary" routerLink="/login">Iniciar sesión</a>
+      </ng-template>
     </div>
   </div>
 </nav>
-
