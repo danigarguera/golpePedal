@@ -1,12 +1,24 @@
-<div class="container text-center mt-5">
-    <h1 class="display-4">Bienvenido a Golpe de Pedal 🚴‍♂️</h1>
-    <p class="lead">Tu tienda online de bicicletas y componentes de confianza.</p>
-    <hr class="my-4">
-    <p>¿Qué quieres hacer?</p>
-    
-    <div class="d-flex justify-content-center gap-3 mt-4">
-      <a routerLink="/registro" class="btn btn-primary btn-lg">Registrarse</a>
-      <a routerLink="/login" class="btn btn-success btn-lg">Iniciar Sesión</a>
+<div class="container mt-5">
+  <h1 class="text-center mb-3 display-4">Bienvenido a Golpe de Pedal 🚴‍♂️</h1>
+  <p class="lead text-center">Tu tienda online de bicicletas y componentes de confianza.</p>
+  <hr class="my-4">
+
+  <div class="row mt-4">
+    <div class="col-md-4 mb-4" *ngFor="let categoria of categorias">
+      <div class="card h-100 text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ categoria }}</h5>
+          <button class="btn btn-outline-primary" (click)="verCategoria(categoria)">
+            Ver {{ categoria }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  
+
+  <div class="text-center mt-5">
+    <a routerLink="/componentes" class="btn btn-dark btn-lg me-2">Ver todos los componentes</a>
+    <a routerLink="/registro" class="btn btn-outline-primary btn-lg me-2">Registrarse</a>
+    <a routerLink="/login" class="btn btn-outline-success btn-lg">Iniciar Sesión</a>
+  </div>
+</div>

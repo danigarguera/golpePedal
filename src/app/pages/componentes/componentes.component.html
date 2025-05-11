@@ -1,14 +1,31 @@
 <div class="container mt-4">
-  <h2>Lista de Componentes</h2>
+  <h2 class="mb-4">Lista de Componentes</h2>
 
+  <!-- Filtros -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <label for="filtroTipo" class="form-label">Filtrar por tipo</label>
+      <select id="filtroTipo" class="form-select" [(ngModel)]="filtroTipo" (change)="aplicarFiltros()">
+        <option value="">Todos</option>
+        <option *ngFor="let tipo of tiposDisponibles" [value]="tipo">{{ tipo }}</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="filtroMarca" class="form-label">Filtrar por marca</label>
+      <select id="filtroMarca" class="form-select" [(ngModel)]="filtroMarca" (change)="aplicarFiltros()">
+        <option value="">Todas</option>
+        <option *ngFor="let marca of marcasDisponibles" [value]="marca">{{ marca }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Listado -->
   <div *ngIf="componentes.length > 0; else noComponentes">
-    <ul class="list-group">
-      <li *ngFor="let componente of componentes" class="list-group-item">
-        <a [routerLink]="['/componentes', componente.id]">
-          {{ componente.nombre }}
-        </a>
-      </li>
-    </ul>
+    <div class="row">
+      <div class="col-md-4 mb-4" *ngFor="let componente of componentes">
+        <app-tarjeta-producto [producto]="componente" />
+      </div>
+    </div>
   </div>
 
   <ng-template #noComponentes>
@@ -18,5 +35,6 @@
   <div *ngIf="error" class="alert alert-danger mt-3">
     {{ error }}
   </div>
+
+  <app-boton-volver></app-boton-volver>
 </div>
-<app-boton-volver></app-boton-volver>
