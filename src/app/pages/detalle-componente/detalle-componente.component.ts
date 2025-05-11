@@ -1,7 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; 
 import { BotonVolverComponent } from '../../shared/boton-volver/boton-volver.component';
 import { ComponentesService, Componente } from '../../services/componentes.service';
 
@@ -12,8 +11,9 @@ import { ComponentesService, Componente } from '../../services/componentes.servi
   templateUrl: './detalle-componente.component.html',
   styleUrls: ['./detalle-componente.component.css']
 })
-export class DetalleComponenteComponent {
+export class DetalleComponenteComponent implements OnInit {
   componente: Componente | null = null;
+  error = '';
   componentesService = inject(ComponentesService);
   route = inject(ActivatedRoute);
 
@@ -22,8 +22,13 @@ export class DetalleComponenteComponent {
     if (id) {
       this.componentesService.obtenerPorId(+id).subscribe({
         next: (data) => this.componente = data,
-        error: (err) => console.error('❌ Error al cargar componente:', err)
+        error: (err) => {
+          console.error('❌ Error al cargar componente:', err);
+          this.error = 'No se pudo cargar el componente.';
+        }
       });
+    } else {
+      this.error = 'ID inválido';
     }
   }
 }
