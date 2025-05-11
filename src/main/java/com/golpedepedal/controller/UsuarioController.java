@@ -1,15 +1,12 @@
 package com.golpedepedal.controller;
 
-import java.net.PasswordAuthentication;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +20,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "*")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;

@@ -14,7 +14,6 @@ import com.golpedepedal.service.DireccionService;
 
 @RestController
 @RequestMapping("/api/direcciones")
-@CrossOrigin(origins = "*")
 public class DireccionController {
 
     private final DireccionService service;

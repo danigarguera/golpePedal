@@ -1,24 +1,16 @@
 package com.golpedepedal.controller;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import com.golpedepedal.dto.ComponenteDTO;
+import com.golpedepedal.dto.ComponenteMapper;
 import com.golpedepedal.model.Componente;
 import com.golpedepedal.service.ComponenteService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/componentes")
 public class ComponenteController {
@@ -30,14 +22,18 @@ public class ComponenteController {
     }
 
     @GetMapping
-    public List<Componente> listar() {
-        System.out.println(" Acceso permitido al endpoint /api/componentes");
-        return service.obtenerTodos();
+    public List<ComponenteDTO> listar() {
+        return service.obtenerTodos().stream()
+            .map(ComponenteMapper::toDTO)
+            .toList();
     }
 
     @GetMapping("/{id}")
-    public Optional<Componente> get(@PathVariable Long id) {
-        return service.buscarPorId(id);
+    public ResponseEntity<ComponenteDTO> get(@PathVariable Long id) {
+        return service.buscarPorId(id)
+            .map(ComponenteMapper::toDTO)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -58,12 +54,12 @@ public class ComponenteController {
     public void eliminar(@PathVariable Long id) {
         service.eliminar(id);
     }
-    
+
     @GetMapping("/marca/{id}")
     public List<Componente> listarPorMarca(@PathVariable Long id) {
         return service.buscarPorMarcaId(id);
     }
-    
+
     @GetMapping("/buscar")
     public List<Componente> buscarComponentes(
         @RequestParam(required = false) String nombre,
@@ -72,7 +68,4 @@ public class ComponenteController {
 
         return service.buscar(nombre, tipoComponenteId, marcaId);
     }
-
-
-
 }
