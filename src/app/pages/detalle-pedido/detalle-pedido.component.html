@@ -1,0 +1,48 @@
+<div class="container mt-4" *ngIf="pedido">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4">Factura del pedido #{{ pedido.id }}</h2>
+    <button class="btn btn-outline-secondary d-print-none" (click)="imprimir()">
+      <i class="bi bi-printer"></i> Imprimir
+    </button>
+  </div>
+
+  <p><strong>Fecha:</strong> {{ pedido.fecha | date:'short' }}</p>
+  <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+
+  <hr>
+
+  <h5>Dirección de envío</h5>
+  <address>
+    {{ pedido.direccion.alias }}<br>
+    {{ pedido.direccion.calle }}, {{ pedido.direccion.numero }}
+    <span *ngIf="pedido.direccion.piso">, piso {{ pedido.direccion.piso }}</span><br>
+    {{ pedido.direccion.codigoPostal }} {{ pedido.direccion.ciudad }} ({{ pedido.direccion.provincia }})<br>
+    {{ pedido.direccion.pais }}
+  </address>
+
+  <hr>
+
+  <h5>Productos</h5>
+  <table class="table table-bordered table-sm">
+    <thead class="table-light">
+      <tr>
+        <th>Producto</th>
+        <th class="text-center">Cantidad</th>
+        <th class="text-end">Precio unitario</th>
+        <th class="text-end">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let linea of pedido.lineas">
+        <td>{{ linea.nombre }}</td>
+        <td class="text-center">{{ linea.cantidad }}</td>
+        <td class="text-end">{{ linea.precioUnitario | currency:'EUR' }}</td>
+        <td class="text-end">{{ linea.precioUnitario * linea.cantidad | currency:'EUR' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-end">
+    <h5>Total: {{ pedido.total | currency:'EUR' }}</h5>
+  </div>
+</div>

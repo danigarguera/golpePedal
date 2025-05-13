@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router'; 
 import { CarritoService, ProductoCarrito } from '../../services/carrito.service';
 
 @Component({
@@ -13,8 +14,7 @@ import { CarritoService, ProductoCarrito } from '../../services/carrito.service'
 export class CarritoComponent implements OnInit {
   carrito: ProductoCarrito[] = [];
 
-  constructor(private carritoService: CarritoService) {}
-
+constructor(private carritoService: CarritoService, private router: Router) {}
   ngOnInit(): void {
     this.cargarCarrito();
   }
@@ -36,4 +36,24 @@ export class CarritoComponent implements OnInit {
   obtenerTotal(): number {
     return this.carrito.reduce((suma, prod) => suma + prod.precio * prod.cantidad, 0);
   }
+
+  irASeleccionDireccion(): void {
+  console.log('🧪 Validando sesión manualmente...');
+
+  const token = localStorage.getItem('token');
+  if (token) {
+    console.log('✅ Token encontrado, navegando...');
+    this.router.navigate(['/seleccionar-direccion']);
+  } else {
+    console.log('❌ Sin token, redirigiendo a login');
+    alert('Debes iniciar sesión para continuar');
+    this.router.navigate(['/login'], {
+      queryParams: { redirectTo: '/seleccionar-direccion' }
+    });
+  }
+}
+
+
+
+
 }

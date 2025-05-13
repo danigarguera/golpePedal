@@ -1,31 +1,28 @@
-<tbody>
-  <ng-container *ngFor="let pedido of pedidos">
-    <tr>
-      <td>{{ pedido.id }}</td>
-      <td>{{ pedido.fecha | date:'short' }}</td>
-      <td>{{ pedido.estado }}</td>
-      <td>{{ pedido.total | currency:'EUR' }}</td>
-      <td>
-        <button (click)="verDetalles(pedido.id)">
-          {{ pedidoSeleccionadoId === pedido.id ? 'Ocultar' : 'Ver detalles' }}
-        </button>
-      </td>
-    </tr>
+<div class="container mt-4">
+  <h2>Mis pedidos</h2>
 
-    <tr *ngIf="pedidoSeleccionadoId === pedido.id">
-      <td colspan="5">
-        <ul *ngIf="componentesDelPedido.length > 0; else sinComponentes">
-          <li *ngFor="let comp of componentesDelPedido">
-            <strong>{{ comp.nombre }}</strong> - {{ comp.descripcion }}  
-            | Precio: {{ comp.precio | currency:'EUR' }}  
-            | Cantidad: {{ comp.cantidad }}
-          </li>
-        </ul>
-        <ng-template #sinComponentes>
-          <p class="text-muted">Este pedido no tiene componentes.</p>
-        </ng-template>
-      </td>
-    </tr>
-  </ng-container>
-</tbody>
-<app-boton-volver></app-boton-volver>
+  <table class="table table-striped mt-3" *ngIf="pedidos.length > 0; else sinPedidos">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Total</th>
+        <th>Dirección</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pedido of pedidos">
+        <td>{{ pedido.id }}</td>
+        <td>{{ pedido.fecha | date: 'short' }}</td>
+        <td>{{ pedido.estado }}</td>
+        <td>{{ pedido.total | currency: 'EUR' }}</td>
+        <td>{{ pedido.direccionAlias }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #sinPedidos>
+    <div class="alert alert-info mt-3">No tienes pedidos realizados.</div>
+  </ng-template>
+</div>

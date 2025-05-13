@@ -1,0 +1,73 @@
+<div class="container mt-4">
+  <h2>Selecciona una dirección para el envío</h2>
+
+  <!-- Lista de direcciones -->
+  <div *ngIf="direcciones.length > 0; else sinDirecciones">
+    <div class="row row-cols-1 row-cols-md-2 g-4 mt-3">
+      <div class="col" *ngFor="let direccion of direcciones">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ direccion.alias }}</h5>
+            <p class="card-text">
+              {{ direccion.calle }}, {{ direccion.numero }}<span *ngIf="direccion.piso">, piso {{ direccion.piso }}</span><br>
+              {{ direccion.codigoPostal }} {{ direccion.ciudad }} ({{ direccion.provincia }})<br>
+              {{ direccion.pais }}
+            </p>
+            <button class="btn btn-primary" (click)="seleccionarDireccion(direccion)">Usar esta dirección</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje si no hay direcciones -->
+  <ng-template #sinDirecciones>
+    <div class="alert alert-info mt-3">
+      No tienes direcciones guardadas. Añade una nueva abajo.
+    </div>
+  </ng-template>
+
+  <!-- Formulario para nueva dirección -->
+  <div class="mt-5">
+    <h4>Añadir nueva dirección</h4>
+    <form (ngSubmit)="crearDireccion()" #direccionForm="ngForm">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="alias" class="form-label">Alias</label>
+          <input type="text" id="alias" class="form-control" [(ngModel)]="nuevaDireccion.alias" name="alias" required>
+        </div>
+        <div class="col-md-6">
+          <label for="calle" class="form-label">Calle</label>
+          <input type="text" id="calle" class="form-control" [(ngModel)]="nuevaDireccion.calle" name="calle" required>
+        </div>
+        <div class="col-md-3">
+          <label for="numero" class="form-label">Número</label>
+          <input type="text" id="numero" class="form-control" [(ngModel)]="nuevaDireccion.numero" name="numero" required>
+        </div>
+        <div class="col-md-3">
+          <label for="piso" class="form-label">Piso (opcional)</label>
+          <input type="text" id="piso" class="form-control" [(ngModel)]="nuevaDireccion.piso" name="piso">
+        </div>
+        <div class="col-md-3">
+          <label for="ciudad" class="form-label">Ciudad</label>
+          <input type="text" id="ciudad" class="form-control" [(ngModel)]="nuevaDireccion.ciudad" name="ciudad" required>
+        </div>
+        <div class="col-md-3">
+          <label for="provincia" class="form-label">Provincia</label>
+          <input type="text" id="provincia" class="form-control" [(ngModel)]="nuevaDireccion.provincia" name="provincia" required>
+        </div>
+        <div class="col-md-3">
+          <label for="codigoPostal" class="form-label">Código Postal</label>
+          <input type="text" id="codigoPostal" class="form-control" [(ngModel)]="nuevaDireccion.codigoPostal" name="codigoPostal" required>
+        </div>
+        <div class="col-md-3">
+          <label for="pais" class="form-label">País</label>
+          <input type="text" id="pais" class="form-control" [(ngModel)]="nuevaDireccion.pais" name="pais" required>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-success">Guardar dirección</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
