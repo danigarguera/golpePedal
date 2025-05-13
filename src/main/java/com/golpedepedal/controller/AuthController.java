@@ -11,10 +11,12 @@ import com.golpedepedal.security.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -71,10 +73,34 @@ public class AuthController {
                     .body(Map.of("error", "❌ Credenciales incorrectas."));
         }
 
-        String token = jwtUtil.generateToken(usuario.getEmail(), usuario.getRol().getNombre());
+        String token = jwtUtil.generateToken(
+        	    usuario.getId(),
+        	    usuario.getEmail(),
+        	    usuario.getRol().getNombre()
+        	);
+
 
         return ResponseEntity.ok(Map.of(
                 "token", token
         ));
     }
+    
+    @GetMapping("/me")
+    public ResponseEntity<?> obtenerUsuarioAutenticado(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autenticado");
+        }
+
+        String email = authentication.getName(); // viene del subject del token
+        Usuario usuario = usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("id", usuario.getId());
+        datos.put("email", usuario.getEmail());
+        datos.put("rol", usuario.getRol().getNombre());
+
+        return ResponseEntity.ok(datos);
+    }
+
 }

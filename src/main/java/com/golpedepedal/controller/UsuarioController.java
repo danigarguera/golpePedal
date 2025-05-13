@@ -32,7 +32,6 @@ public class UsuarioController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // ✅ Disponible solo para ADMIN
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public List<Usuario> listarTodos() {

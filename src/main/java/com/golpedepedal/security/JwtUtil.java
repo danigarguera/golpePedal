@@ -17,15 +17,17 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateToken(String email, String rol) {
+    public String generateToken(Long id, String email, String rol) {
         return Jwts.builder()
-                .setSubject(email)
-                .claim("rol", rol)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
-                .signWith(getKey(), SignatureAlgorithm.HS256)
-                .compact();
+            .setSubject(email)
+            .claim("id", id) // ⬅️ ¡Esto es lo que falta!
+            .claim("rol", rol)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
+            .signWith(getKey(), SignatureAlgorithm.HS256)
+            .compact();
     }
+
 
     public Jws<Claims> parseToken(String token) {
         return Jwts.parserBuilder()

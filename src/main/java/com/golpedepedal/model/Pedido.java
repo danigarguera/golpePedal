@@ -47,6 +47,11 @@ public class Pedido {
         PENDIENTE, ENVIADO, ENTREGADO, CANCELADO
     }
 
+    @ManyToOne
+    @JoinColumn(name = "direccion_id")
+    private Direccion direccion;
+
+    
 	public Pedido() {
 		
 	}
@@ -97,6 +102,14 @@ public class Pedido {
 
 	public void setPedidoComponentes(List<PedidoComponente> pedidoComponentes) {
 		this.pedidoComponentes = pedidoComponentes;
+	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
     
     
