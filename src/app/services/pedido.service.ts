@@ -31,6 +31,14 @@ export interface PedidoResponseDTO {
   fecha: string;
   estado: string;
   total: number;
+  usuario: {
+    nombre: string;
+    apellido1: string;
+    apellido2: string;
+    email: string;
+    telefono: string;
+  };
+
   direccion: {
     alias: string;
     calle: string;
