@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PedidoService, PedidoResumenDTO } from '../../../services/pedido.service';
+import { RouterModule } from '@angular/router'; 
 import { CurrencyPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 
@@ -8,7 +9,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-mis-pedidos',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe], 
+  imports: [CommonModule, CurrencyPipe, RouterModule], 
   templateUrl: './mis-pedidos.component.html'
 })
 export class MisPedidosComponent implements OnInit {

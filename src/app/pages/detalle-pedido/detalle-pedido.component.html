@@ -11,6 +11,13 @@
 
   <hr>
 
+  <h5>Datos del cliente</h5>
+  <p>
+    {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }} {{ pedido.usuario.apellido2 }}<br>
+    {{ pedido.usuario.email }}<br>
+    {{ pedido.usuario.telefono }}
+  </p>
+
   <h5>Dirección de envío</h5>
   <address>
     {{ pedido.direccion.alias }}<br>
@@ -44,5 +51,12 @@
 
   <div class="text-end">
     <h5>Total: {{ pedido.total | currency:'EUR' }}</h5>
+  </div>
+
+  <hr class="mt-4">
+
+  <div class="text-center text-muted small mt-4">
+    Gracias por confiar en Golpe de Pedal 🚴‍♂️<br>
+    Si tienes dudas sobre tu pedido, contáctanos en soporte&#64;golpedepedal.com
   </div>
 </div>

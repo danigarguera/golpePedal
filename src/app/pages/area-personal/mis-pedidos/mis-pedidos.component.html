@@ -9,6 +9,7 @@
         <th>Estado</th>
         <th>Total</th>
         <th>Dirección</th>
+        <th>Acciones</th> <!-- Nueva columna -->
       </tr>
     </thead>
     <tbody>
@@ -18,6 +19,11 @@
         <td>{{ pedido.estado }}</td>
         <td>{{ pedido.total | currency: 'EUR' }}</td>
         <td>{{ pedido.direccionAlias }}</td>
+        <td>
+          <a [routerLink]="['/pedido', pedido.id]" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-receipt"></i> Ver detalle
+          </a>
+        </td>
       </tr>
     </tbody>
   </table>

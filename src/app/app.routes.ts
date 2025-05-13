@@ -8,7 +8,7 @@ import { MisDireccionesComponent } from './pages/area-personal/mis-direcciones/m
 import { MisPedidosComponent } from './pages/area-personal/mis-pedidos/mis-pedidos.component';
 import { AreaPersonalComponent } from './pages/area-personal/area-personal/area-personal.component';
 import { AuthGuard } from './guards/auth.guard'; 
-import { CarritoComponent } from './pages/carrito/carrito.component'; // 👈 NUEVO
+import { CarritoComponent } from './pages/carrito/carrito.component'; 
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,13 +22,11 @@ export const routes: Routes = [
       import('./pages/detalle-componente/detalle-componente.component').then(m => m.DetalleComponenteComponent)
   },
 
-  // 🔓 Carrito accesible para todos
   {
     path: 'carrito',
     component: CarritoComponent
   },
 
-  // 🔐 Rutas protegidas
   {
     path: 'dashboard',
     loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
@@ -68,8 +66,12 @@ export const routes: Routes = [
   canActivate: [AuthGuard]
   },
 
-
-
+  {
+   path: 'pedido/:id',
+    loadComponent: () =>
+     import('./pages/detalle-pedido/detalle-pedido.component').then(m => m.DetallePedidoComponent),
+    canActivate: [AuthGuard]
+  },
 
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
