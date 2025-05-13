@@ -1,0 +1,33 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+export interface DireccionDTO {
+  id?: number; 
+  alias: string;
+  calle: string;
+  numero: string;
+  piso?: string;
+  ciudad: string;
+  provincia: string;
+  codigoPostal: string;
+  pais: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DireccionService {
+  private apiUrl = `${environment.apiUrl}/direcciones`;
+
+  constructor(private http: HttpClient) {}
+
+  obtenerMisDirecciones(): Observable<DireccionDTO[]> {
+    return this.http.get<DireccionDTO[]>(this.apiUrl);
+  }
+
+  crearDireccion(direccion: DireccionDTO): Observable<DireccionDTO> {
+    return this.http.post<DireccionDTO>(this.apiUrl, direccion);
+  }
+}

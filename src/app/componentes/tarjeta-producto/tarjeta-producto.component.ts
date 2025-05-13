@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { CarritoService } from '../../services/carrito.service'; // Asegúrate que esta ruta sea correcta
+import { CarritoService } from '../../services/carrito.service'; 
 
 @Component({
   selector: 'app-tarjeta-producto',

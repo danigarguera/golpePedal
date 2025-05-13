@@ -1,7 +1,15 @@
 <div class="container mt-4">
   <h2>🛒 Mi carrito</h2>
-  <div *ngIf="carrito.length === 0">Tu carrito está vacío.</div>
 
+ 
+  <div *ngIf="carrito.length === 0" class="alert alert-info mt-3">
+    Tu carrito está vacío.
+    <div class="mt-3">
+      <a class="btn btn-primary" routerLink="/">Volver a la tienda</a>
+    </div>
+  </div>
+
+  
   <table *ngIf="carrito.length > 0" class="table table-striped mt-3">
     <thead>
       <tr>
@@ -25,8 +33,12 @@
     </tbody>
   </table>
 
-  <div *ngIf="carrito.length > 0" class="mt-3">
+ 
+  <div *ngIf="carrito.length > 0" class="d-flex justify-content-between align-items-center mt-4">
     <h4>Total: {{ obtenerTotal() | currency: 'EUR' }}</h4>
-    <button class="btn btn-warning" (click)="vaciarCarrito()">Vaciar carrito</button>
+    <div class="text-end">
+      <button class="btn btn-warning me-2" (click)="vaciarCarrito()">Vaciar carrito</button>
+      <button class="btn btn-primary" (click)="irASeleccionDireccion()">Finalizar compra</button>
+    </div>
   </div>
 </div>

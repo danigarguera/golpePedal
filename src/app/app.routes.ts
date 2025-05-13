@@ -50,6 +50,26 @@ export const routes: Routes = [
       { path: 'pedidos', component: MisPedidosComponent }
     ]
   },
+  {
+    path: 'seleccionar-direccion',
+    loadComponent: () => import('./pages/seleccionar-direccion/seleccionar-direccion.component').then(m => m.SeleccionarDireccionComponent)
+  },
+
+  {
+    path: 'finalizar-compra',
+    loadComponent: () =>
+    import('./pages/finalizar-compra/finalizar-compra.component').then(m => m.FinalizarCompraComponent)
+  },
+
+ {
+  path: 'pedido/:id',
+  loadComponent: () =>
+    import('./pages/detalle-pedido/detalle-pedido.component').then(m => m.DetallePedidoComponent),
+  canActivate: [AuthGuard]
+  },
+
+
+
 
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
