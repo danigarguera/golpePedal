@@ -13,6 +13,7 @@ import com.golpedepedal.dto.LineaPedidoResponseDTO;
 import com.golpedepedal.dto.PedidoRequestDTO;
 import com.golpedepedal.dto.PedidoResponseDTO;
 import com.golpedepedal.dto.PedidoResumenDTO;
+import com.golpedepedal.dto.UsuarioFacturaDTO;
 import com.golpedepedal.model.Componente;
 import com.golpedepedal.model.Direccion;
 import com.golpedepedal.model.Pedido;
@@ -124,6 +125,17 @@ public class PedidoServiceImpl implements PedidoService {
 	    dto.setEstado(pedido.getEstado().name());
 	    dto.setTotal(pedido.getTotal());
 
+	    // Usuario → UsuarioFacturaDTO
+	    UsuarioFacturaDTO usuarioDTO = new UsuarioFacturaDTO();
+	    usuarioDTO.setNombre(pedido.getUsuario().getNombre());
+	    usuarioDTO.setApellido1(pedido.getUsuario().getApellido1());
+	    usuarioDTO.setApellido2(pedido.getUsuario().getApellido2());
+	    usuarioDTO.setEmail(pedido.getUsuario().getEmail());
+	    usuarioDTO.setTelefono(pedido.getUsuario().getTelefono()); 
+	    
+	    dto.setUsuario(usuarioDTO);
+
+	    // Dirección
 	    if (pedido.getDireccion() != null) {
 	        DireccionDTO direccionDTO = new DireccionDTO();
 	        direccionDTO.setAlias(pedido.getDireccion().getAlias());
@@ -138,6 +150,7 @@ public class PedidoServiceImpl implements PedidoService {
 	        dto.setDireccion(direccionDTO);
 	    }
 
+	    // Líneas de pedido
 	    List<LineaPedidoResponseDTO> lineasDTO = new ArrayList<>();
 
 	    if (pedido.getPedidoComponentes() != null) {

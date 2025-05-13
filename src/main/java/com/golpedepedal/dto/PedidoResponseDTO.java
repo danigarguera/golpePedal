@@ -13,6 +13,8 @@ public class PedidoResponseDTO {
     private BigDecimal total;
     private List<LineaPedidoResponseDTO> lineas;
     private DireccionDTO direccion;
+    private UsuarioFacturaDTO usuario;
+
 
     
     public Long getId() {
@@ -69,6 +71,14 @@ public class PedidoResponseDTO {
 
 	public void setDireccion(DireccionDTO direccion) {
 		this.direccion = direccion;
+	}
+
+	public UsuarioFacturaDTO getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioFacturaDTO usuario) {
+		this.usuario = usuario;
 	}
     
     
