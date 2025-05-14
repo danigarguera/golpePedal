@@ -30,6 +30,11 @@ public class Pedido {
     @JsonIgnoreProperties("pedidos")
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+    
+    @ManyToOne
+    @JoinColumn(name = "empleado_id")
+    private Usuario empleado;
+
 
     @NotNull
     private LocalDateTime fecha;
@@ -110,6 +115,14 @@ public class Pedido {
 
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+	}
+
+	public Usuario getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(Usuario empleado) {
+		this.empleado = empleado;
 	}
     
     

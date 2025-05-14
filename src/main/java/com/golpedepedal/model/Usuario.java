@@ -52,8 +52,10 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Pedido> pedidos;
-
-
+    
+    @OneToMany(mappedBy = "empleado")
+    @JsonIgnore
+    private List<Pedido> ventasRealizadas;
 
 	public Usuario() {
 
@@ -146,6 +148,14 @@ public class Usuario {
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public List<Pedido> getVentasRealizadas() {
+		return ventasRealizadas;
+	}
+
+	public void setVentasRealizadas(List<Pedido> ventasRealizadas) {
+		this.ventasRealizadas = ventasRealizadas;
 	}
     
     

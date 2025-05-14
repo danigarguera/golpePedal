@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.golpedepedal.dto.DireccionDTO;
@@ -41,6 +42,17 @@ public class DireccionController {
     public Optional<Direccion> get(@PathVariable Long id) {
         return service.buscarPorId(id);
     }
+    
+    @GetMapping("/usuario/{usuarioId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
+    public List<DireccionDTO> listarPorUsuarioId(@PathVariable Long usuarioId) {
+        return service.buscarPorUsuarioId(usuarioId)
+                     .stream()
+                     .map(service::convertirADTO)
+                     .toList();
+    }
+
+
 
     @PostMapping
     public Direccion crear(@RequestBody DireccionDTO dto, Principal principal) {
@@ -87,4 +99,6 @@ public class DireccionController {
     public void eliminar(@PathVariable Long id) {
         service.eliminar(id);
     }
+
+
 }

@@ -195,10 +195,53 @@ public class PedidoServiceImpl implements PedidoService {
 	    Pedido pedido = pedidoRepository.findById(id)
 	        .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
 
-	    // Forzar carga controlada de relaciones
 	    pedido.setPedidoComponentes(pedidoComponenteRepository.findByPedidoId(id));
 
 	    return convertirAPedidoResponseDTO(pedido);
+	}
+
+	@Override
+	public void crearPedidoComoEmpleado(PedidoRequestDTO dto, String emailEmpleado) {
+		
+	    Usuario cliente = usuarioRepository.findById(dto.getUsuarioId())
+	        .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+	    Usuario empleado = usuarioRepository.findByEmail(emailEmpleado)
+	        .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+
+	    Direccion direccion = direccionRepository.findById(dto.getDireccionId())
+	        .orElseThrow(() -> new RuntimeException("Dirección no encontrada"));
+
+	    Pedido pedido = new Pedido();
+	    pedido.setUsuario(cliente);
+	    pedido.setEmpleado(empleado); 
+	    pedido.setDireccion(direccion);
+	    pedido.setFecha(LocalDateTime.now());
+	    pedido.setEstado(Estado.PENDIENTE);
+
+	    BigDecimal total = BigDecimal.ZERO;
+
+	    
+	    pedidoRepository.save(pedido);
+
+	    for (PedidoRequestDTO.LineaPedidoDTO linea : dto.getLineas()) {
+	        Componente componente = componenteRepository.findById(linea.getComponenteId())
+	            .orElseThrow(() -> new RuntimeException("Componente no encontrado"));
+
+	        PedidoComponente pc = new PedidoComponente();
+	        pc.setPedido(pedido);
+	        pc.setComponente(componente);
+	        pc.setCantidad(linea.getCantidad());
+
+	        BigDecimal subtotal = BigDecimal.valueOf(linea.getPrecioUnitario())
+	            .multiply(BigDecimal.valueOf(linea.getCantidad()));
+	        total = total.add(subtotal);
+
+	        pedidoComponenteRepository.save(pc);
+	    }
+
+	    pedido.setTotal(total);
+	    pedidoRepository.save(pedido);
 	}
 
 

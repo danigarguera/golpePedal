@@ -1,6 +1,8 @@
 package com.golpedepedal.dto;
 
 public class DireccionDTO {
+	
+	private Long id;
 
     private String alias;
     
@@ -17,6 +19,16 @@ public class DireccionDTO {
     private String codigoPostal;
     
     private String pais;
+    
+    
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getAlias() {
 		return alias;

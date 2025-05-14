@@ -61,11 +61,15 @@ public class ComponenteController {
     }
 
     @GetMapping("/buscar")
-    public List<Componente> buscarComponentes(
+    public List<ComponenteDTO> buscarComponentes(
         @RequestParam(required = false) String nombre,
         @RequestParam(required = false) Long tipoComponenteId,
         @RequestParam(required = false) Long marcaId) {
 
-        return service.buscar(nombre, tipoComponenteId, marcaId);
+        return service.buscar(nombre, tipoComponenteId, marcaId)
+            .stream()
+            .map(ComponenteMapper::toDTO)
+            .toList();
     }
+
 }

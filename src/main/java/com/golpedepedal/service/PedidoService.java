@@ -25,4 +25,7 @@ public interface PedidoService {
     PedidoResumenDTO convertirAPedidoResumenDTO(Pedido pedido);
     
     public PedidoResponseDTO getPedidoDetallePorId(Long id);
+    
+    void crearPedidoComoEmpleado(PedidoRequestDTO dto, String emailEmpleado);
+
 }

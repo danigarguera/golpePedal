@@ -3,6 +3,7 @@ package com.golpedepedal.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.golpedepedal.dto.DireccionDTO;
 import com.golpedepedal.model.Direccion;
 
 public interface DireccionService {
@@ -16,5 +17,6 @@ public interface DireccionService {
     void eliminar(Long id);
     
     List<Direccion> buscarPorUsuarioId(Long usuarioId);
-
+    
+    DireccionDTO convertirADTO(Direccion direccion);
 }
