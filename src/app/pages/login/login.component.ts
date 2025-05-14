@@ -29,15 +29,10 @@ export class LoginComponent {
 
     this.loginService.login(this.email, this.password).subscribe({
       next: (res) => {
-        // Guardar token
         localStorage.setItem('token', res.token);
         console.log('✅ Token guardado en localStorage:', res.token);
-
-        // Refrescar contador del carrito (en caso de carrito anónimo)
         this.carritoService.refrescarContador?.();
-
-        // Redirigir a dashboard
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/']);
       },
       error: (err) => {
         console.error('❌ Error al hacer login', err);

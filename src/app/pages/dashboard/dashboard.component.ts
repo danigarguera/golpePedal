@@ -13,12 +13,20 @@ import { ProtectedComponent } from '../../shared/protected.component';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent extends ProtectedComponent {
-  constructor(router: Router, roleService: RoleService) {
+
+  constructor(
+    override readonly router: Router,
+    override readonly roleService: RoleService
+  ) {
     super();
   }
 
   override onInitAfterAuth(): void {
     console.log('📊 Dashboard cargado para:', this.email, 'con rol:', this.rol);
-    // Aquí puedes hacer lógica adicional si quieres
+  }
+
+  override logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface DireccionDTO {
-  id?: number; 
+  id?: number;
   alias: string;
   calle: string;
   numero: string;
@@ -19,9 +19,9 @@ export interface DireccionDTO {
   providedIn: 'root'
 })
 export class DireccionService {
-  private apiUrl = `${environment.apiUrl}/direcciones`;
+  private apiUrl = `${environment.apiUrl}`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   obtenerMisDirecciones(): Observable<DireccionDTO[]> {
     return this.http.get<DireccionDTO[]>(this.apiUrl);
@@ -30,4 +30,9 @@ export class DireccionService {
   crearDireccion(direccion: DireccionDTO): Observable<DireccionDTO> {
     return this.http.post<DireccionDTO>(this.apiUrl, direccion);
   }
+
+  obtenerDireccionesPorUsuario(usuarioId: number): Observable<DireccionDTO[]> {
+    return this.http.get<DireccionDTO[]>(`${this.apiUrl}/direcciones/usuario/${usuarioId}`);
+  }
+
 }

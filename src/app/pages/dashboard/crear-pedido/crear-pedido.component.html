@@ -1,0 +1,77 @@
+<div class="container mt-4">
+  <h2>🛒 Crear Pedido</h2>
+
+  <!-- Cliente y dirección -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label>Cliente</label>
+      <select class="form-select" [(ngModel)]="clienteSeleccionadoId" (change)="onClienteChange()" name="cliente">
+        <option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.nombre }} {{ cliente.apellido1 }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label>Dirección</label>
+      <select class="form-select" [(ngModel)]="direccionSeleccionadaId" name="direccion">
+        <option *ngFor="let d of direcciones" [value]="d.id">{{ d.alias }} - {{ d.calle }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Filtro por tipo -->
+  <div class="mb-3">
+    <label>Tipo de componente</label>
+    <select class="form-select" [(ngModel)]="tipoSeleccionado" (change)="filtrarComponentesPorTipo()" name="tipo">
+      <option *ngFor="let tipo of tiposComponente" [value]="tipo.id">{{ tipo.nombre }}</option>
+    </select>
+  </div>
+
+  <!-- Filtro por marca -->
+  <div class="mb-3">
+    <label>Marca</label>
+    <select class="form-select" [(ngModel)]="marcaSeleccionada" (change)="filtrarComponentesPorTipo()" name="marca">
+      <option [ngValue]="null">-- Todas las marcas --</option>
+      <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre }}</option>
+    </select>
+  </div>
+
+
+  <!-- Componentes filtrados -->
+  <h4>📦 Componentes disponibles</h4>
+  <table class="table table-striped" *ngIf="componentesFiltrados.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Marca</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let comp of componentesFiltrados">
+        <td>{{ comp.nombre }}</td>
+        <td>{{ comp.marca }}</td>
+        <td>{{ comp.precio | currency:'EUR' }}</td>
+        <td>
+          <button class="btn btn-sm btn-success" (click)="anadirAlCarrito(comp)">➕ Añadir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Carrito -->
+  <h4 class="mt-4">🧾 Componentes seleccionados</h4>
+  <ul class="list-group mb-3">
+    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of carrito">
+      {{ item.nombre }} × {{ item.cantidad }} → {{ item.precio * item.cantidad | currency:'EUR' }}
+      <button class="btn btn-sm btn-danger" (click)="eliminarDelCarrito(item.componenteId)">❌</button>
+    </li>
+  </ul>
+
+  <p><strong>Total:</strong> {{ calcularTotal() | currency:'EUR' }}</p>
+  <button class="btn btn-primary" (click)="crearPedido()">✅ Finalizar Pedido</button>
+
+  <div *ngIf="mensaje" class="alert alert-success mt-3">{{ mensaje }}</div>
+  <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+</div>

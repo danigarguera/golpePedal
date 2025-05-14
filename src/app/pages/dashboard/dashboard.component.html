@@ -1,16 +1,24 @@
-<h2>Bienvenido, {{ email }}</h2>
-<p>Rol: {{ rol }}</p>
+<h2>Área privada</h2>
+<p>Bienvenido, {{ email }} (Rol: {{ rol }})</p>
 
-<div class="list-group mt-4">
+<nav class="list-group mt-4">
+<a routerLink="/crear-pedido" class="list-group-item list-group-item-action">
+  🛒 Crear pedido para cliente
+</a>
+
+
   <a routerLink="/componentes" class="list-group-item list-group-item-action">
     🧩 Ver todos los componentes
   </a>
-  <a routerLink="/componentes/filtro" class="list-group-item list-group-item-action">
-    🔍 Filtrar componentes por tipo o marca
-  </a>
+
   <a *ngIf="roleService.isAdmin()" routerLink="/admin/usuarios" class="list-group-item list-group-item-action">
-    👥 Gestión de clientes (solo admin)
+    👥 Gestión de usuarios (solo admin)
   </a>
-</div>
+</nav>
+
+<hr />
+
+<!-- Aquí se cargan las vistas hijas del dashboard -->
+<router-outlet></router-outlet>
 
 <button class="btn btn-danger mt-4" (click)="logout()">Cerrar sesión</button>

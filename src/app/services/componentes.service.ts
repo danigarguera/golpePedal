@@ -12,6 +12,20 @@ export interface Componente {
   precio: number;
 }
 
+export interface ComponenteDTO {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  marca: string;
+  tipo: string;
+}
+export interface MarcaDTO {
+  id: number;
+  nombre: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +33,7 @@ export class ComponentesService {
 
   private apiUrl = `${environment.apiUrl}/componentes`; // ✅ URL del entorno
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   obtenerComponentes(): Observable<Componente[]> {
     return this.http.get<Componente[]>(this.apiUrl);
