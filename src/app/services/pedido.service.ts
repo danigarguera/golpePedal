@@ -76,4 +76,8 @@ export class PedidoService {
   getPedidoPorId(id: number): Observable<PedidoResponseDTO> {
     return this.http.get<PedidoResponseDTO>(`${this.apiUrl}/${id}`);
   }
+  crearPedidoComoEmpleado(pedido: any) {
+  return this.http.post('/api/pedidos/crear-empleado', pedido);
+  }
+
 }

@@ -2,13 +2,15 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
-import { ComponentesComponent } from './pages/componentes/componentes.component'; 
+import { ComponentesComponent } from './pages/componentes/componentes.component';
 import { MisDatosComponent } from './pages/area-personal/mis-datos/mis-datos.component';
 import { MisDireccionesComponent } from './pages/area-personal/mis-direcciones/mis-direcciones.component';
 import { MisPedidosComponent } from './pages/area-personal/mis-pedidos/mis-pedidos.component';
 import { AreaPersonalComponent } from './pages/area-personal/area-personal/area-personal.component';
-import { AuthGuard } from './guards/auth.guard'; 
-import { CarritoComponent } from './pages/carrito/carrito.component'; 
+import { AuthGuard } from './guards/auth.guard';
+import { CarritoComponent } from './pages/carrito/carrito.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { RoleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,16 +24,27 @@ export const routes: Routes = [
       import('./pages/detalle-componente/detalle-componente.component').then(m => m.DetalleComponenteComponent)
   },
 
-  {
-    path: 'carrito',
-    component: CarritoComponent
-  },
+  { path: 'carrito', component: CarritoComponent },
 
+  // ✅ Dashboard con vista de bienvenida como hijo
   {
     path: 'dashboard',
-    loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate: [AuthGuard]
+    component: DashboardComponent,
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_EMPLEADO'] }
   },
+
+
+  // ✅ Crear pedido como ruta independiente
+  {
+    path: 'crear-pedido',
+    loadComponent: () =>
+      import('./pages/dashboard/crear-pedido/crear-pedido.component')
+        .then(m => m.CrearPedidoComponent),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_EMPLEADO'] }
+  },
+
   {
     path: 'admin/usuarios',
     loadComponent: () => import('./pages/usuarios/usuarios.component').then(m => m.UsuariosComponent),
@@ -50,29 +63,20 @@ export const routes: Routes = [
   },
   {
     path: 'seleccionar-direccion',
-    loadComponent: () => import('./pages/seleccionar-direccion/seleccionar-direccion.component').then(m => m.SeleccionarDireccionComponent)
+    loadComponent: () =>
+      import('./pages/seleccionar-direccion/seleccionar-direccion.component').then(m => m.SeleccionarDireccionComponent)
   },
-
   {
     path: 'finalizar-compra',
     loadComponent: () =>
-    import('./pages/finalizar-compra/finalizar-compra.component').then(m => m.FinalizarCompraComponent)
+      import('./pages/finalizar-compra/finalizar-compra.component').then(m => m.FinalizarCompraComponent)
   },
-
- {
-  path: 'pedido/:id',
-  loadComponent: () =>
-    import('./pages/detalle-pedido/detalle-pedido.component').then(m => m.DetallePedidoComponent),
-  canActivate: [AuthGuard]
-  },
-
   {
-   path: 'pedido/:id',
+    path: 'pedido/:id',
     loadComponent: () =>
-     import('./pages/detalle-pedido/detalle-pedido.component').then(m => m.DetallePedidoComponent),
+      import('./pages/detalle-pedido/detalle-pedido.component').then(m => m.DetallePedidoComponent),
     canActivate: [AuthGuard]
   },
 
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
-
