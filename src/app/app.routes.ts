@@ -77,6 +77,14 @@ export const routes: Routes = [
       import('./pages/detalle-pedido/detalle-pedido.component').then(m => m.DetallePedidoComponent),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'dashboard/detalle-venta/:id',
+    loadComponent: () => import('./pages/dashboard/detalle-venta/detalle-venta.component')
+      .then(m => m.DetalleVentaComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN', 'EMPLEADO'] }
+  },
+
 
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

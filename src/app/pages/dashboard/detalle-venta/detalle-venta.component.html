@@ -1,0 +1,60 @@
+<div class="container mt-4" *ngIf="pedido; else cargando">
+  <h2 class="h4">🧾 Detalle de Venta #{{ pedido.id }}</h2>
+
+  <p><strong>Fecha:</strong> {{ pedido.fecha | date:'short' }}</p>
+  <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+
+  <hr>
+
+  <h5>Cliente</h5>
+  <p>
+    {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }} {{ pedido.usuario.apellido2 }}<br>
+    {{ pedido.usuario.email }}<br>
+    {{ pedido.usuario.telefono }}
+  </p>
+
+  <ng-container *ngIf="pedido.direccion">
+    <h5>Dirección asociada</h5>
+    <address>
+      {{ pedido.direccion.alias }}<br>
+      {{ pedido.direccion.calle }}, {{ pedido.direccion.numero }}
+      <span *ngIf="pedido.direccion.piso">, piso {{ pedido.direccion.piso }}</span><br>
+      {{ pedido.direccion.codigoPostal }} {{ pedido.direccion.ciudad }} ({{ pedido.direccion.provincia }})<br>
+      {{ pedido.direccion.pais }}
+    </address>
+  </ng-container>
+
+  <h5 class="mt-4">Componentes</h5>
+  <table class="table table-bordered table-sm">
+    <thead class="table-light">
+      <tr>
+        <th>Producto</th>
+        <th class="text-center">Cantidad</th>
+        <th class="text-end">Precio unitario</th>
+        <th class="text-end">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let linea of pedido.lineas">
+        <td>{{ linea.nombre }}</td>
+        <td class="text-center">{{ linea.cantidad }}</td>
+        <td class="text-end">{{ linea.precioUnitario | currency:'EUR' }}</td>
+        <td class="text-end">{{ linea.precioUnitario * linea.cantidad | currency:'EUR' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-end">
+    <h5>Total: {{ pedido.total | currency:'EUR' }}</h5>
+  </div>
+  <div class="mt-4 text-center d-print-none">
+  <button class="btn btn-outline-secondary" (click)="router.navigate(['/dashboard'])">
+    ⬅️ Volver al Dashboard
+  </button>
+</div>
+
+</div>
+
+<ng-template #cargando>
+  <div class="alert alert-warning">Cargando venta...</div>
+</ng-template>

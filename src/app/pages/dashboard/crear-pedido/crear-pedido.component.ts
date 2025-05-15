@@ -1,14 +1,11 @@
-// crear-pedido.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ComponenteDTO, MarcaDTO } from '../../../../../src/app/services/componentes.service';
-import { DireccionDTO, DireccionCreateEmpleadoDTO } from '../../../../../src/app/services/direccion.service';
 import { UsuarioService, Usuario, PedidoComponenteDTO } from '../../../../../src/app/services/usuario.service';
-import { DireccionService } from '../../../../../src/app/services/direccion.service';
-import { PedidoService } from '../../../../../src/app/services/pedido.service';
+import { PedidoService, PedidoRequestDTO, PedidoResponseDTO } from '../../../../../src/app/services/pedido.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../src/environments/environment';
 
@@ -19,17 +16,14 @@ import { environment } from '../../../../../src/environments/environment';
   templateUrl: './crear-pedido.component.html'
 })
 export class CrearPedidoComponent implements OnInit {
-
   apiUrl = environment.apiUrl;
 
   clientes: Usuario[] = [];
-  direcciones: DireccionDTO[] = [];
   tiposComponente: { id: number, nombre: string }[] = [];
   componentesFiltrados: ComponenteDTO[] = [];
   marcas: MarcaDTO[] = [];
 
   clienteSeleccionadoId: number | null = null;
-  direccionSeleccionadaId: number | undefined;
   tipoSeleccionado: number | null = null;
   marcaSeleccionada: number | null = null;
 
@@ -39,16 +33,12 @@ export class CrearPedidoComponent implements OnInit {
   mensaje = '';
   error = '';
 
-  nuevaDireccion: Partial<DireccionDTO> = {};
-  mostrarFormularioDireccion = false;
-
   constructor(
     private usuarioService: UsuarioService,
-    private direccionService: DireccionService,
     private pedidoService: PedidoService,
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.cargarClientes();
@@ -60,55 +50,6 @@ export class CrearPedidoComponent implements OnInit {
     this.usuarioService.obtenerUsuarios().subscribe({
       next: (res: Usuario[]) => this.clientes = res,
       error: () => this.error = 'Error cargando clientes.'
-    });
-  }
-
-  onClienteChange() {
-    this.direccionSeleccionadaId = undefined;
-    this.mostrarFormularioDireccion = false;
-    this.direcciones = [];
-
-    if (this.clienteSeleccionadoId) {
-      this.direccionService.obtenerDireccionesPorUsuario(this.clienteSeleccionadoId).subscribe({
-        next: (res: DireccionDTO[]) => {
-          this.direcciones = res;
-          if (res.length === 0) this.mostrarFormularioDireccion = true;
-        },
-        error: () => this.error = 'Error cargando direcciones.'
-      });
-    }
-  }
-
-  onDireccionChange() {
-    this.mostrarFormularioDireccion = this.direccionSeleccionadaId === -1;
-  }
-
-  guardarNuevaDireccion() {
-    if (!this.clienteSeleccionadoId || !this.nuevaDireccion.calle || !this.nuevaDireccion.ciudad) {
-      this.error = 'Faltan campos obligatorios para la dirección.';
-      return;
-    }
-
-    const direccionAGuardar: DireccionCreateEmpleadoDTO = {
-      alias: this.nuevaDireccion.alias ?? '',
-      calle: this.nuevaDireccion.calle ?? '',
-      numero: this.nuevaDireccion.numero ?? '',
-      piso: this.nuevaDireccion.piso ?? '',
-      ciudad: this.nuevaDireccion.ciudad ?? '',
-      provincia: this.nuevaDireccion.provincia ?? '',
-      codigoPostal: this.nuevaDireccion.codigoPostal ?? '',
-      pais: this.nuevaDireccion.pais ?? '',
-      usuarioId: this.clienteSeleccionadoId
-    };
-
-    this.direccionService.crearDireccionComoEmpleado(direccionAGuardar).subscribe({
-      next: (dir) => {
-        this.direcciones.push(dir);
-        this.direccionSeleccionadaId = dir.id;
-        this.mostrarFormularioDireccion = false;
-        this.nuevaDireccion = {};
-      },
-      error: () => this.error = 'Error al guardar la dirección.'
     });
   }
 
@@ -131,7 +72,6 @@ export class CrearPedidoComponent implements OnInit {
   filtrarComponentesPorTipo() {
     const params = new URLSearchParams();
 
-    // SOLO añadimos el parámetro si tipoSeleccionado > 0
     if (this.tipoSeleccionado !== null && this.tipoSeleccionado > 0) {
       params.append('tipoComponenteId', this.tipoSeleccionado.toString());
     }
@@ -140,17 +80,11 @@ export class CrearPedidoComponent implements OnInit {
       params.append('marcaId', this.marcaSeleccionada.toString());
     }
 
-    console.log('📦 Buscando componentes con:', params.toString());
-
     this.http.get<ComponenteDTO[]>(`${this.apiUrl}/componentes/buscar?${params.toString()}`).subscribe({
-      next: (res) => {
-        console.log('🔎 Resultado:', res);
-        this.componentesFiltrados = res;
-      },
+      next: (res) => this.componentesFiltrados = res,
       error: () => this.error = 'Error filtrando componentes.'
     });
   }
-
 
   ordenarPor(campo: 'nombre' | 'marca' | 'precio') {
     if (this.ordenActual.campo === campo) {
@@ -192,14 +126,14 @@ export class CrearPedidoComponent implements OnInit {
   }
 
   crearPedido() {
-    if (this.clienteSeleccionadoId == null || this.direccionSeleccionadaId == null || this.carrito.length === 0) {
-      this.error = 'Completa todos los campos antes de crear el pedido.';
+    if (!this.clienteSeleccionadoId || this.carrito.length === 0) {
+      this.error = 'Completa cliente y carrito antes de crear el pedido.';
       return;
     }
 
-    const body = {
-      usuarioId: this.clienteSeleccionadoId,
-      direccionId: this.direccionSeleccionadaId,
+    const body: PedidoRequestDTO = {
+      usuarioId: this.clienteSeleccionadoId!,
+      direccionId: null,
       lineas: this.carrito.map(c => ({
         componenteId: c.componenteId,
         cantidad: c.cantidad,
@@ -208,11 +142,17 @@ export class CrearPedidoComponent implements OnInit {
     };
 
     this.pedidoService.crearPedidoComoEmpleado(body).subscribe({
-      next: () => {
+      next: (pedidoCreado) => {
         this.mensaje = '✅ Pedido creado exitosamente';
         this.error = '';
         this.carrito = [];
-        setTimeout(() => this.router.navigate(['/dashboard']), 1500);
+
+        setTimeout(() => {
+          this.mensaje = '';
+          this.router.navigate(['/dashboard/detalle-venta', pedidoCreado.id], {
+            state: { pedido: pedidoCreado }
+          });
+        }, 1000);
       },
       error: () => {
         this.error = '❌ Error al crear el pedido';
