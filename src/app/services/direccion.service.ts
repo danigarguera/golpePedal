@@ -15,6 +15,18 @@ export interface DireccionDTO {
   pais: string;
 }
 
+export interface DireccionCreateEmpleadoDTO {
+  alias: string;
+  calle: string;
+  numero: string;
+  piso?: string;
+  ciudad: string;
+  provincia: string;
+  codigoPostal: string;
+  pais: string;
+  usuarioId: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,5 +46,11 @@ export class DireccionService {
   obtenerDireccionesPorUsuario(usuarioId: number): Observable<DireccionDTO[]> {
     return this.http.get<DireccionDTO[]>(`${this.apiUrl}/direcciones/usuario/${usuarioId}`);
   }
+
+  crearDireccionComoEmpleado(direccion: DireccionCreateEmpleadoDTO): Observable<DireccionDTO> {
+    return this.http.post<DireccionDTO>(`${this.apiUrl}/direcciones/admin`, direccion);
+  }
+
+
 
 }

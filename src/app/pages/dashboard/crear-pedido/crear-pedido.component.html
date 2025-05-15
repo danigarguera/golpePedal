@@ -13,9 +13,30 @@
     </div>
     <div class="col-md-6">
       <label>Dirección</label>
-      <select class="form-select" [(ngModel)]="direccionSeleccionadaId" name="direccion">
+      <select class="form-select" [(ngModel)]="direccionSeleccionadaId" (change)="onDireccionChange()" name="direccion">
         <option *ngFor="let d of direcciones" [value]="d.id">{{ d.alias }} - {{ d.calle }}</option>
+        <option [value]="-1">➕ Añadir nueva dirección</option>
       </select>
+
+      <!-- Formulario nueva dirección -->
+      <div *ngIf="mostrarFormularioDireccion" class="border p-3 mt-2 bg-light rounded">
+        <h5>➕ Nueva Dirección</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" [(ngModel)]="nuevaDireccion.alias" class="form-control mb-2" placeholder="Alias">
+            <input type="text" [(ngModel)]="nuevaDireccion.calle" class="form-control mb-2" placeholder="Calle">
+            <input type="text" [(ngModel)]="nuevaDireccion.numero" class="form-control mb-2" placeholder="Número">
+            <input type="text" [(ngModel)]="nuevaDireccion.piso" class="form-control mb-2" placeholder="Piso (opcional)">
+          </div>
+          <div class="col-md-6">
+            <input type="text" [(ngModel)]="nuevaDireccion.codigoPostal" class="form-control mb-2" placeholder="Código Postal">
+            <input type="text" [(ngModel)]="nuevaDireccion.ciudad" class="form-control mb-2" placeholder="Ciudad">
+            <input type="text" [(ngModel)]="nuevaDireccion.provincia" class="form-control mb-2" placeholder="Provincia">
+            <input type="text" [(ngModel)]="nuevaDireccion.pais" class="form-control mb-2" placeholder="País">
+          </div>
+        </div>
+        <button class="btn btn-success mt-2" (click)="guardarNuevaDireccion()">Guardar dirección</button>
+      </div>
     </div>
   </div>
 
@@ -36,15 +57,14 @@
     </select>
   </div>
 
-
   <!-- Componentes filtrados -->
   <h4>📦 Componentes disponibles</h4>
   <table class="table table-striped" *ngIf="componentesFiltrados.length > 0">
     <thead>
       <tr>
-        <th>Nombre</th>
-        <th>Marca</th>
-        <th>Precio</th>
+        <th (click)="ordenarPor('nombre')" style="cursor:pointer">Nombre</th>
+        <th (click)="ordenarPor('marca')" style="cursor:pointer">Marca</th>
+        <th (click)="ordenarPor('precio')" style="cursor:pointer">Precio</th>
         <th>Acciones</th>
       </tr>
     </thead>
