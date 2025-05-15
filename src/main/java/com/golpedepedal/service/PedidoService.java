@@ -7,6 +7,7 @@ import com.golpedepedal.dto.PedidoRequestDTO;
 import com.golpedepedal.dto.PedidoResponseDTO;
 import com.golpedepedal.dto.PedidoResumenDTO;
 import com.golpedepedal.model.Pedido;
+import com.golpedepedal.model.Usuario;
 
 public interface PedidoService {
 
@@ -26,6 +27,8 @@ public interface PedidoService {
     
     public PedidoResponseDTO getPedidoDetallePorId(Long id);
     
-    void crearPedidoComoEmpleado(PedidoRequestDTO dto, String emailEmpleado);
+    PedidoResponseDTO crearPedidoComoEmpleado(PedidoRequestDTO dto, String emailEmpleado);
+
+    List<Pedido> findByUsuarioAndDireccionIsNotNull(Usuario usuario);
 
 }

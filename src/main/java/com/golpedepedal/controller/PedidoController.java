@@ -1,6 +1,9 @@
 package com.golpedepedal.controller;
 
+import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +19,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.golpedepedal.dto.PedidoMapper;
 import com.golpedepedal.dto.PedidoRequestDTO;
+import com.golpedepedal.dto.PedidoRequestDTO.LineaPedidoDTO;
 import com.golpedepedal.dto.PedidoResponseDTO;
 import com.golpedepedal.dto.PedidoResumenDTO;
+import com.golpedepedal.model.Componente;
+import com.golpedepedal.model.Direccion;
 import com.golpedepedal.model.Pedido;
+import com.golpedepedal.model.Pedido.Estado;
+import com.golpedepedal.model.PedidoComponente;
+import com.golpedepedal.model.Usuario;
+import com.golpedepedal.repository.ComponenteRepository;
+import com.golpedepedal.repository.DireccionRepository;
+import com.golpedepedal.repository.PedidoRepository;
+import com.golpedepedal.repository.UsuarioRepository;
 import com.golpedepedal.service.PedidoService;
 
 @RestController
@@ -27,9 +41,23 @@ import com.golpedepedal.service.PedidoService;
 public class PedidoController {
     
     private final PedidoService service;
+    private final UsuarioRepository usuarioRepository;
+    private final DireccionRepository direccionRepository;
+    private final ComponenteRepository componenteRepository;
+    private final PedidoRepository pedidoRepository;
     
-    public PedidoController(PedidoService service) { 
+    
+    public PedidoController(PedidoService service,  
+    						UsuarioRepository usuarioRepository, 
+    						DireccionRepository direccionRepository, 
+    						ComponenteRepository componenteRepository,
+    						PedidoRepository pedidoRepository) { 
+    	
         this.service = service; 
+        this.usuarioRepository = usuarioRepository; 
+        this.direccionRepository = direccionRepository; 
+        this.componenteRepository = componenteRepository; 
+        this.pedidoRepository = pedidoRepository; 
     }
     
     @GetMapping 
@@ -64,20 +92,77 @@ public class PedidoController {
     }
     
     @GetMapping("/mios")
-    public ResponseEntity<List<PedidoResumenDTO>> obtenerPedidosDelUsuario(Principal principal) {
-        String email = principal.getName();
-        List<PedidoResumenDTO> pedidos = service.obtenerPedidosResumenPorEmail(email);
-        return ResponseEntity.ok(pedidos);
+    public List<PedidoResumenDTO> obtenerPedidosResumenPorEmail(Principal principal) {
+        String email = principal.getName(); // 🔐 email del usuario autenticado
+
+        Usuario usuario = usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        List<Pedido> pedidos = pedidoRepository.findByUsuarioAndDireccionIsNotNull(usuario);
+
+        return pedidos.stream()
+            .map(p -> new PedidoResumenDTO(
+                p.getId(),
+                p.getFecha(),
+                p.getEstado().name(),
+                p.getTotal(),
+                p.getDireccion().getAlias()
+            ))
+            .toList();
     }
+
 
     @PostMapping("/crear-empleado")
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
-    public ResponseEntity<?> crearPedidoComoEmpleado(@RequestBody PedidoRequestDTO dto,
+    public PedidoResponseDTO crearPedidoComoEmpleado(@RequestBody PedidoRequestDTO dto,
                                                      Authentication authentication) {
         String emailEmpleado = authentication.getName();
-        service.crearPedidoComoEmpleado(dto, emailEmpleado);
-        return ResponseEntity.ok("Pedido creado exitosamente.");
+
+        Usuario empleado = usuarioRepository.findByEmail(emailEmpleado)
+            .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+
+        Usuario cliente = usuarioRepository.findById(dto.getUsuarioId())
+            .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+        Direccion direccion = null;
+        if (dto.getDireccionId() != null) {
+            direccion = direccionRepository.findById(dto.getDireccionId())
+                .orElseThrow(() -> new RuntimeException("Dirección no encontrada"));
+        }
+
+        Pedido pedido = new Pedido();
+        pedido.setUsuario(cliente);
+        pedido.setEmpleado(empleado);
+        pedido.setDireccion(direccion);
+        pedido.setFecha(LocalDateTime.now());
+        pedido.setEstado(Pedido.Estado.PENDIENTE);
+        pedido.setTotal(BigDecimal.ZERO);
+        pedido.setPedidoComponentes(new ArrayList<>()); 
+
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (LineaPedidoDTO lineaDTO : dto.getLineas()) {
+            Componente componente = componenteRepository.findById(lineaDTO.getComponenteId())
+                .orElseThrow(() -> new RuntimeException("Componente no encontrado"));
+
+            PedidoComponente linea = new PedidoComponente();
+            linea.setPedido(pedido);
+            linea.setComponente(componente);
+            linea.setCantidad(lineaDTO.getCantidad());
+
+            pedido.getPedidoComponentes().add(linea);
+
+            BigDecimal subtotal = componente.getPrecio().multiply(BigDecimal.valueOf(lineaDTO.getCantidad()));
+            total = total.add(subtotal);
+        }
+
+        pedido.setTotal(total);
+        Pedido guardado = pedidoRepository.save(pedido);
+
+        return PedidoMapper.toDTO(guardado); 
     }
+
+
 
 
 

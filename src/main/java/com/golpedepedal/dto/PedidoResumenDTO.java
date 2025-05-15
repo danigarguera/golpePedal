@@ -12,7 +12,16 @@ public class PedidoResumenDTO {
     private String direccionAlias;
 
 
-    public Long getId() {
+    public PedidoResumenDTO(Long id, LocalDateTime fecha, String estado, BigDecimal total, String direccionAlias) {
+        this.id = id;
+        this.fecha = fecha;
+        this.estado = estado;
+        this.total = total;
+        this.direccionAlias = direccionAlias;
+    }
+
+
+	public Long getId() {
         return id;
     }
 

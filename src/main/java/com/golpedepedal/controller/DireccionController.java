@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.golpedepedal.dto.DireccionCreateEmpleadoDTO;
 import com.golpedepedal.dto.DireccionDTO;
 import com.golpedepedal.model.Direccion;
 import com.golpedepedal.model.Usuario;
@@ -93,6 +94,27 @@ public class DireccionController {
 
         return service.guardar(d);
     }
+
+    @PostMapping("/admin")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
+    public Direccion crearComoEmpleado(@RequestBody DireccionCreateEmpleadoDTO dto) {
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Direccion direccion = new Direccion();
+        direccion.setAlias(dto.getAlias());
+        direccion.setCalle(dto.getCalle());
+        direccion.setNumero(dto.getNumero());
+        direccion.setPiso(dto.getPiso());
+        direccion.setCiudad(dto.getCiudad());
+        direccion.setProvincia(dto.getProvincia());
+        direccion.setCodigoPostal(dto.getCodigoPostal());
+        direccion.setPais(dto.getPais());
+        direccion.setUsuario(usuario);
+
+        return service.guardar(direccion);
+    }
+
 
 
     @DeleteMapping("/{id}")

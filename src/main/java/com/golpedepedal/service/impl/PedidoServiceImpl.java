@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.golpedepedal.dto.DireccionDTO;
 import com.golpedepedal.dto.LineaPedidoResponseDTO;
+import com.golpedepedal.dto.PedidoMapper;
 import com.golpedepedal.dto.PedidoRequestDTO;
 import com.golpedepedal.dto.PedidoResponseDTO;
 import com.golpedepedal.dto.PedidoResumenDTO;
@@ -201,28 +202,31 @@ public class PedidoServiceImpl implements PedidoService {
 	}
 
 	@Override
-	public void crearPedidoComoEmpleado(PedidoRequestDTO dto, String emailEmpleado) {
-		
+	public PedidoResponseDTO crearPedidoComoEmpleado(PedidoRequestDTO dto, String emailEmpleado) {
+
 	    Usuario cliente = usuarioRepository.findById(dto.getUsuarioId())
 	        .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
 	    Usuario empleado = usuarioRepository.findByEmail(emailEmpleado)
 	        .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
-	    Direccion direccion = direccionRepository.findById(dto.getDireccionId())
-	        .orElseThrow(() -> new RuntimeException("Dirección no encontrada"));
+	    Direccion direccion = null;
+	    if (dto.getDireccionId() != null) {
+	        direccion = direccionRepository.findById(dto.getDireccionId())
+	            .orElseThrow(() -> new RuntimeException("Dirección no encontrada"));
+	    }
 
 	    Pedido pedido = new Pedido();
 	    pedido.setUsuario(cliente);
-	    pedido.setEmpleado(empleado); 
+	    pedido.setEmpleado(empleado);
 	    pedido.setDireccion(direccion);
 	    pedido.setFecha(LocalDateTime.now());
 	    pedido.setEstado(Estado.PENDIENTE);
+	    pedido.setTotal(BigDecimal.ZERO); // se ajustará después
+
+	    pedido = pedidoRepository.save(pedido); // guarda primero para asociar en componentes
 
 	    BigDecimal total = BigDecimal.ZERO;
-
-	    
-	    pedidoRepository.save(pedido);
 
 	    for (PedidoRequestDTO.LineaPedidoDTO linea : dto.getLineas()) {
 	        Componente componente = componenteRepository.findById(linea.getComponenteId())
@@ -241,8 +245,15 @@ public class PedidoServiceImpl implements PedidoService {
 	    }
 
 	    pedido.setTotal(total);
-	    pedidoRepository.save(pedido);
+	    pedido = pedidoRepository.save(pedido);
+
+	    return PedidoMapper.toDTO(pedido);
 	}
 
+	@Override
+	public List<Pedido> findByUsuarioAndDireccionIsNotNull(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
