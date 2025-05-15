@@ -36,8 +36,9 @@ export class DireccionService {
   constructor(private http: HttpClient) { }
 
   obtenerMisDirecciones(): Observable<DireccionDTO[]> {
-    return this.http.get<DireccionDTO[]>(this.apiUrl);
+    return this.http.get<DireccionDTO[]>(`${this.apiUrl}/direcciones`);
   }
+
 
   crearDireccion(direccion: DireccionDTO): Observable<DireccionDTO> {
     return this.http.post<DireccionDTO>(this.apiUrl, direccion);

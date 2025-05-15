@@ -21,9 +21,10 @@ export interface PedidoResumenDTO {
 
 export interface PedidoRequestDTO {
   usuarioId: number;
-  direccionId: number;
+  direccionId: number | null; // ✅ Así acepta que no se haya seleccionado dirección
   lineas: LineaPedidoDTO[];
 }
+
 
 export interface PedidoResponseDTO {
   id: number;
@@ -76,8 +77,8 @@ export class PedidoService {
   getPedidoPorId(id: number): Observable<PedidoResponseDTO> {
     return this.http.get<PedidoResponseDTO>(`${this.apiUrl}/${id}`);
   }
-  crearPedidoComoEmpleado(pedido: any) {
-  return this.http.post('/api/pedidos/crear-empleado', pedido);
-  }
+  crearPedidoComoEmpleado(pedido: PedidoRequestDTO): Observable<PedidoResponseDTO> {
+  return this.http.post<PedidoResponseDTO>(`${this.apiUrl}/crear-empleado`, pedido);
+}
 
 }
