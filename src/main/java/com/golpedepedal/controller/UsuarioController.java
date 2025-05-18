@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import com.golpedepedal.dto.CambioRolRequest;
 import com.golpedepedal.dto.UsuarioRequest;
 import com.golpedepedal.model.Role;
 import com.golpedepedal.model.Usuario;
@@ -101,5 +102,39 @@ public class UsuarioController {
 
         return ResponseEntity.ok(usuario);
     }
+    
+    @PutMapping("/{id}/rol")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> cambiarRol(@PathVariable Long id, @RequestBody CambioRolRequest request) {
+        Optional<Usuario> usuarioOpt = usuarioService.buscarPorId(id);
+        if (usuarioOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
 
+        // Obtener el ID del usuario autenticado desde el token
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String emailAutenticado = auth.getName();
+        Usuario usuarioActual = usuarioService.buscarPorEmail(emailAutenticado);
+
+        // Proteger: el admin no puede cambiarse su propio rol
+        if (usuarioActual != null && usuarioActual.getId().equals(id)) {
+            return ResponseEntity.badRequest().body("No puedes cambiar tu propio rol.");
+        }
+
+        String nuevoRolNombre = request.getRol();
+        if (!nuevoRolNombre.equals("ROLE_CLIENTE") && !nuevoRolNombre.equals("ROLE_EMPLEADO")) {
+            return ResponseEntity.badRequest().body("Rol no permitido.");
+        }
+
+        Role nuevoRol = roleRepository.findByNombre(nuevoRolNombre)
+            .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+
+        Usuario usuario = usuarioOpt.get();
+        usuario.setRol(nuevoRol);
+        usuarioService.guardar(usuario);
+
+        return ResponseEntity.ok().build();
+    }
+
+    
 }

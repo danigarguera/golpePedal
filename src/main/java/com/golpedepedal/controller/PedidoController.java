@@ -2,7 +2,9 @@ package com.golpedepedal.controller;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.golpedepedal.dto.PedidoMapper;
@@ -24,6 +27,7 @@ import com.golpedepedal.dto.PedidoRequestDTO;
 import com.golpedepedal.dto.PedidoRequestDTO.LineaPedidoDTO;
 import com.golpedepedal.dto.PedidoResponseDTO;
 import com.golpedepedal.dto.PedidoResumenDTO;
+import com.golpedepedal.dto.VentaEmpleadoDTO;
 import com.golpedepedal.model.Componente;
 import com.golpedepedal.model.Direccion;
 import com.golpedepedal.model.Pedido;
@@ -161,6 +165,34 @@ public class PedidoController {
 
         return PedidoMapper.toDTO(guardado); 
     }
+
+    @GetMapping("/por-empleados")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<VentaEmpleadoDTO> obtenerVentasPorEmpleados(
+            @RequestParam(required = false) String desde,
+            @RequestParam(required = false) String hasta) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        LocalDateTime fechaDesde = (desde != null)
+                ? LocalDate.parse(desde, formatter).atStartOfDay()
+                : LocalDateTime.MIN;
+
+        LocalDateTime fechaHasta = (hasta != null)
+                ? LocalDate.parse(hasta, formatter).atTime(23, 59, 59)
+                : LocalDateTime.now();
+
+        List<Pedido> pedidos = pedidoRepository.findByEmpleadoNotNullAndFechaBetween(fechaDesde, fechaHasta);
+
+        return pedidos.stream().map(p -> new VentaEmpleadoDTO(
+                p.getId(),
+                p.getFecha(),
+                p.getUsuario().getNombre() + " " + p.getUsuario().getApellido1(),
+                p.getEmpleado().getNombre() + " " + p.getEmpleado().getApellido1(),
+                p.getTotal()
+        )).toList();
+    }
+
 
 
 

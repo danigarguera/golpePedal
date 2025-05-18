@@ -20,6 +20,9 @@ public class PedidoResumenDTO {
         this.direccionAlias = direccionAlias;
     }
 
+    public PedidoResumenDTO() {
+    	
+    }
 
 	public Long getId() {
         return id;
