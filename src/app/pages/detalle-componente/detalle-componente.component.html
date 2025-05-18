@@ -5,7 +5,6 @@
   <p><strong>Marca:</strong> {{ componente.marca }}</p>
   <p><strong>Descripción:</strong> {{ componente.descripcion }}</p>
   <p><strong>Precio:</strong> {{ componente.precio | currency:'EUR' }}</p>
-  <app-boton-volver></app-boton-volver>
 </div>
 
 <div *ngIf="!componente && !error">

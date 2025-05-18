@@ -11,6 +11,13 @@ export interface Usuario {
   dni: string;
   email: string;
   telefono: string;
+  rol: Rol;
+
+}
+
+export interface Rol {
+  id: number;
+  nombre: string;
 }
 
 export interface Direccion {
@@ -83,5 +90,10 @@ export class UsuarioService {
   obtenerUsuarios() {
     return this.http.get<Usuario[]>(`${this.apiUrl}/usuarios`);
   }
+
+  cambiarRol(usuarioId: number, nuevoRol: string): Observable<void> {
+  return this.http.put<void>(`${this.apiUrl}/usuarios/${usuarioId}/rol`, { rol: nuevoRol });
+}
+
 
 }

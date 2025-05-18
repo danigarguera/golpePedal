@@ -1,31 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Golpe de Pedal</a>
+    <a class="navbar-brand" routerLink="/">🚴 Golpe de Pedal</a>
 
-    <div class="ms-auto d-flex align-items-center">
-      <!-- Carrito visible siempre -->
-      <a class="btn position-relative me-3" routerLink="/carrito" title="Carrito">
+    <div class="d-flex align-items-center ms-auto">
+      <!-- Botón Carrito -->
+      <a class="btn btn-outline-light position-relative me-3" routerLink="/carrito" title="Carrito">
         🛒
-        <span
-          *ngIf="carritoCantidad > 0"
-          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-        >
+        <span *ngIf="carritoCantidad > 0"
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
           {{ carritoCantidad }}
-          <span class="visually-hidden">productos en el carrito</span>
         </span>
       </a>
 
-      <!-- Dinámico: dropdown si logueado, botón si no -->
+      <!-- Volver al Dashboard si es ADMIN o EMPLEADO -->
+      <a *ngIf="mostrarDashboard()" class="btn btn-outline-light me-3" routerLink="/dashboard">
+        ⬅️ Dashboard
+      </a>
+
+      <!-- Usuario logueado -->
       <ng-container *ngIf="isLoggedIn(); else loginBtn">
-        <!-- Dropdown del usuario -->
         <div class="dropdown">
-          <button
-            class="btn btn-outline-secondary dropdown-toggle"
-            type="button"
-            id="userDropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown"
+                  data-bs-toggle="dropdown" aria-expanded="false">
             {{ getEmail() }}
           </button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
@@ -36,7 +32,7 @@
         </div>
       </ng-container>
 
-      <!-- Botón "Iniciar sesión" si no logueado -->
+      <!-- Botón login -->
       <ng-template #loginBtn>
         <a class="btn btn-outline-primary" routerLink="/login">Iniciar sesión</a>
       </ng-template>

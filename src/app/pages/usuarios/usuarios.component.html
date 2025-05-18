@@ -1,23 +1,37 @@
-<h2>👥 Usuarios (solo admin)</h2>
+<h2>👥 Gestión de Usuarios</h2>
 
+<div *ngIf="cargando">Cargando usuarios...</div>
 <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-<table class="table table-bordered mt-4" *ngIf="usuarios.length > 0">
-  <thead class="table-light">
+<table *ngIf="usuarios.length" class="table table-striped">
+  <thead>
     <tr>
       <th>ID</th>
       <th>Nombre</th>
       <th>Email</th>
       <th>Rol</th>
+      <th>Acción</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let usuario of usuarios">
       <td>{{ usuario.id }}</td>
-      <td>{{ usuario.nombre }}</td>
+      <td>{{ usuario.nombre }} {{ usuario.apellido1 }}</td>
       <td>{{ usuario.email }}</td>
-      <td>{{ usuario.rol }}</td>
+      <td>{{ usuario.rol?.nombre }}</td>
+      <td>
+        <button class="btn btn-sm btn-warning" [disabled]="cambiandoRol[usuario.id]" (click)="cambiarRol(usuario)">
+          <ng-container *ngIf="!cambiandoRol[usuario.id]">
+            Cambiar a {{ usuario.rol.nombre === 'ROLE_CLIENTE' ? 'EMPLEADO' : 'CLIENTE' }}
+          </ng-container>
+          <ng-container *ngIf="cambiandoRol[usuario.id]">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Cambiando...
+          </ng-container>
+        </button>
+
+
+      </td>
     </tr>
   </tbody>
 </table>
-<app-boton-volver></app-boton-volver>

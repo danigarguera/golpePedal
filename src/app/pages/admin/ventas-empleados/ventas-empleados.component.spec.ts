@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BotonVolverComponent } from './boton-volver.component';
+import { VentasEmpleadosComponent } from './ventas-empleados.component';
 
-describe('BotonVolverComponent', () => {
-  let component: BotonVolverComponent;
-  let fixture: ComponentFixture<BotonVolverComponent>;
+describe('VentasEmpleadosComponent', () => {
+  let component: VentasEmpleadosComponent;
+  let fixture: ComponentFixture<VentasEmpleadosComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BotonVolverComponent]
+      imports: [VentasEmpleadosComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BotonVolverComponent);
+    fixture = TestBed.createComponent(VentasEmpleadosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

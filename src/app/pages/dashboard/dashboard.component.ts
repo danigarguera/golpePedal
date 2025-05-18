@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RoleService } from '../../services/role.service';
-import { ProtectedComponent } from '../../shared/protected.component';
+import { jwtDecode} from 'jwt-decode';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,20 +12,30 @@ import { ProtectedComponent } from '../../shared/protected.component';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent extends ProtectedComponent {
+export class DashboardComponent implements OnInit {
+  email: string = '';
+  rol: string = '';
 
   constructor(
-    override readonly router: Router,
-    override readonly roleService: RoleService
-  ) {
-    super();
+    private router: Router,
+    public roleService: RoleService
+  ) {}
+
+  ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+        this.email = decoded.sub;
+        this.rol = decoded.rol;
+        console.log('📊 Dashboard cargado para:', this.email, 'con rol:', this.rol);
+      } catch (e) {
+        console.error('❌ Error al decodificar token');
+      }
+    }
   }
 
-  override onInitAfterAuth(): void {
-    console.log('📊 Dashboard cargado para:', this.email, 'con rol:', this.rol);
-  }
-
-  override logout(): void {
+  logout(): void {
     localStorage.clear();
     this.router.navigate(['/login']);
   }

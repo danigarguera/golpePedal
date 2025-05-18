@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService, Direccion } from '../../../services/usuario.service';
-import { BotonVolverComponent } from '../../../shared/boton-volver/boton-volver.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-mis-direcciones',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, BotonVolverComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './mis-direcciones.component.html',
   styleUrls: ['./mis-direcciones.component.css']
 })
