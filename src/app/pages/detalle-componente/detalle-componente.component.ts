@@ -1,13 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BotonVolverComponent } from '../../shared/boton-volver/boton-volver.component';
 import { ComponentesService, Componente } from '../../services/componentes.service';
 
 @Component({
   selector: 'app-detalle-componente',
   standalone: true,
-  imports: [CommonModule, RouterModule, BotonVolverComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './detalle-componente.component.html',
   styleUrls: ['./detalle-componente.component.css']
 })

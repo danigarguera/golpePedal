@@ -84,7 +84,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['ADMIN', 'EMPLEADO'] }
   },
-
+  {
+    path: 'admin/ventas',
+    loadComponent: () => import('./pages/admin/ventas-empleados/ventas-empleados.component')
+      .then(m => m.VentasEmpleadosComponent)
+  },
 
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

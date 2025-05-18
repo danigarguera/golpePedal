@@ -1,0 +1,63 @@
+<h2 class="mb-4">📊 Ventas por empleados</h2>
+
+<div class="mb-3 d-flex align-items-center gap-3">
+  <label>
+    Desde:
+    <input type="date" [(ngModel)]="desde" class="form-control d-inline w-auto" />
+  </label>
+  <label>
+    Hasta:
+    <input type="date" [(ngModel)]="hasta" class="form-control d-inline w-auto" />
+  </label>
+  <button class="btn btn-primary" (click)="cargarVentas()">Filtrar</button>
+</div>
+
+<div *ngIf="cargando">Cargando ventas...</div>
+<div *ngIf="!ventas.length && !cargando" class="alert alert-warning">No hay ventas para mostrar.</div>
+
+<table *ngIf="ventas.length" class="table table-bordered table-hover mt-3">
+  <thead class="table-light">
+    <tr>
+      <th (click)="ordenarPor('id')" style="cursor: pointer">
+        ID
+        <span *ngIf="sortField === 'id'">
+          {{ sortDirection === 'asc' ? '▲' : '▼' }}
+        </span>
+      </th>
+      <th (click)="ordenarPor('fecha')" style="cursor: pointer">
+        Fecha
+        <span *ngIf="sortField === 'fecha'">
+          {{ sortDirection === 'asc' ? '▲' : '▼' }}
+        </span>
+      </th>
+      <th (click)="ordenarPor('cliente')" style="cursor: pointer">
+        Cliente
+        <span *ngIf="sortField === 'cliente'">
+          {{ sortDirection === 'asc' ? '▲' : '▼' }}
+        </span>
+      </th>
+      <th (click)="ordenarPor('empleado')" style="cursor: pointer">
+        Empleado
+        <span *ngIf="sortField === 'empleado'">
+          {{ sortDirection === 'asc' ? '▲' : '▼' }}
+        </span>
+      </th>
+      <th (click)="ordenarPor('total')" style="cursor: pointer">
+        Total
+        <span *ngIf="sortField === 'total'">
+          {{ sortDirection === 'asc' ? '▲' : '▼' }}
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let venta of ventas" (click)="irADetalle(venta.id)" style="cursor: pointer" class="table-row-hover">
+      <td>{{ venta.id }}</td>
+      <td>{{ venta.fecha | date: 'short' }}</td>
+      <td>{{ venta.cliente }}</td>
+      <td>{{ venta.empleado }}</td>
+      <td>{{ venta.total | currency:'EUR' }}</td>
+    </tr>
+
+  </tbody>
+</table>

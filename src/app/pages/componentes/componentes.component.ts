@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router'; 
 import { FormsModule } from '@angular/forms';
-import { BotonVolverComponent } from '../../shared/boton-volver/boton-volver.component';
 import { ComponentesService, Componente } from '../../services/componentes.service';
 import { TarjetaProductoComponent } from '../../componentes/tarjeta-producto/tarjeta-producto.component';
 
@@ -13,7 +12,6 @@ import { TarjetaProductoComponent } from '../../componentes/tarjeta-producto/tar
     CommonModule,
     RouterModule,
     FormsModule,
-    BotonVolverComponent,
     TarjetaProductoComponent
   ],
   templateUrl: './componentes.component.html',

@@ -1,40 +1,67 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RoleService } from '../../services/role.service';
-import { UsuariosService, Usuario } from '../../services/usuarios.service';
-import { ProtectedComponent } from '../../shared/protected.component';
-import { BotonVolverComponent } from '../../shared/boton-volver/boton-volver.component';
+import { UsuarioService, Usuario } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule, BotonVolverComponent],
+  imports: [CommonModule],
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
 })
-export class UsuariosComponent extends ProtectedComponent {
+export class UsuariosComponent implements OnInit {
   usuarios: Usuario[] = [];
-  error: string = '';
+  error = '';
+  cargando = false;
+  cambiandoRol: { [id: number]: boolean } = {};
 
-  usuariosService = inject(UsuariosService);
 
-  constructor() {
-    super();
-  }
+  constructor(
+    private router: Router,
+    private roleService: RoleService,
+    private usuariosService: UsuarioService
+  ) { }
 
-  override onInitAfterAuth(): void {
-    if (this.rol !== 'ROLE_ADMIN') {
+  ngOnInit(): void {
+    const rol = this.roleService.getRol();
+
+    if (rol !== 'ROLE_ADMIN') {
       this.router.navigate(['/dashboard']);
       return;
     }
 
-    this.usuariosService.obtenerTodos().subscribe({
-      next: (data) => (this.usuarios = data),
-      error: (err) => {
+    this.cargarUsuarios();
+  }
+
+  cargarUsuarios(): void {
+    this.cargando = true;
+    this.usuariosService.obtenerUsuarios().subscribe({
+      next: (data) => {
+        this.usuarios = data;
+        this.cargando = false;
+      },
+      error: (err: any) => {
         console.error('❌ Error al cargar usuarios:', err);
         this.error = 'No se pudo cargar la lista de usuarios.';
+        this.cargando = false;
       }
     });
+  }
+
+  cambiarRol(usuario: Usuario): void {
+    const nuevoRol = usuario.rol.nombre === 'ROLE_CLIENTE' ? 'ROLE_EMPLEADO' : 'ROLE_CLIENTE'; 
+
+    this.usuariosService.cambiarRol(usuario.id, nuevoRol).subscribe({
+      next: () => {
+        usuario.rol = { ...usuario.rol, nombre: nuevoRol };
+      },
+      error: (err: any) => {
+        console.error('❌ Error al cambiar rol:', err);
+        this.error = 'No se pudo cambiar el rol del usuario.';
+      }
+    });
+
   }
 }

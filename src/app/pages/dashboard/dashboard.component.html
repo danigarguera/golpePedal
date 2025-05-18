@@ -6,6 +6,11 @@
   🛒 Crear pedido para cliente
 </a>
 
+<div *ngIf="rol === 'ROLE_ADMIN'" class="mt-4">
+  <a routerLink="/admin/ventas" class="btn btn-primary">
+    📊 Ver ventas por empleados
+  </a>
+</div>
 
   <a routerLink="/componentes" class="list-group-item list-group-item-action">
     🧩 Ver todos los componentes

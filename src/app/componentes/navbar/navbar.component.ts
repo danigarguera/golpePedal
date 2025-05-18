@@ -39,6 +39,12 @@ export class NavbarComponent implements OnInit {
     return this.roleService.getEmail();
   }
 
+  mostrarDashboard(): boolean {
+  const rol = this.roleService.getRol();
+  return rol === 'ROLE_ADMIN' || rol === 'ROLE_EMPLEADO';
+}
+
+
   logout(): void {
     localStorage.removeItem('token');
     this.carritoService.vaciarCarrito(); // 🧹 Vacía el carrito al cerrar sesión
