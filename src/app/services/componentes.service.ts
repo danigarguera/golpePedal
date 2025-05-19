@@ -13,13 +13,18 @@ export interface Componente {
 }
 
 export interface ComponenteDTO {
-  id: number;
+  id?: number;
   nombre: string;
   descripcion: string;
   precio: number;
-  marca: string;
-  tipo: string;
+  tipo?: string;      
+  marca?: string;      
+  tipoComponenteId: number;
+  marcaId: number;
+  tipoBicicletaId: number;
 }
+
+
 export interface MarcaDTO {
   id: number;
   nombre: string;
@@ -46,4 +51,33 @@ export class ComponentesService {
   filtrarPorMarca(marca: string): Observable<Componente[]> {
     return this.http.get<Componente[]>(`${this.apiUrl}?marca=${marca}`);
   }
+
+  eliminar(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  obtenerMarcas(): Observable<MarcaDTO[]> {
+  return this.http.get<MarcaDTO[]>(`${this.apiUrl}/marcas`);
+}
+
+obtenerTiposComponente(): Observable<{ id: number, nombre: string }[]> {
+  return this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-componente`);
+}
+
+obtenerTiposBicicleta(): Observable<{ id: number, nombre: string }[]> {
+  return this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-bicicleta`);
+}
+
+crearComponente(componente: any): Observable<Componente> {
+  return this.http.post<Componente>(this.apiUrl, componente);
+}
+
+actualizarComponente(id: number, componente: any): Observable<Componente> {
+  return this.http.put<Componente>(`${this.apiUrl}/${id}`, componente);
+}
+
+obtenerComponentesDTO(): Observable<ComponenteDTO[]> {
+  return this.http.get<ComponenteDTO[]>(`${this.apiUrl}`);
+}
+
 }
