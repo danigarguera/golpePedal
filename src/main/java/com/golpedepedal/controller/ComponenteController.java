@@ -38,16 +38,18 @@ public class ComponenteController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public Componente crear(@RequestBody Componente c) {
-        return service.guardar(c);
+    public ComponenteDTO crear(@RequestBody ComponenteDTO dto) {
+        Componente c = service.crearDesdeDTO(dto);
+        return ComponenteMapper.toDTO(c);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public Componente actualizar(@PathVariable Long id, @RequestBody Componente c) {
-        c.setId(id);
-        return service.guardar(c);
+    public ComponenteDTO actualizar(@PathVariable Long id, @RequestBody ComponenteDTO dto) {
+        Componente c = service.actualizarDesdeDTO(id, dto);
+        return ComponenteMapper.toDTO(c);
     }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
