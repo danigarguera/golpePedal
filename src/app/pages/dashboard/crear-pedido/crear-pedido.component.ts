@@ -33,12 +33,13 @@ export class CrearPedidoComponent implements OnInit {
   mensaje = '';
   error = '';
 
+
   constructor(
     private usuarioService: UsuarioService,
     private pedidoService: PedidoService,
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cargarClientes();
@@ -94,8 +95,8 @@ export class CrearPedidoComponent implements OnInit {
     }
 
     this.componentesFiltrados.sort((a, b) => {
-      const valorA = a[campo];
-      const valorB = b[campo];
+      const valorA = a[campo] ?? '';
+      const valorB = b[campo] ?? '';
       if (valorA < valorB) return this.ordenActual.ascendente ? -1 : 1;
       if (valorA > valorB) return this.ordenActual.ascendente ? 1 : -1;
       return 0;
@@ -108,7 +109,7 @@ export class CrearPedidoComponent implements OnInit {
       existente.cantidad += 1;
     } else {
       this.carrito.push({
-        componenteId: componente.id,
+        componenteId: componente.id!,
         nombre: componente.nombre,
         descripcion: componente.descripcion,
         precio: componente.precio,

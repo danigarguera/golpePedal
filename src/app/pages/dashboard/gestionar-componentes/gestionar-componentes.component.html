@@ -1,0 +1,42 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Gestión de Componentes</h2>
+
+    <div class="mb-3 text-end">
+        <a routerLink="/dashboard/componentes/nuevo" class="btn btn-primary">
+            ➕ Nuevo Componente
+        </a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Tipo</th>
+                <th>Marca</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let componente of componentes">
+                <td>{{ componente.nombre }}</td>
+                <td>{{ componente.descripcion }}</td>
+                <td>{{ componente.precio | currency:'EUR' }}</td>
+                <td>{{ componente.tipo }}</td>
+                <td>{{ componente.marca }}</td>
+                <td>
+                    <a [routerLink]="['/dashboard/componentes/editar', componente.id]"
+                        class="btn btn-sm btn-warning me-2">
+                        ✏️ Editar
+                    </a>
+                    <button *ngIf="componente.id !== undefined" class="btn btn-sm btn-danger"
+                        (click)="eliminar(componente.id!)">
+                        🗑️ Eliminar
+                    </button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

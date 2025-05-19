@@ -90,5 +90,31 @@ export const routes: Routes = [
       .then(m => m.VentasEmpleadosComponent)
   },
 
+  {
+    path: 'dashboard/componentes',
+    loadComponent: () =>
+      import('./pages/dashboard/gestionar-componentes/gestionar-componentes.component')
+        .then(m => m.GestionarComponentesComponent),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'dashboard/componentes/nuevo',
+    loadComponent: () =>
+      import('./pages/dashboard/formulario-componente/formulario-componente.component')
+        .then(m => m.FormularioComponenteComponent),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'dashboard/componentes/editar/:id',
+    loadComponent: () =>
+      import('./pages/dashboard/formulario-componente/formulario-componente.component')
+        .then(m => m.FormularioComponenteComponent),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+
+
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

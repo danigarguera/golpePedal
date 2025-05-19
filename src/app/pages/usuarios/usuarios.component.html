@@ -18,7 +18,7 @@
       <td>{{ usuario.id }}</td>
       <td>{{ usuario.nombre }} {{ usuario.apellido1 }}</td>
       <td>{{ usuario.email }}</td>
-      <td>{{ usuario.rol?.nombre }}</td>
+      <td>{{ usuario.rol.nombre }}</td>
       <td>
         <button class="btn btn-sm btn-warning" [disabled]="cambiandoRol[usuario.id]" (click)="cambiarRol(usuario)">
           <ng-container *ngIf="!cambiandoRol[usuario.id]">

@@ -2,19 +2,26 @@
 <p>Bienvenido, {{ email }} (Rol: {{ rol }})</p>
 
 <nav class="list-group mt-4">
-<a routerLink="/crear-pedido" class="list-group-item list-group-item-action">
-  🛒 Crear pedido para cliente
-</a>
-
-<div *ngIf="rol === 'ROLE_ADMIN'" class="mt-4">
-  <a routerLink="/admin/ventas" class="btn btn-primary">
-    📊 Ver ventas por empleados
+  <a routerLink="/crear-pedido" class="list-group-item list-group-item-action">
+    🛒 Crear pedido para cliente
   </a>
-</div>
 
-  <a routerLink="/componentes" class="list-group-item list-group-item-action">
-    🧩 Ver todos los componentes
-  </a>
+  <div *ngIf="rol === 'ROLE_ADMIN'" class="mt-4">
+    <a routerLink="/admin/ventas" class="btn btn-primary">
+      📊 Ver ventas por empleados
+    </a>
+  </div>
+
+  <div *ngIf="roleService.isAdmin()" class="mt-4">
+    <h5 class="mb-2">🧩 Gestión de componentes</h5>
+    <a routerLink="/dashboard/componentes" class="list-group-item list-group-item-action">
+      📋 Listar componentes
+    </a>
+    <a routerLink="/dashboard/componentes/nuevo" class="list-group-item list-group-item-action">
+      ➕ Crear nuevo componente
+    </a>
+  </div>
+
 
   <a *ngIf="roleService.isAdmin()" routerLink="/admin/usuarios" class="list-group-item list-group-item-action">
     👥 Gestión de usuarios (solo admin)
