@@ -7,23 +7,33 @@ import com.golpedepedal.model.TipoComponente;
 
 public class ComponenteMapper {
 
-    public static ComponenteDTO toDTO(Componente c) {
-        ComponenteDTO dto = new ComponenteDTO();
-        dto.setId(c.getId());
-        dto.setNombre(c.getNombre());
-        dto.setDescripcion(c.getDescripcion());
-        dto.setPrecio(c.getPrecio());
+	public static ComponenteDTO toDTO(Componente c) {
+	    ComponenteDTO dto = new ComponenteDTO();
+	    dto.setId(c.getId());
+	    dto.setNombre(c.getNombre());
+	    dto.setDescripcion(c.getDescripcion());
+	    dto.setPrecio(c.getPrecio());
 
-        if (c.getTipoComponente() != null) {
-            dto.setTipo(c.getTipoComponente().getNombre());
-        }
+	    if (c.getTipoComponente() != null) {
+	        dto.setTipo(c.getTipoComponente().getNombre());
+	        dto.setTipoComponenteId(c.getTipoComponente().getId());
+	    }
 
-        if (c.getMarca() != null) {
-            dto.setMarca(c.getMarca().getNombre());
-        }
+	    if (c.getMarca() != null) {
+	        dto.setMarca(c.getMarca().getNombre());
+	        dto.setMarcaId(c.getMarca().getId());
+	    }
 
-        return dto;
-    }
+	    if (c.getTipoBicicleta() != null) {
+	        dto.setTipoBicicleta(c.getTipoBicicleta().getNombre());
+	        dto.setTipoBicicletaId(c.getTipoBicicleta().getId());
+	    }
+
+	    return dto;
+	}
+
+
+
     
     public static Componente fromDTO(
             ComponenteDTO dto,

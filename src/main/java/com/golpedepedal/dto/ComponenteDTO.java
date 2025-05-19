@@ -21,6 +21,8 @@ public class ComponenteDTO {
     private Long marcaId;
     
     private Long tipoBicicletaId;
+    
+    private String tipoBicicleta;
 
 
 	public Long getId() {
@@ -93,6 +95,14 @@ public class ComponenteDTO {
 
 	public void setTipoBicicletaId(Long tipoBicicletaId) {
 		this.tipoBicicletaId = tipoBicicletaId;
+	}
+
+	public String getTipoBicicleta() {
+		return tipoBicicleta;
+	}
+
+	public void setTipoBicicleta(String tipoBicicleta) {
+		this.tipoBicicleta = tipoBicicleta;
 	}
     
     
