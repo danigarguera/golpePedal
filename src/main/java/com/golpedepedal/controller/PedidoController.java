@@ -192,11 +192,4 @@ public class PedidoController {
                 p.getTotal()
         )).toList();
     }
-
-
-
-
-
-
-
 }
