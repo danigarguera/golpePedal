@@ -1,42 +1,73 @@
 <div class="container mt-4">
     <h2 class="mb-4">Gestión de Componentes</h2>
 
-    <div class="mb-3 text-end">
-        <a routerLink="/dashboard/componentes/nuevo" class="btn btn-primary">
+    <!-- Botón y filtros alineados con estilos mejorados -->
+    <div class="d-flex align-items-end gap-3 flex-wrap mb-4">
+        <a routerLink="/dashboard/componentes/nuevo" class="btn btn-primary fs-6">
             ➕ Nuevo Componente
         </a>
+
+        <div>
+            <label for="filtroTipo" class="form-label fw-semibold">Tipo</label>
+            <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-select form-select-sm fs-6">
+                <option value="">Todos</option>
+                <option *ngFor="let tipo of tiposDisponibles" [value]="tipo">{{ tipo }}</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="filtroMarca" class="form-label fw-semibold">Marca</label>
+            <select [(ngModel)]="filtroMarca" (change)="aplicarFiltros()" class="form-select form-select-sm fs-6">
+                <option value="">Todas</option>
+                <option *ngFor="let marca of marcasDisponibles" [value]="marca">{{ marca }}</option>
+            </select>
+        </div>
     </div>
+
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Tipo</th>
-                <th>Marca</th>
+                <th class="sortable" (click)="ordenarPor('nombre')">Nombre</th>
+                <th class="sortable" (click)="ordenarPor('descripcion')">Descripción</th>
+                <th class="sortable" (click)="ordenarPor('precio')">Precio</th>
+                <th class="sortable" (click)="ordenarPor('tipo')">Tipo</th>
+                <th class="sortable" (click)="ordenarPor('marca')">Marca</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let componente of componentes">
+            <tr *ngFor="let componente of componentesFiltrados">
                 <td>{{ componente.nombre }}</td>
                 <td>{{ componente.descripcion }}</td>
                 <td>{{ componente.precio | currency:'EUR' }}</td>
                 <td>{{ componente.tipo }}</td>
                 <td>{{ componente.marca }}</td>
                 <td>
-                    <a [routerLink]="['/dashboard/componentes/editar', componente.id]"
+                    <a [routerLink]="['/dashboard/componentes/modificar', componente.id]"
                         class="btn btn-sm btn-warning me-2">
                         ✏️ Editar
                     </a>
+
                     <button *ngIf="componente.id !== undefined" class="btn btn-sm btn-danger"
                         (click)="eliminar(componente.id!)">
                         🗑️ Eliminar
                     </button>
-
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
+
+<style>
+    th.sortable {
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.2s ease-in-out;
+    }
+
+    th.sortable:hover {
+        color: #0d6efd;
+        text-decoration: underline;
+    }
+</style>

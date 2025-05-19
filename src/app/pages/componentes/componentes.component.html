@@ -5,14 +5,14 @@
   <div class="row mb-4">
     <div class="col-md-6">
       <label for="filtroTipo" class="form-label">Filtrar por tipo</label>
-      <select id="filtroTipo" class="form-select" [(ngModel)]="filtroTipo" (change)="aplicarFiltros()">
+      <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-select">
         <option value="">Todos</option>
         <option *ngFor="let tipo of tiposDisponibles" [value]="tipo">{{ tipo }}</option>
       </select>
     </div>
     <div class="col-md-6">
       <label for="filtroMarca" class="form-label">Filtrar por marca</label>
-      <select id="filtroMarca" class="form-select" [(ngModel)]="filtroMarca" (change)="aplicarFiltros()">
+      <select [(ngModel)]="filtroMarca" (change)="aplicarFiltros()" class="form-select">
         <option value="">Todas</option>
         <option *ngFor="let marca of marcasDisponibles" [value]="marca">{{ marca }}</option>
       </select>

@@ -6,23 +6,28 @@ import { environment } from '../../environments/environment'; // ✅ ruta relati
 export interface Componente {
   id: number;
   nombre: string;
-  tipo: string;
-  marca: string;
   descripcion: string;
   precio: number;
+  tipo: string;         
+  marca: string;        
+  tipoBicicleta: string;
 }
+
+
 
 export interface ComponenteDTO {
   id?: number;
   nombre: string;
   descripcion: string;
   precio: number;
-  tipo?: string;      
-  marca?: string;      
+  tipo?: string;
+  tipoBicicleta?: string;
+  marca?: string;
   tipoComponenteId: number;
   marcaId: number;
   tipoBicicletaId: number;
 }
+
 
 
 export interface MarcaDTO {
@@ -44,9 +49,15 @@ export class ComponentesService {
     return this.http.get<Componente[]>(this.apiUrl);
   }
 
-  obtenerPorId(id: number): Observable<Componente> {
+  obtenerEntidadPorId(id: number): Observable<Componente> {
     return this.http.get<Componente>(`${this.apiUrl}/${id}`);
   }
+
+
+  obtenerPorId(id: number): Observable<ComponenteDTO> {
+    return this.http.get<ComponenteDTO>(`${this.apiUrl}/${id}`);
+  }
+
 
   filtrarPorMarca(marca: string): Observable<Componente[]> {
     return this.http.get<Componente[]>(`${this.apiUrl}?marca=${marca}`);
@@ -57,27 +68,29 @@ export class ComponentesService {
   }
 
   obtenerMarcas(): Observable<MarcaDTO[]> {
-  return this.http.get<MarcaDTO[]>(`${this.apiUrl}/marcas`);
-}
+    return this.http.get<MarcaDTO[]>(`${this.apiUrl}/marcas`);
+  }
 
-obtenerTiposComponente(): Observable<{ id: number, nombre: string }[]> {
-  return this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-componente`);
-}
+  obtenerTiposComponente(): Observable<{ id: number, nombre: string }[]> {
+    return this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-componente`);
+  }
 
-obtenerTiposBicicleta(): Observable<{ id: number, nombre: string }[]> {
-  return this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-bicicleta`);
-}
+  obtenerTiposBicicleta(): Observable<{ id: number, nombre: string }[]> {
+    return this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-bicicleta`);
+  }
 
-crearComponente(componente: any): Observable<Componente> {
-  return this.http.post<Componente>(this.apiUrl, componente);
-}
+  crearComponente(componente: ComponenteDTO): Observable<ComponenteDTO> {
+    return this.http.post<ComponenteDTO>(this.apiUrl, componente);
+  }
 
-actualizarComponente(id: number, componente: any): Observable<Componente> {
-  return this.http.put<Componente>(`${this.apiUrl}/${id}`, componente);
-}
+  actualizarComponente(id: number, componente: ComponenteDTO): Observable<ComponenteDTO> {
+    return this.http.put<ComponenteDTO>(`${this.apiUrl}/${id}`, componente);
+  }
 
-obtenerComponentesDTO(): Observable<ComponenteDTO[]> {
-  return this.http.get<ComponenteDTO[]>(`${this.apiUrl}`);
-}
+
+
+  obtenerComponentesDTO(): Observable<ComponenteDTO[]> {
+    return this.http.get<ComponenteDTO[]>(`${this.apiUrl}`);
+  }
 
 }
