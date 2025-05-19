@@ -34,7 +34,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-//    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
     public List<Usuario> listarTodos() {
         return usuarioService.obtenerTodos();
     }
@@ -111,12 +111,10 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
 
-        // Obtener el ID del usuario autenticado desde el token
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String emailAutenticado = auth.getName();
         Usuario usuarioActual = usuarioService.buscarPorEmail(emailAutenticado);
 
-        // Proteger: el admin no puede cambiarse su propio rol
         if (usuarioActual != null && usuarioActual.getId().equals(id)) {
             return ResponseEntity.badRequest().body("No puedes cambiar tu propio rol.");
         }
