@@ -19,7 +19,7 @@ export class DetalleComponenteComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.componentesService.obtenerPorId(+id).subscribe({
+      this.componentesService.obtenerEntidadPorId(+id).subscribe({
         next: (data) => this.componente = data,
         error: (err) => {
           console.error('❌ Error al cargar componente:', err);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ComponentesService, Componente, MarcaDTO } from '../../../services/componentes.service';
+import { Router, RouterModule } from '@angular/router';
+import { ComponentesService, ComponenteDTO, MarcaDTO } from '../../../services/componentes.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
@@ -14,9 +14,6 @@ import { environment } from '../../../../environments/environment';
 })
 export class FormularioComponenteComponent implements OnInit {
   formulario!: FormGroup;
-  id?: number;
-  modoEdicion = false;
-
   marcas: MarcaDTO[] = [];
   tiposComponente: { id: number, nombre: string }[] = [];
   tiposBicicleta: { id: number, nombre: string }[] = [];
@@ -25,16 +22,12 @@ export class FormularioComponenteComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private componentesService: ComponentesService,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.modoEdicion = !!this.id;
-
     this.formulario = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -45,58 +38,42 @@ export class FormularioComponenteComponent implements OnInit {
     });
 
     this.cargarSelects();
-
-    if (this.modoEdicion) {
-      this.componentesService.obtenerPorId(this.id!).subscribe({
-        next: (componente) => {
-          this.formulario.patchValue(componente);
-        },
-        error: (err) => {
-          console.error('❌ Error al obtener componente:', err);
-          this.router.navigate(['/dashboard/componentes']);
-        }
-      });
-    }
   }
 
   cargarSelects(): void {
     this.http.get<MarcaDTO[]>(`${this.apiUrl}/marcas`).subscribe({
       next: res => this.marcas = res,
-      error: err => console.error('❌ Error al cargar marcas:', err)
+      error: err => console.error('Error al cargar marcas:', err)
     });
 
     this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-componente`).subscribe({
       next: res => this.tiposComponente = res,
-      error: err => console.error('❌ Error al cargar tipos de componente:', err)
+      error: err => console.error('Error al cargar tipos de componente:', err)
     });
 
     this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-bicicleta`).subscribe({
       next: res => this.tiposBicicleta = res,
-      error: err => console.error('❌ Error al cargar tipos de bicicleta:', err)
+      error: err => console.error('Error al cargar tipos de bicicleta:', err)
     });
   }
 
-  guardar() {
+  guardar(): void {
     if (this.formulario.invalid) return;
 
-    const datos = this.formulario.value;
+    const formData = this.formulario.getRawValue();
 
-    if (this.modoEdicion) {
-      this.componentesService.actualizarComponente(this.id!, datos).subscribe({
-        next: () => {
-          console.log('✅ Componente actualizado');
-          this.router.navigate(['/dashboard/componentes']);
-        },
-        error: (err) => console.error('❌ Error al actualizar:', err)
-      });
-    } else {
-      this.componentesService.crearComponente(datos).subscribe({
-        next: () => {
-          console.log('✅ Componente creado');
-          this.router.navigate(['/dashboard/componentes']);
-        },
-        error: (err) => console.error('❌ Error al crear:', err)
-      });
-    }
+    const dto: ComponenteDTO = {
+      nombre: formData.nombre,
+      descripcion: formData.descripcion,
+      precio: formData.precio,
+      tipoComponenteId: formData.tipoComponenteId,
+      marcaId: formData.marcaId,
+      tipoBicicletaId: formData.tipoBicicletaId
+    };
+
+    this.componentesService.crearComponente(dto).subscribe({
+      next: () => this.router.navigate(['/dashboard/componentes']),
+      error: (err) => console.error('Error al crear componente:', err)
+    });
   }
 }

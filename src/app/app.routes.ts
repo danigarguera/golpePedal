@@ -107,13 +107,11 @@ export const routes: Routes = [
     data: { roles: ['ROLE_ADMIN'] }
   },
   {
-    path: 'dashboard/componentes/editar/:id',
-    loadComponent: () =>
-      import('./pages/dashboard/formulario-componente/formulario-componente.component')
-        .then(m => m.FormularioComponenteComponent),
-    canActivate: [RoleGuard],
-    data: { roles: ['ROLE_ADMIN'] }
+    path: 'dashboard/componentes/modificar/:id',
+    loadComponent: () => import('./pages/dashboard/modificar-componente/modificar-componente.component')
+      .then(m => m.ModificarComponenteComponent)
   },
+
 
 
   { path: '**', redirectTo: '', pathMatch: 'full' }

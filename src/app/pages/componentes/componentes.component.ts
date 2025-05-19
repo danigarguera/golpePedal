@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute } from '@angular/router'; 
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ComponentesService, Componente } from '../../services/componentes.service';
 import { TarjetaProductoComponent } from '../../componentes/tarjeta-producto/tarjeta-producto.component';
@@ -40,12 +40,11 @@ export class ComponentesComponent implements OnInit {
     this.componentesService.obtenerComponentes().subscribe({
       next: (data) => {
         this.componentesOriginales = data;
+        this.tiposDisponibles = [...new Set(data.map(c => c.tipo).filter(Boolean))];
+        this.marcasDisponibles = [...new Set(data.map(c => c.marca).filter(Boolean))];
 
-        this.tiposDisponibles = [...new Set(data.map(c => c.tipo))];
-        this.marcasDisponibles = [...new Set(data.map(c => c.marca))];
 
         this.aplicarFiltros();
-        console.log('✅ Componentes recibidos:', data);
       },
       error: (err) => {
         console.error('❌ Error al cargar componentes:', err);
@@ -54,6 +53,8 @@ export class ComponentesComponent implements OnInit {
     });
   }
 
+
+
   aplicarFiltros(): void {
     this.componentes = this.componentesOriginales.filter(componente => {
       const coincideTipo = this.filtroTipo ? componente.tipo === this.filtroTipo : true;
@@ -61,4 +62,6 @@ export class ComponentesComponent implements OnInit {
       return coincideTipo && coincideMarca;
     });
   }
+
+
 }
