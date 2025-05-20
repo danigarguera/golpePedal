@@ -1,25 +1,31 @@
-<div class="card h-100">
+<div class="card h-100 sombra-suave borde-claro">
   <a [routerLink]="['/componentes', producto.id]" class="text-decoration-none text-dark">
     <img
       [src]="producto.imagenUrl || 'https://placehold.co/300x200?text=Producto'"
-      class="card-img-top"
+      class="card-img-top img-fluid rounded-top"
       alt="Imagen del producto"
+      style="height: 200px; object-fit: cover;"
     />
   </a>
-  <div class="card-body">
+
+  <div class="card-body d-flex flex-column justify-content-between">
     <a [routerLink]="['/componentes', producto.id]" class="text-decoration-none text-dark">
-      <h5 class="card-title">{{ producto.nombre }}</h5>
+      <h5 class="card-title mb-2 fw-bold">
+        {{ producto.nombre }}
+      </h5>
     </a>
-    <p class="card-text text-muted">
+
+    <p class="card-text text-muted small">
       {{ producto.descripcion || 'Descripción no disponible' }}
     </p>
-    <p class="fw-bold">{{ producto.precio | currency: 'EUR' }}</p>
 
-    <div class="d-flex justify-content-between">
-      <a [routerLink]="['/componentes', producto.id]" class="btn btn-sm btn-outline-primary">
+    <p class="fw-bold mb-3">{{ producto.precio | currency: 'EUR' }}</p>
+
+    <div class="d-flex justify-content-between align-items-center mt-auto">
+      <a [routerLink]="['/componentes', producto.id]" class="btn btn-sm btn-primario">
         Ver detalle
       </a>
-      <button class="btn btn-sm btn-success" (click)="agregarAlCarrito($event)">
+      <button class="btn btn-sm btn-secundario" (click)="agregarAlCarrito($event)">
         Añadir al carrito
       </button>
     </div>

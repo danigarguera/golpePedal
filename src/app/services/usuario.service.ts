@@ -94,6 +94,8 @@ export class UsuarioService {
   cambiarRol(usuarioId: number, nuevoRol: string): Observable<void> {
   return this.http.put<void>(`${this.apiUrl}/usuarios/${usuarioId}/rol`, { rol: nuevoRol });
 }
-
+  actualizarDatosUsuario(data: any) {
+    return this.http.put(`${environment.apiUrl}/usuarios/mis-datos`, data);
+  }
 
 }

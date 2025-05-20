@@ -8,7 +8,7 @@ import { ComponentesService, Componente } from '../../services/componentes.servi
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './detalle-componente.component.html',
-  styleUrls: ['./detalle-componente.component.css']
+  styleUrls: ['./detalle-componente.component.scss']
 })
 export class DetalleComponenteComponent implements OnInit {
   componente: Componente | null = null;

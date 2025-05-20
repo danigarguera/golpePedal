@@ -10,7 +10,7 @@ import { CarritoService, ProductoCarrito } from '../../services/carrito.service'
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './carrito.component.html',
-  styleUrls: ['./carrito.component.css']
+  styleUrls: ['./carrito.component.scss']
 })
 export class CarritoComponent implements OnInit {
   carrito: ProductoCarrito[] = [];

@@ -1,0 +1,42 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+
+.navbar {
+  background-color: $color-primario;
+  font-family: $fuente-principal;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 1.5rem;
+}
+
+.navbar-brand {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: $color-secundario !important;
+}
+
+.navbar .btn {
+  font-weight: 500;
+  font-family: $fuente-principal;
+}
+
+.btn-outline-light {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+
+  &:hover {
+    background-color: white;
+    color: $color-primario;
+    transition: 0.2s ease-in-out;
+  }
+}
+
+.dropdown-menu {
+  font-family: $fuente-secundaria;
+  font-size: 0.95rem;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.35em 0.6em;
+}

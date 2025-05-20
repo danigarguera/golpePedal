@@ -15,7 +15,7 @@ import { TarjetaProductoComponent } from '../../componentes/tarjeta-producto/tar
     TarjetaProductoComponent
   ],
   templateUrl: './componentes.component.html',
-  styleUrls: ['./componentes.component.css']
+  styleUrls: ['./componentes.component.scss']
 })
 export class ComponentesComponent implements OnInit {
   componentesService = inject(ComponentesService);
