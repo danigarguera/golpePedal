@@ -8,7 +8,7 @@ import { CarritoService } from '../../services/carrito.service';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './tarjeta-producto.component.html',
-  styleUrls: ['./tarjeta-producto.component.css']
+  styleUrls: ['./tarjeta-producto.component.scss']
 })
 export class TarjetaProductoComponent {
   @Input() producto!: {

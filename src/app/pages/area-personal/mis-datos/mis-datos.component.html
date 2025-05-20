@@ -1,14 +1,44 @@
-<div *ngIf="usuario">
+<div *ngIf="formUsuario" class="container mt-4">
   <h2>Mis datos</h2>
-  <p><strong>ID:</strong> {{ usuario.id }}</p>
-  <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
-  <p><strong>Apellidos:</strong> {{ usuario.apellido1 }} {{ usuario.apellido2 }}</p>
-  <p><strong>Email:</strong> {{ usuario.email }}</p>
-  <p><strong>DNI:</strong> {{ usuario.dni }}</p>
-  <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
 
+  <form [formGroup]="formUsuario" (ngSubmit)="guardarCambios()">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input id="nombre" type="text" formControlName="nombre" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="apellido1" class="form-label">Primer Apellido</label>
+      <input id="apellido1" type="text" formControlName="apellido1" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="apellido2" class="form-label">Segundo Apellido</label>
+      <input id="apellido2" type="text" formControlName="apellido2" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo electrónico</label>
+      <input type="email" class="form-control" formControlName="email" />
+    </div>
+
+    <div class="mb-3">
+      <label for="dni" class="form-label">DNI</label>
+      <input id="dni" type="text" formControlName="dni" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="telefono" class="form-label">Teléfono</label>
+      <input id="telefono" type="text" formControlName="telefono" class="form-control" required>
+    </div>
+
+    <div *ngIf="mensaje" class="alert alert-success">{{ mensaje }}</div>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="formUsuario.invalid">Guardar cambios</button>
+  </form>
 </div>
 
-<div *ngIf="!usuario">
+<div *ngIf="!formUsuario">
   <p class="text-muted">Cargando datos del usuario...</p>
 </div>

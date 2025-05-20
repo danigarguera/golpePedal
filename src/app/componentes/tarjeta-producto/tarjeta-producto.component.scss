@@ -1,0 +1,10 @@
+@use '../../../styles/variables.scss' as *;
+@use '../../../styles/mixins' as *;
+
+.card-title {
+  font-family: $fuente-principal;
+}
+
+.card-text {
+  font-family: $fuente-secundaria;
+}

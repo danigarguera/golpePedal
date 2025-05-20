@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './mis-direcciones.component.html',
-  styleUrls: ['./mis-direcciones.component.css']
+  styleUrls: ['./mis-direcciones.component.scss']
 })
 export class MisDireccionesComponent implements OnInit {
   direcciones: Direccion[] = [];

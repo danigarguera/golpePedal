@@ -13,12 +13,16 @@ export interface Usuario {
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
+export class UsuarioService {
   private apiUrl = `${environment.apiUrl}/usuarios`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   obtenerTodos(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(this.apiUrl);
   }
+
+
+
+
 }

@@ -10,7 +10,7 @@ import { CarritoService } from '../../services/carrito.service';
   standalone: true,
   imports: [RouterLink, CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
   carritoCantidad = 0;

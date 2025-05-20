@@ -9,7 +9,7 @@ import { UsuarioService, Usuario } from '../../services/usuario.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.css']
+  styleUrls: ['./usuarios.component.scss']
 })
 export class UsuariosComponent implements OnInit {
   usuarios: Usuario[] = [];
@@ -21,7 +21,7 @@ export class UsuariosComponent implements OnInit {
   constructor(
     private router: Router,
     private roleService: RoleService,
-    private usuariosService: UsuarioService
+    private usuarioService: UsuarioService
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +37,7 @@ export class UsuariosComponent implements OnInit {
 
   cargarUsuarios(): void {
     this.cargando = true;
-    this.usuariosService.obtenerUsuarios().subscribe({
+    this.usuarioService.obtenerUsuarios().subscribe({
       next: (data) => {
         this.usuarios = data;
         this.cargando = false;
@@ -53,7 +53,7 @@ export class UsuariosComponent implements OnInit {
   cambiarRol(usuario: Usuario): void {
     const nuevoRol = usuario.rol.nombre === 'ROLE_CLIENTE' ? 'ROLE_EMPLEADO' : 'ROLE_CLIENTE'; 
 
-    this.usuariosService.cambiarRol(usuario.id, nuevoRol).subscribe({
+    this.usuarioService.cambiarRol(usuario.id, nuevoRol).subscribe({
       next: () => {
         usuario.rol = { ...usuario.rol, nombre: nuevoRol };
       },

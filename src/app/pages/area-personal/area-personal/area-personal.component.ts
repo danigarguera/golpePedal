@@ -7,6 +7,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './area-personal.component.html',
-  styleUrls: ['./area-personal.component.css']
+  styleUrls: ['./area-personal.component.scss']
 })
 export class AreaPersonalComponent {}
