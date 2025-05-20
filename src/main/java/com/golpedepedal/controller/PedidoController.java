@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.golpedepedal.dto.PedidoGestionDTO;
 import com.golpedepedal.dto.PedidoMapper;
 import com.golpedepedal.dto.PedidoRequestDTO;
 import com.golpedepedal.dto.PedidoRequestDTO.LineaPedidoDTO;
@@ -139,7 +140,7 @@ public class PedidoController {
         pedido.setEmpleado(empleado);
         pedido.setDireccion(direccion);
         pedido.setFecha(LocalDateTime.now());
-        pedido.setEstado(Pedido.Estado.PENDIENTE);
+        pedido.setEstado(Pedido.Estado.ENTREGADO);
         pedido.setTotal(BigDecimal.ZERO);
         pedido.setPedidoComponentes(new ArrayList<>()); 
 
@@ -192,4 +193,56 @@ public class PedidoController {
                 p.getTotal()
         )).toList();
     }
+    
+    @GetMapping("/por-clientes")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
+    public List<PedidoGestionDTO> obtenerPedidosDeClientes(
+            @RequestParam(required = false) String desde,
+            @RequestParam(required = false) String hasta,
+            @RequestParam(required = false) String estado
+    ) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        LocalDateTime fechaDesde = (desde != null)
+                ? LocalDate.parse(desde, formatter).atStartOfDay()
+                : LocalDateTime.MIN;
+
+        LocalDateTime fechaHasta = (hasta != null)
+                ? LocalDate.parse(hasta, formatter).atTime(23, 59, 59)
+                : LocalDateTime.now();
+
+        List<Pedido> pedidos = pedidoRepository.findByDireccionNotNullAndFechaBetween(fechaDesde, fechaHasta);
+
+        // 🔍 Filtro por estado (importante)
+        if (estado != null && !estado.isBlank()) {
+            pedidos = pedidos.stream()
+                    .filter(p -> p.getEstado().name().equalsIgnoreCase(estado))
+                    .toList();
+        }
+
+        return pedidos.stream()
+                .map(PedidoMapper::toGestionDTO)
+                .toList();
+    }
+
+
+    @PutMapping("/{id}/estado")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
+    public ResponseEntity<?> actualizarEstado(@PathVariable Long id, @RequestBody String nuevoEstadoRaw) {
+        String estadoLimpio = nuevoEstadoRaw.replace("\"", "").trim();
+
+        Pedido pedido = pedidoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+        Estado nuevoEstado = Estado.valueOf(estadoLimpio);
+
+        if (!pedido.getEstado().equals(nuevoEstado)) {
+            pedido.setEstado(nuevoEstado);
+            pedidoRepository.save(pedido);
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+
+
 }

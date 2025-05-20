@@ -57,4 +57,23 @@ public class PedidoMapper {
 
         return dto;
     }
+    
+    public static PedidoGestionDTO toGestionDTO(Pedido pedido) {
+        PedidoGestionDTO dto = new PedidoGestionDTO();
+        dto.setId(pedido.getId());
+        dto.setCliente(pedido.getUsuario().getNombre() + " " + pedido.getUsuario().getApellido1());
+
+        if (pedido.getEmpleado() != null) {
+            dto.setEmpleado(pedido.getEmpleado().getNombre() + " " + pedido.getEmpleado().getApellido1());
+        } else {
+            dto.setEmpleado("-");
+        }
+
+        dto.setEstado(pedido.getEstado().name());
+        dto.setFecha(pedido.getFecha().toString()); 
+        dto.setTotal(pedido.getTotal());
+
+        return dto;
+    }
+
 }
