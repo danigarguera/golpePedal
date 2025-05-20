@@ -1,0 +1,59 @@
+<h2 class="mb-4">📦 Pedidos realizados por clientes</h2>
+
+<div class="mb-3 d-flex align-items-center gap-3">
+  <label>
+    Desde:
+    <input type="date" [(ngModel)]="desde" class="form-control d-inline w-auto" />
+  </label>
+  <label>
+    Hasta:
+    <input type="date" [(ngModel)]="hasta" class="form-control d-inline w-auto" />
+  </label>
+
+  <label>
+    Estado:
+    <select [(ngModel)]="estadoFiltro" name="estadoFiltro" class="form-control d-inline w-auto ms-2">
+      <option value="">Todos</option>
+      <option value="PENDIENTE">PENDIENTE</option>
+      <option value="ENVIADO">ENVIADO</option>
+      <option value="ENTREGADO">ENTREGADO</option>
+      <option value="CANCELADO">CANCELADO</option>
+    </select>
+  </label>
+
+  <button class="btn btn-primary ms-3" (click)="cargarPedidos()">Filtrar</button>
+</div>
+
+
+<div *ngIf="cargando">Cargando pedidos...</div>
+<div *ngIf="!pedidos.length && !cargando" class="alert alert-warning">No hay pedidos para mostrar.</div>
+
+<table *ngIf="pedidos.length" class="table table-bordered table-hover mt-3">
+    <thead class="table-light">
+        <tr>
+            <th (click)="ordenarPor('id')" style="cursor: pointer">ID</th>
+            <th (click)="ordenarPor('fecha')" style="cursor: pointer">Fecha</th>
+            <th (click)="ordenarPor('cliente')" style="cursor: pointer">Cliente</th>
+            <th (click)="ordenarPor('empleado')" style="cursor: pointer">Empleado</th>
+            <th (click)="ordenarPor('total')" style="cursor: pointer">Total</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pedido of pedidos" class="table-row-hover">
+            <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.id }}</td>
+            <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.fecha | date: 'short' }}</td>
+            <td>{{ pedido.cliente }}</td>
+            <td>{{ pedido.empleado }}</td>
+            <td>{{ pedido.total | currency:'EUR' }}</td>
+            <td>
+                <select [(ngModel)]="pedido.estado" (change)="actualizarEstado(pedido)" class="form-select">
+                    <option value="PENDIENTE">PENDIENTE</option>
+                    <option value="ENVIADO">ENVIADO</option>
+                    <option value="ENTREGADO">ENTREGADO</option>
+                    <option value="CANCELADO">CANCELADO</option>
+                </select>
+            </td>
+        </tr>
+    </tbody>
+</table>
