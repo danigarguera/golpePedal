@@ -35,8 +35,6 @@ export class PedidosClientesComponent implements OnInit {
     if (this.estadoFiltro) params = params.set('estado', this.estadoFiltro);
     console.log('🔍 Filtro estado enviado:', this.estadoFiltro);
 
-
-
     this.http.get<any[]>(`${environment.apiUrl}/pedidos/por-clientes`, { params }).subscribe({
       next: data => {
         this.pedidos = data;
