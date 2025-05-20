@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
@@ -13,6 +13,9 @@ import { environment } from '../../../../environments/environment';
 })
 export class VentasEmpleadosComponent implements OnInit {
   ventas: any[] = [];
+  empleados: any[] = [];
+  empleadoSeleccionado: string = '';
+
   desde: string = '';
   hasta: string = '';
   cargando = false;
@@ -23,10 +26,22 @@ export class VentasEmpleadosComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.cargarEmpleados();
     this.cargarVentas();
+  }
+
+  cargarEmpleados(): void {
+    this.http.get<any[]>(`${environment.apiUrl}/usuarios/empleados`).subscribe({
+      next: (data) => {
+        this.empleados = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar empleados:', err);
+      }
+    });
   }
 
   cargarVentas(): void {
@@ -35,6 +50,7 @@ export class VentasEmpleadosComponent implements OnInit {
     let params = new HttpParams();
     if (this.desde) params = params.set('desde', this.desde);
     if (this.hasta) params = params.set('hasta', this.hasta);
+    if (this.empleadoSeleccionado) params = params.set('empleadoId', this.empleadoSeleccionado);
 
     this.http.get<any[]>(`${environment.apiUrl}/pedidos/por-empleados`, { params }).subscribe({
       next: (data) => {

@@ -9,6 +9,13 @@
     Hasta:
     <input type="date" [(ngModel)]="hasta" class="form-control d-inline w-auto" />
   </label>
+  <label>
+    Empleado:
+    <select [(ngModel)]="empleadoSeleccionado" name="empleadoSeleccionado" class="form-control d-inline w-auto">
+      <option value="">Todos</option>
+      <option *ngFor="let emp of empleados" [value]="emp.id">{{ emp.email }}</option>
+    </select>
+  </label>
   <button class="btn btn-primary" (click)="cargarVentas()">Filtrar</button>
 </div>
 
@@ -58,6 +65,5 @@
       <td>{{ venta.empleado }}</td>
       <td>{{ venta.total | currency:'EUR' }}</td>
     </tr>
-
   </tbody>
 </table>
