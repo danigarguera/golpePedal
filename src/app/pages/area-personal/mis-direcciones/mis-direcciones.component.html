@@ -18,16 +18,33 @@
 <button (click)="iniciarNueva()">Añadir dirección</button>
 
 <form *ngIf="mostrarFormulario" [formGroup]="formDireccion" (ngSubmit)="onSubmit()">
-  <label>Alias: <input formControlName="alias"></label><br>
-  <label>Calle: <input formControlName="calle"></label><br>
-  <label>Número: <input formControlName="numero"></label><br>
-  <label>Piso: <input formControlName="piso"></label><br>
-  <label>Ciudad: <input formControlName="ciudad"></label><br>
-  <label>Provincia: <input formControlName="provincia"></label><br>
-  <label>Código postal: <input formControlName="codigoPostal"></label><br>
-  <label>País: <input formControlName="pais"></label><br>
-  <button type="submit" [disabled]="formDireccion.invalid">
+  <div *ngFor="let campo of ['alias', 'calle', 'numero', 'piso', 'ciudad', 'provincia', 'codigoPostal', 'pais']">
+    <label [for]="campo" class="form-label text-capitalize">{{ campo }}:</label>
+
+    <input type="text" [formControlName]="campo" [id]="campo" class="form-control"
+      [ngClass]="{ 'is-invalid': formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched }"
+      [attr.inputmode]="campo === 'numero' || campo === 'codigoPostal' ? 'numeric' : null"
+      [attr.pattern]="campo === 'numero' ? '\\d+' : campo === 'codigoPostal' ? '\\d{5}' : null" />
+
+
+    <div *ngIf="formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched" class="invalid-feedback">
+      <div *ngIf="formDireccion.get(campo)?.errors?.['required']">
+        Este campo es obligatorio.
+      </div>
+      <div *ngIf="formDireccion.get(campo)?.errors?.['minlength']">
+        Debe tener al menos 3 caracteres.
+      </div>
+      <div *ngIf="campo === 'numero' && formDireccion.get(campo)?.errors?.['pattern']">
+        Solo se permiten números enteros.
+      </div>
+      <div *ngIf="campo === 'codigoPostal' && formDireccion.get(campo)?.errors?.['pattern']">
+        Debe tener 5 dígitos numéricos.
+      </div>
+    </div>
+    <br />
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="formDireccion.invalid">
     {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
   </button>
 </form>
-

@@ -34,7 +34,6 @@
             <th (click)="ordenarPor('id')" style="cursor: pointer">ID</th>
             <th (click)="ordenarPor('fecha')" style="cursor: pointer">Fecha</th>
             <th (click)="ordenarPor('cliente')" style="cursor: pointer">Cliente</th>
-            <th (click)="ordenarPor('empleado')" style="cursor: pointer">Empleado</th>
             <th (click)="ordenarPor('total')" style="cursor: pointer">Total</th>
             <th>Estado</th>
         </tr>
@@ -44,7 +43,6 @@
             <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.id }}</td>
             <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.fecha | date: 'short' }}</td>
             <td>{{ pedido.cliente }}</td>
-            <td>{{ pedido.empleado }}</td>
             <td>{{ pedido.total | currency:'EUR' }}</td>
             <td>
                 <select [(ngModel)]="pedido.estado" (change)="actualizarEstado(pedido)" class="form-select">

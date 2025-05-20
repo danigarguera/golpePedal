@@ -25,13 +25,13 @@ export class FormularioComponenteComponent implements OnInit {
     private router: Router,
     private componentesService: ComponentesService,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formulario = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
-      precio: [0, [Validators.required, Validators.min(0.01)]],
+      precio: [null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/), Validators.min(0.01)]],
       tipoComponenteId: [null, Validators.required],
       marcaId: [null, Validators.required],
       tipoBicicletaId: [null, Validators.required]

@@ -4,47 +4,68 @@
   <form [formGroup]="formulario" (ngSubmit)="guardar()">
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre</label>
-      <input id="nombre" type="text" class="form-control" formControlName="nombre">
+      <input id="nombre" type="text" class="form-control"
+             formControlName="nombre"
+             [ngClass]="{'is-invalid': formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched}" />
+      <div class="invalid-feedback">El nombre es obligatorio.</div>
     </div>
 
     <div class="mb-3">
       <label for="descripcion" class="form-label">Descripción</label>
-      <textarea id="descripcion" rows="3" class="form-control" formControlName="descripcion"></textarea>
+      <textarea id="descripcion" rows="3" class="form-control"
+                formControlName="descripcion"
+                [ngClass]="{'is-invalid': formulario.get('descripcion')?.invalid && formulario.get('descripcion')?.touched}"></textarea>
+      <div class="invalid-feedback">La descripción es obligatoria.</div>
     </div>
 
     <div class="mb-3">
       <label for="precio" class="form-label">Precio (€)</label>
-      <input id="precio" type="number" class="form-control" formControlName="precio" min="0.01" step="0.01">
+      <input id="precio" type="number" class="form-control"
+             formControlName="precio"
+             [ngClass]="{'is-invalid': formulario.get('precio')?.invalid && formulario.get('precio')?.touched}"
+             min="0.01" step="0.01" />
+      <div class="invalid-feedback">
+        <div *ngIf="formulario.get('precio')?.errors?.['required']">El precio es obligatorio.</div>
+        <div *ngIf="formulario.get('precio')?.errors?.['min']">Debe ser mayor que 0.</div>
+        <div *ngIf="formulario.get('precio')?.errors?.['pattern']">Formato inválido (hasta 2 decimales).</div>
+      </div>
     </div>
 
     <div class="mb-3">
       <label class="form-label">Tipo de Componente</label>
-      <select class="form-select" formControlName="tipoComponenteId">
+      <select class="form-select"
+              formControlName="tipoComponenteId"
+              [ngClass]="{'is-invalid': formulario.get('tipoComponenteId')?.invalid && formulario.get('tipoComponenteId')?.touched}">
         <option [ngValue]="null">-- Seleccionar --</option>
         <option *ngFor="let tipo of tiposComponente" [ngValue]="tipo.id">{{ tipo.nombre }}</option>
       </select>
+      <div class="invalid-feedback">Selecciona un tipo de componente.</div>
     </div>
 
     <div class="mb-3">
       <label class="form-label">Marca</label>
-      <select class="form-select" formControlName="marcaId">
+      <select class="form-select"
+              formControlName="marcaId"
+              [ngClass]="{'is-invalid': formulario.get('marcaId')?.invalid && formulario.get('marcaId')?.touched}">
         <option [ngValue]="null">-- Seleccionar --</option>
         <option *ngFor="let marca of marcas" [ngValue]="marca.id">{{ marca.nombre }}</option>
       </select>
+      <div class="invalid-feedback">Selecciona una marca.</div>
     </div>
 
     <div class="mb-3">
       <label class="form-label">Tipo de Bicicleta</label>
-      <select class="form-select" formControlName="tipoBicicletaId">
+      <select class="form-select"
+              formControlName="tipoBicicletaId"
+              [ngClass]="{'is-invalid': formulario.get('tipoBicicletaId')?.invalid && formulario.get('tipoBicicletaId')?.touched}">
         <option [ngValue]="null">-- Seleccionar --</option>
         <option *ngFor="let tipoBici of tiposBicicleta" [ngValue]="tipoBici.id">{{ tipoBici.nombre }}</option>
       </select>
+      <div class="invalid-feedback">Selecciona un tipo de bicicleta.</div>
     </div>
 
     <div class="d-flex justify-content-between mt-4">
-      <button type="submit" class="btn btn-success" [disabled]="formulario.invalid">
-        Crear
-      </button>
+      <button type="submit" class="btn btn-success" [disabled]="formulario.invalid">Crear</button>
       <a class="btn btn-secondary" routerLink="/dashboard/componentes">Cancelar</a>
     </div>
   </form>
