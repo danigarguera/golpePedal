@@ -5,6 +5,10 @@
   <a routerLink="/crear-pedido" class="list-group-item list-group-item-action">
     🛒 Crear pedido para cliente
   </a>
+  <a routerLink="/dashboard/pedidos-clientes" class="list-group-item list-group-item-action">
+    📦 Ver pedidos de clientes
+  </a>
+
 
   <div *ngIf="rol === 'ROLE_ADMIN'" class="mt-4">
     <a routerLink="/admin/ventas" class="btn btn-primary">
