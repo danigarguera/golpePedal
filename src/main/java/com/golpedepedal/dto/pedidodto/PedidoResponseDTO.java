@@ -1,8 +1,11 @@
-package com.golpedepedal.dto;
+package com.golpedepedal.dto.pedidodto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.golpedepedal.dto.DireccionDTO;
+import com.golpedepedal.dto.usuariodto.UsuarioFacturaDTO;
 
 public class PedidoResponseDTO {
 

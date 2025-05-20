@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.golpedepedal.dto.TipoBicicletaDTO;
-import com.golpedepedal.dto.TipoBicicletaMapper;
+import com.golpedepedal.dto.componentesdto.TipoBicicletaDTO;
+import com.golpedepedal.dto.componentesdto.TipoBicicletaMapper;
 import com.golpedepedal.repository.TipoBicicletaRepository;
 import com.golpedepedal.service.TipoBicicletaService;
 

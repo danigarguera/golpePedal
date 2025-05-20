@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.golpedepedal.dto.ComponenteDTO;
-import com.golpedepedal.dto.ComponenteMapper;
+import com.golpedepedal.dto.componentesdto.ComponenteDTO;
+import com.golpedepedal.dto.componentesdto.ComponenteMapper;
 import com.golpedepedal.model.Componente;
 import com.golpedepedal.service.ComponenteService;
 

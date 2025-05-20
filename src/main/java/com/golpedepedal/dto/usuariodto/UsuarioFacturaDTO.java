@@ -1,4 +1,4 @@
-package com.golpedepedal.dto;
+package com.golpedepedal.dto.usuariodto;
 
 public class UsuarioFacturaDTO {
 

@@ -1,7 +1,7 @@
 package com.golpedepedal.controller;
 
-import com.golpedepedal.dto.LoginRequest;
 import com.golpedepedal.dto.RegistroRequest;
+import com.golpedepedal.dto.usuariodto.LoginRequest;
 import com.golpedepedal.model.Usuario;
 import com.golpedepedal.model.Role;
 import com.golpedepedal.repository.UsuarioRepository;

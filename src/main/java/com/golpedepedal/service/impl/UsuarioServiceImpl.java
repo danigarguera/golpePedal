@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.golpedepedal.dto.UsuarioRequest;
+import com.golpedepedal.dto.usuariodto.UsuarioRequest;
 import com.golpedepedal.model.Role;
 import com.golpedepedal.model.Usuario;
 import com.golpedepedal.repository.RoleRepository;

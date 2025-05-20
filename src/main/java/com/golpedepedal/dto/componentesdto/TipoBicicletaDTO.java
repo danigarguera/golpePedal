@@ -1,16 +1,10 @@
-package com.golpedepedal.dto;
+package com.golpedepedal.dto.componentesdto;
 
-public class TipoComponenteDTO {
+public class TipoBicicletaDTO {
     private Long id;
     private String nombre;
 
-    public TipoComponenteDTO() {}
-
-    public TipoComponenteDTO(Long id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
-
+    // Getters y Setters
     public Long getId() {
         return id;
     }

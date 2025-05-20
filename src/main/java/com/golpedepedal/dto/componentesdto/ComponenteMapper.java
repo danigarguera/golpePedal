@@ -1,4 +1,4 @@
-package com.golpedepedal.dto;
+package com.golpedepedal.dto.componentesdto;
 
 import com.golpedepedal.model.Componente;
 import com.golpedepedal.model.Marca;

@@ -3,7 +3,7 @@ package com.golpedepedal.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.golpedepedal.dto.UsuarioRequest;
+import com.golpedepedal.dto.usuariodto.UsuarioRequest;
 import com.golpedepedal.model.Usuario;
 
 public interface UsuarioService {

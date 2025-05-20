@@ -1,4 +1,4 @@
-package com.golpedepedal.dto;
+package com.golpedepedal.dto.pedidodto;
 
 import java.math.BigDecimal;
 

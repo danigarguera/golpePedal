@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.golpedepedal.dto.ComponenteDTO;
-import com.golpedepedal.dto.ComponenteMapper;
+import com.golpedepedal.dto.componentesdto.ComponenteDTO;
+import com.golpedepedal.dto.componentesdto.ComponenteMapper;
 import com.golpedepedal.model.Componente;
 import com.golpedepedal.repository.ComponenteRepository;
 import com.golpedepedal.repository.MarcaRepository;

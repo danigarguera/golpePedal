@@ -3,7 +3,7 @@ package com.golpedepedal.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.golpedepedal.dto.ComponenteDTO;
+import com.golpedepedal.dto.componentesdto.ComponenteDTO;
 import com.golpedepedal.model.Componente;
 
 public interface ComponenteService {

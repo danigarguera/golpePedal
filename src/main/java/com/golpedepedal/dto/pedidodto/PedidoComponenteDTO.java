@@ -1,4 +1,4 @@
-package com.golpedepedal.dto;
+package com.golpedepedal.dto.pedidodto;
 
 
 public class PedidoComponenteDTO {

@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.golpedepedal.dto.CambioRolRequest;
-import com.golpedepedal.dto.UsuarioDTO;
-import com.golpedepedal.dto.UsuarioRequest;
+import com.golpedepedal.dto.usuariodto.UsuarioDTO;
+import com.golpedepedal.dto.usuariodto.UsuarioRequest;
 import com.golpedepedal.model.Role;
 import com.golpedepedal.model.Usuario;
 import com.golpedepedal.repository.RoleRepository;

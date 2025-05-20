@@ -1,4 +1,4 @@
-package com.golpedepedal.dto;
+package com.golpedepedal.dto.usuariodto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

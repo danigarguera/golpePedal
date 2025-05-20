@@ -3,8 +3,8 @@ package com.golpedepedal.controller;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.golpedepedal.dto.TipoBicicletaDTO;
-import com.golpedepedal.dto.TipoBicicletaMapper;
+import com.golpedepedal.dto.componentesdto.TipoBicicletaDTO;
+import com.golpedepedal.dto.componentesdto.TipoBicicletaMapper;
 import com.golpedepedal.repository.TipoBicicletaRepository;
 
 @RestController

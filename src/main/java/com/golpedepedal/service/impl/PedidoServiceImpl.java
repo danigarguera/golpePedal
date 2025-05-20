@@ -9,12 +9,12 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.golpedepedal.dto.DireccionDTO;
-import com.golpedepedal.dto.LineaPedidoResponseDTO;
-import com.golpedepedal.dto.PedidoMapper;
-import com.golpedepedal.dto.PedidoRequestDTO;
-import com.golpedepedal.dto.PedidoResponseDTO;
-import com.golpedepedal.dto.PedidoResumenDTO;
-import com.golpedepedal.dto.UsuarioFacturaDTO;
+import com.golpedepedal.dto.pedidodto.LineaPedidoResponseDTO;
+import com.golpedepedal.dto.pedidodto.PedidoMapper;
+import com.golpedepedal.dto.pedidodto.PedidoRequestDTO;
+import com.golpedepedal.dto.pedidodto.PedidoResponseDTO;
+import com.golpedepedal.dto.pedidodto.PedidoResumenDTO;
+import com.golpedepedal.dto.usuariodto.UsuarioFacturaDTO;
 import com.golpedepedal.model.Componente;
 import com.golpedepedal.model.Direccion;
 import com.golpedepedal.model.Pedido;

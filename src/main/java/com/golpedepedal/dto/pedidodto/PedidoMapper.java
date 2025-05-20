@@ -1,8 +1,10 @@
-package com.golpedepedal.dto;
+package com.golpedepedal.dto.pedidodto;
 
 import com.golpedepedal.model.Pedido;
 import com.golpedepedal.model.Usuario;
 import com.golpedepedal.model.Direccion;
+import com.golpedepedal.dto.DireccionDTO;
+import com.golpedepedal.dto.usuariodto.UsuarioFacturaDTO;
 import com.golpedepedal.model.Componente;
 
 import java.util.List;
