@@ -1,6 +1,8 @@
 package com.golpedepedal.controller;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -147,6 +149,26 @@ public class UsuarioController {
             .toList();
     }
 
+
+    @PutMapping("/mis-datos")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> actualizarMisDatos(@Valid @RequestBody UsuarioDTO dto, Principal principal) {
+        Usuario usuario = usuarioService.buscarPorEmail(principal.getName());
+
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        usuario.setNombre(dto.getNombre());
+        usuario.setApellido1(dto.getApellido1());
+        usuario.setApellido2(dto.getApellido2());
+        usuario.setDni(dto.getDni());
+        usuario.setTelefono(dto.getTelefono());
+
+        usuarioService.guardar(usuario);
+
+        return ResponseEntity.ok(Map.of("mensaje", "Datos actualizados correctamente"));
+    }
 
 
 }
