@@ -171,7 +171,8 @@ public class PedidoController {
     @PreAuthorize("hasRole('ADMIN')")
     public List<VentaEmpleadoDTO> obtenerVentasPorEmpleados(
             @RequestParam(required = false) String desde,
-            @RequestParam(required = false) String hasta) {
+            @RequestParam(required = false) String hasta,
+            @RequestParam(required = false) Long empleadoId) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -183,7 +184,13 @@ public class PedidoController {
                 ? LocalDate.parse(hasta, formatter).atTime(23, 59, 59)
                 : LocalDateTime.now();
 
-        List<Pedido> pedidos = pedidoRepository.findByEmpleadoNotNullAndFechaBetween(fechaDesde, fechaHasta);
+        List<Pedido> pedidos;
+
+        if (empleadoId != null) {
+            pedidos = pedidoRepository.findByEmpleadoIdAndFechaBetween(empleadoId, fechaDesde, fechaHasta);
+        } else {
+            pedidos = pedidoRepository.findByEmpleadoNotNullAndFechaBetween(fechaDesde, fechaHasta);
+        }
 
         return pedidos.stream().map(p -> new VentaEmpleadoDTO(
                 p.getId(),
@@ -193,6 +200,7 @@ public class PedidoController {
                 p.getTotal()
         )).toList();
     }
+
     
     @GetMapping("/por-clientes")
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")

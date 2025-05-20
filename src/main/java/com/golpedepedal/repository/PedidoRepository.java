@@ -18,4 +18,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
 	List<Pedido> findByDireccionNotNullAndFechaBetween(LocalDateTime fechaDesde, LocalDateTime fechaHasta);
 
+	List<Pedido> findByEmpleadoIdAndFechaBetween(Long empleadoId, LocalDateTime fechaDesde, LocalDateTime fechaHasta);
+
 }

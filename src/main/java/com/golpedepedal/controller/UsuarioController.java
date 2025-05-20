@@ -11,10 +11,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.golpedepedal.dto.CambioRolRequest;
+import com.golpedepedal.dto.UsuarioDTO;
 import com.golpedepedal.dto.UsuarioRequest;
 import com.golpedepedal.model.Role;
 import com.golpedepedal.model.Usuario;
 import com.golpedepedal.repository.RoleRepository;
+import com.golpedepedal.repository.UsuarioRepository;
 import com.golpedepedal.service.UsuarioService;
 
 import jakarta.validation.Valid;
@@ -26,11 +28,13 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UsuarioRepository usuarioRepository;
 
-    public UsuarioController(UsuarioService usuarioService, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioController(UsuarioService usuarioService, RoleRepository roleRepository, PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository) {
         this.usuarioService = usuarioService;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @GetMapping
@@ -134,5 +138,15 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
-    
+    @GetMapping("/empleados")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UsuarioDTO> listarEmpleadosYAdmins() {
+        return usuarioRepository.findByRolNombreIn(List.of("ROLE_EMPLEADO", "ROLE_ADMIN"))
+            .stream()
+            .map(u -> new UsuarioDTO(u.getId(), u.getEmail()))
+            .toList();
+    }
+
+
+
 }
