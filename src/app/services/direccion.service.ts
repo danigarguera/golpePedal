@@ -41,8 +41,9 @@ export class DireccionService {
 
 
   crearDireccion(direccion: DireccionDTO): Observable<DireccionDTO> {
-    return this.http.post<DireccionDTO>(this.apiUrl, direccion);
+    return this.http.post<DireccionDTO>(`${this.apiUrl}/direcciones`, direccion);
   }
+
 
   obtenerDireccionesPorUsuario(usuarioId: number): Observable<DireccionDTO[]> {
     return this.http.get<DireccionDTO[]>(`${this.apiUrl}/direcciones/usuario/${usuarioId}`);
