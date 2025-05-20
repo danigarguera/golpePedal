@@ -47,7 +47,6 @@ public class PedidoController {
     
     private final PedidoService service;
     private final UsuarioRepository usuarioRepository;
-    private final DireccionRepository direccionRepository;
     private final ComponenteRepository componenteRepository;
     private final PedidoRepository pedidoRepository;
     
@@ -60,7 +59,6 @@ public class PedidoController {
     	
         this.service = service; 
         this.usuarioRepository = usuarioRepository; 
-        this.direccionRepository = direccionRepository; 
         this.componenteRepository = componenteRepository; 
         this.pedidoRepository = pedidoRepository; 
     }
@@ -98,7 +96,7 @@ public class PedidoController {
     
     @GetMapping("/mios")
     public List<PedidoResumenDTO> obtenerPedidosResumenPorEmail(Principal principal) {
-        String email = principal.getName(); // 🔐 email del usuario autenticado
+        String email = principal.getName(); 
 
         Usuario usuario = usuarioRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -129,16 +127,9 @@ public class PedidoController {
         Usuario cliente = usuarioRepository.findById(dto.getUsuarioId())
             .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
-        Direccion direccion = null;
-        if (dto.getDireccionId() != null) {
-            direccion = direccionRepository.findById(dto.getDireccionId())
-                .orElseThrow(() -> new RuntimeException("Dirección no encontrada"));
-        }
-
         Pedido pedido = new Pedido();
         pedido.setUsuario(cliente);
         pedido.setEmpleado(empleado);
-        pedido.setDireccion(direccion);
         pedido.setFecha(LocalDateTime.now());
         pedido.setEstado(Pedido.Estado.ENTREGADO);
         pedido.setTotal(BigDecimal.ZERO);
@@ -221,7 +212,6 @@ public class PedidoController {
 
         List<Pedido> pedidos = pedidoRepository.findByDireccionNotNullAndFechaBetween(fechaDesde, fechaHasta);
 
-        // 🔍 Filtro por estado (importante)
         if (estado != null && !estado.isBlank()) {
             pedidos = pedidos.stream()
                     .filter(p -> p.getEstado().name().equalsIgnoreCase(estado))

@@ -97,7 +97,7 @@ public class UsuarioController {
             return ResponseEntity.status(401).build();
         }
 
-        String email = authentication.getName(); // Aquí está el username/email del token
+        String email = authentication.getName(); 
         Usuario usuario = usuarioService.buscarPorEmail(email);
 
         if (usuario == null) {

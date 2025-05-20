@@ -39,9 +39,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @RequestBody RegistroRequest request) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegistroRequest request) {
         if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
-            return "Ya existe un usuario con ese email.";
+            return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(Map.of("error", "Ya existe un usuario con ese email."));
         }
 
         Usuario usuario = new Usuario();
@@ -57,11 +59,23 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("Rol CLIENTE no encontrado"));
 
         usuario.setRol(clienteRole);
-
         usuarioRepository.save(usuario);
 
-        return "Usuario registrado correctamente.";
+        // 🔐 Generar token tras registro
+        String token = jwtUtil.generateToken(
+        		usuario.getId(),
+        	    usuario.getEmail(),
+        	    usuario.getRol().getNombre()
+        	);
+
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("token", token);
+        respuesta.put("rol", usuario.getRol().getNombre());
+        respuesta.put("email", usuario.getEmail());
+
+        return ResponseEntity.ok(respuesta);
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest request) {
