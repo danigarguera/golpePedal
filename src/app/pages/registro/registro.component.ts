@@ -15,6 +15,7 @@ export class RegistroComponent {
   usuario = {
     nombre: '',
     apellido1: '',
+    apellido2: '',
     dni: '',
     telefono: '',
     email: '',
@@ -28,29 +29,36 @@ export class RegistroComponent {
   constructor(
     private registroService: RegistroService,
     private router: Router
-  ) {}
+  ) { }
 
   registrarUsuario() {
-    this.cargando = true; // 👉 Activa el spinner
+    this.cargando = true;
 
     this.registroService.registrar(this.usuario).subscribe({
       next: response => {
         console.log('✅ Usuario registrado:', response);
+
+        // 🔐 Guardar token
+        localStorage.setItem('token', response.token);
+
         this.mensaje = '✅ ¡Usuario registrado exitosamente!';
         this.error = '';
-        this.usuario = { nombre: '', apellido1: '', dni: '', telefono: '', email: '', password: '' };
-        
-        setTimeout(() => {
-          this.cargando = false;
-          this.router.navigate(['/login']);
-        }, 1500);
+        this.usuario = {
+          nombre: '', apellido1: '', apellido2: '', dni: '', telefono: '', email: '', password: ''
+        };
+
+        this.cargando = false;
+
+        // 🔁 Redirigir automáticamente al home
+        this.router.navigate(['/']);
       },
       error: err => {
         console.error('❌ Error al registrar:', err);
-        this.error = '❌ Error: El usuario ya existe o hubo un problema.';
+        this.error = err.error?.error || '❌ Error: El usuario ya existe o hubo un problema.';
         this.mensaje = '';
-        this.cargando = false; // 👉 Desactiva el spinner también en error
+        this.cargando = false;
       }
     });
   }
+
 }

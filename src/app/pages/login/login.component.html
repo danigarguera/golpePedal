@@ -1,5 +1,4 @@
 <form (ngSubmit)="login()" #formLogin="ngForm" novalidate>
-  <!-- Email -->
   <div class="mb-3">
     <label for="email" class="form-label">Correo Electrónico</label>
     <input
@@ -14,7 +13,6 @@
     <div class="invalid-feedback">Introduce un correo válido.</div>
   </div>
 
-  <!-- Password -->
   <div class="mb-3">
     <label for="password" class="form-label">Contraseña</label>
     <input
@@ -29,10 +27,8 @@
     <div class="invalid-feedback">Introduce tu contraseña.</div>
   </div>
 
-  <!-- Mensajes -->
   <div *ngIf="mensaje" class="alert alert-success">{{ mensaje }}</div>
   <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-  <!-- Botón -->
   <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
 </form>

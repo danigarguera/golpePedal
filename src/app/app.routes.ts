@@ -35,7 +35,6 @@ export const routes: Routes = [
   },
 
 
-  // ✅ Crear pedido como ruta independiente
   {
     path: 'crear-pedido',
     loadComponent: () =>

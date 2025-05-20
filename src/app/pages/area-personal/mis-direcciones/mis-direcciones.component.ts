@@ -22,15 +22,16 @@ export class MisDireccionesComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.formDireccion = this.fb.group({
-      alias: ['', Validators.required],
-      calle: ['', Validators.required],
-      numero: ['', Validators.required],
+      alias: ['', [Validators.required, Validators.minLength(3)]],
+      calle: ['', [Validators.required, Validators.minLength(3)]],
+      numero: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       piso: [''],
       ciudad: ['', Validators.required],
       provincia: ['', Validators.required],
-      codigoPostal: ['', Validators.required],
+      codigoPostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       pais: ['', Validators.required]
     });
+
   }
 
   ngOnInit(): void {
