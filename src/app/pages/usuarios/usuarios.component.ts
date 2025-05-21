@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { RoleService } from '../../services/role.service';
 import { UsuarioService, Usuario } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.scss']
 })
@@ -16,6 +17,8 @@ export class UsuariosComponent implements OnInit {
   error = '';
   cargando = false;
   cambiandoRol: { [id: number]: boolean } = {};
+  filtroEmail: string = '';
+  usuariosFiltrados: Usuario[] = [];
 
 
   constructor(
@@ -40,6 +43,7 @@ export class UsuariosComponent implements OnInit {
     this.usuarioService.obtenerUsuarios().subscribe({
       next: (data) => {
         this.usuarios = data;
+        this.filtrarUsuarios();  // inicializar filtrado
         this.cargando = false;
       },
       error: (err: any) => {
@@ -50,8 +54,15 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  filtrarUsuarios(): void {
+    const texto = this.filtroEmail.trim().toLowerCase();
+    this.usuariosFiltrados = this.usuarios.filter(u =>
+      u.email.toLowerCase().includes(texto)
+    );
+  }
+
   cambiarRol(usuario: Usuario): void {
-    const nuevoRol = usuario.rol.nombre === 'ROLE_CLIENTE' ? 'ROLE_EMPLEADO' : 'ROLE_CLIENTE'; 
+    const nuevoRol = usuario.rol.nombre === 'ROLE_CLIENTE' ? 'ROLE_EMPLEADO' : 'ROLE_CLIENTE';
 
     this.usuarioService.cambiarRol(usuario.id, nuevoRol).subscribe({
       next: () => {

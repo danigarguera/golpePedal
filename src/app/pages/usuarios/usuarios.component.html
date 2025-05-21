@@ -3,14 +3,23 @@
     <i class="bi bi-people me-2"></i>Gestión de Usuarios
   </h2>
 
+  <!-- Indicador de carga -->
   <div *ngIf="cargando" class="alert alert-info d-flex align-items-center gap-2">
     <span class="spinner-border spinner-border-sm"></span>
     Cargando usuarios...
   </div>
 
+  <!-- Mensaje de error -->
   <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-  <table *ngIf="usuarios.length" class="table table-bordered table-hover sombra-suave">
+  <!-- Campo de búsqueda por email -->
+  <div class="buscador-email">
+    <input type="text" [(ngModel)]="filtroEmail" (input)="filtrarUsuarios()" class="form-control input-estilizado"
+      placeholder="Buscar por email..." />
+  </div>
+
+  <!-- Tabla de usuarios -->
+  <table *ngIf="usuariosFiltrados.length" class="table table-bordered table-hover sombra-suave align-middle">
     <thead class="table-light">
       <tr>
         <th>ID</th>
@@ -21,28 +30,41 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let usuario of usuarios">
+      <tr *ngFor="let usuario of usuariosFiltrados">
         <td>{{ usuario.id }}</td>
         <td>{{ usuario.nombre }} {{ usuario.apellido1 }}</td>
         <td>{{ usuario.email }}</td>
-        <td>{{ usuario.rol.nombre }}</td>
         <td>
-          <button class="btn btn-sm btn-secundario"
-            [disabled]="cambiandoRol[usuario.id] || usuario.rol.nombre === 'ROLE_ADMIN'" (click)="cambiarRol(usuario)">
+          <span [ngClass]="usuario.rol.nombre === 'ROLE_CLIENTE' ? 'rol-cliente' : 'rol-interno'">
+            {{ usuario.rol.nombre }}
+          </span>
+        </td>
+        <td>
+          <ng-container *ngIf="usuario.rol.nombre !== 'ROLE_ADMIN'">
+            <button class="btn btn-sm d-flex align-items-center gap-1"
+              [ngClass]="usuario.rol.nombre === 'ROLE_CLIENTE' ? 'btn-primario' : 'btn-secundario'"
+              [disabled]="cambiandoRol[usuario.id]" (click)="cambiarRol(usuario)">
 
-            <ng-container *ngIf="!cambiandoRol[usuario.id]">
-              <i class="bi bi-arrow-left-right me-1"></i>
-              Cambiar a {{ usuario.rol.nombre === 'ROLE_CLIENTE' ? 'EMPLEADO' : 'CLIENTE' }}
-            </ng-container>
+              <ng-container *ngIf="!cambiandoRol[usuario.id]">
+                <i [class]="usuario.rol.nombre === 'ROLE_CLIENTE' ? 'bi bi-person-up' : 'bi bi-person-down'"></i>
+                Cambiar a {{ usuario.rol.nombre === 'ROLE_CLIENTE' ? 'EMPLEADO' : 'CLIENTE' }}
+              </ng-container>
 
-            <ng-container *ngIf="cambiandoRol[usuario.id]">
-              <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-              Cambiando...
-            </ng-container>
-          </button>
+              <ng-container *ngIf="cambiandoRol[usuario.id]">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Cambiando...
+              </ng-container>
+            </button>
+          </ng-container>
         </td>
 
       </tr>
     </tbody>
   </table>
+
+  <!-- Sin resultados -->
+  <div *ngIf="!usuariosFiltrados.length && !cargando" class="alert alert-warning">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    No se encontraron usuarios con ese email.
+  </div>
 </div>
