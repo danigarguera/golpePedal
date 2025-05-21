@@ -28,7 +28,7 @@ $fuente-secundaria: 'Open Sans', sans-serif;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
-   &.btn-sm {
+  &.btn-sm {
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
   }
@@ -146,4 +146,17 @@ th.sortable {
     font-size: 0.85rem;
     color: $color-secundario;
   }
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }

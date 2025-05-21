@@ -1,46 +1,57 @@
-<div class="container mt-4">
-  <h2>Editar Componente</h2>
+<div class="container mt-4 d-flex justify-content-center">
+  <div class="w-100" style="max-width: 640px;">
+    <h2 class="mb-4 texto-grande fw-bold">
+      <i class="bi bi-pencil-square me-2"></i>Editar Componente
+    </h2>
 
-  <form [formGroup]="formulario" (ngSubmit)="guardar()">
-    <div class="mb-3">
-      <label for="nombre" class="form-label">Nombre</label>
-      <input id="nombre" type="text" class="form-control" formControlName="nombre" readonly>
-    </div>
+    <form [formGroup]="formulario" (ngSubmit)="guardar()" class="bg-white p-4 rounded-3 sombra-suave borde-claro">
+      <!-- Nombre -->
+      <div class="mb-3">
+        <label for="nombre" class="form-label fw-semibold">Nombre</label>
+        <input id="nombre" type="text" class="form-control input-estilizado" formControlName="nombre" readonly>
+      </div>
 
-    <div class="mb-3">
-      <label for="descripcion" class="form-label">Descripción</label>
-      <textarea id="descripcion" rows="3" class="form-control" formControlName="descripcion" readonly></textarea>
-    </div>
+      <!-- Descripción -->
+      <div class="mb-3">
+        <label for="descripcion" class="form-label fw-semibold">Descripción</label>
+        <textarea id="descripcion" rows="3" class="form-control input-estilizado" formControlName="descripcion" readonly></textarea>
+      </div>
 
-    <div class="mb-3">
-      <label for="precio" class="form-label">Precio (€)</label>
-      <input id="precio" type="number" class="form-control" formControlName="precio" min="0.01" step="0.01">
-    </div>
+      <!-- Precio -->
+      <div class="mb-3">
+        <label for="precio" class="form-label fw-semibold">Precio (€)</label>
+        <input id="precio" type="number" class="form-control input-estilizado" formControlName="precio" min="0.01" step="0.01">
+      </div>
 
-    <input type="hidden" formControlName="tipoComponenteId">
-    <input type="hidden" formControlName="marcaId">
-    <input type="hidden" formControlName="tipoBicicletaId">
+      <input type="hidden" formControlName="tipoComponenteId">
+      <input type="hidden" formControlName="marcaId">
+      <input type="hidden" formControlName="tipoBicicletaId">
 
-    <div class="mb-3">
-      <label class="form-label">Tipo de Componente</label>
-      <input class="form-control" [value]="tipoComponenteNombre" readonly>
-    </div>
+      <!-- Info adicional -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Tipo de Componente</label>
+        <input class="form-control input-estilizado" [value]="tipoComponenteNombre" readonly>
+      </div>
 
-    <div class="mb-3">
-      <label class="form-label">Marca</label>
-      <input class="form-control" [value]="marcaNombre" readonly>
-    </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Marca</label>
+        <input class="form-control input-estilizado" [value]="marcaNombre" readonly>
+      </div>
 
-    <div class="mb-3">
-      <label class="form-label">Tipo de Bicicleta</label>
-      <input class="form-control" [value]="tipoBicicletaNombre" readonly>
-    </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Tipo de Bicicleta</label>
+        <input class="form-control input-estilizado" [value]="tipoBicicletaNombre" readonly>
+      </div>
 
-    <div class="d-flex justify-content-between mt-4">
-      <button type="submit" class="btn btn-success" [disabled]="formulario.invalid">
-        Actualizar
-      </button>
-      <a class="btn btn-secondary" routerLink="/dashboard/componentes">Cancelar</a>
-    </div>
-  </form>
+      <!-- Acciones -->
+      <div class="d-flex justify-content-between mt-4">
+        <button type="submit" class="btn btn-secundario btn-sm" [disabled]="formulario.invalid">
+          <i class="bi bi-check2-circle me-1"></i>Actualizar
+        </button>
+        <a class="btn btn-outline-dark btn-sm" routerLink="/dashboard/componentes">
+          <i class="bi bi-x-circle me-1"></i>Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
 </div>
