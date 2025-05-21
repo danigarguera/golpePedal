@@ -39,4 +39,7 @@ export class DetalleVentaComponent implements OnInit {
       }
     }
   }
+    imprimir(): void {
+    window.print();
+  }
 }

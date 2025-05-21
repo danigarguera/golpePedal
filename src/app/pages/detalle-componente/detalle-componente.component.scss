@@ -1,0 +1,15 @@
+@use '../../../styles/variables' as *;
+
+img {
+  object-fit: cover;
+  max-height: 350px;
+}
+
+h2 {
+  font-family: $fuente-principal;
+}
+
+ul {
+  font-family: $fuente-secundaria;
+  font-size: 1rem;
+}

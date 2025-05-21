@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, CurrencyPipe, RouterModule], 
   templateUrl: './mis-pedidos.component.html'
 })
+
 export class MisPedidosComponent implements OnInit {
   pedidos: PedidoResumenDTO[] = [];
 
@@ -28,4 +29,31 @@ export class MisPedidosComponent implements OnInit {
       }
     });
   }
+
+  sortCampo: string = '';
+sortAsc: boolean = true;
+
+ordenarPor(campo: string): void {
+  if (this.sortCampo === campo) {
+    this.sortAsc = !this.sortAsc;
+  } else {
+    this.sortCampo = campo;
+    this.sortAsc = true;
+  }
+
+  this.pedidos.sort((a: any, b: any) => {
+    const valorA = a[campo];
+    const valorB = b[campo];
+
+    if (valorA < valorB) return this.sortAsc ? -1 : 1;
+    if (valorA > valorB) return this.sortAsc ? 1 : -1;
+    return 0;
+  });
+}
+
+getIconoOrden(campo: string): string {
+  if (this.sortCampo !== campo) return 'bi bi-arrow-down-up';
+  return this.sortAsc ? 'bi bi-arrow-down' : 'bi bi-arrow-up';
+}
+
 }

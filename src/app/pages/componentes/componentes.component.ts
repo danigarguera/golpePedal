@@ -4,6 +4,7 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ComponentesService, Componente } from '../../services/componentes.service';
 import { TarjetaProductoComponent } from '../../componentes/tarjeta-producto/tarjeta-producto.component';
+import { AppComponent } from '../../app.component'; 
 
 @Component({
   selector: 'app-componentes',
@@ -20,6 +21,7 @@ import { TarjetaProductoComponent } from '../../componentes/tarjeta-producto/tar
 export class ComponentesComponent implements OnInit {
   componentesService = inject(ComponentesService);
   route = inject(ActivatedRoute);
+  app = inject(AppComponent); 
 
   componentes: Componente[] = [];
   componentesOriginales: Componente[] = [];
@@ -31,7 +33,6 @@ export class ComponentesComponent implements OnInit {
   marcasDisponibles: string[] = [];
 
   ngOnInit(): void {
-    // Leer parámetros de la URL
     this.route.queryParams.subscribe(params => {
       this.filtroTipo = params['tipo'] || '';
       this.filtroMarca = params['marca'] || '';
@@ -42,8 +43,6 @@ export class ComponentesComponent implements OnInit {
         this.componentesOriginales = data;
         this.tiposDisponibles = [...new Set(data.map(c => c.tipo).filter(Boolean))];
         this.marcasDisponibles = [...new Set(data.map(c => c.marca).filter(Boolean))];
-
-
         this.aplicarFiltros();
       },
       error: (err) => {
@@ -53,8 +52,6 @@ export class ComponentesComponent implements OnInit {
     });
   }
 
-
-
   aplicarFiltros(): void {
     this.componentes = this.componentesOriginales.filter(componente => {
       const coincideTipo = this.filtroTipo ? componente.tipo === this.filtroTipo : true;
@@ -63,5 +60,8 @@ export class ComponentesComponent implements OnInit {
     });
   }
 
-
+  // ✅ Método que muestra el banner
+  mostrarBannerDesdeTarjeta(): void {
+    this.app.mostrarBannerCarrito();
+  }
 }

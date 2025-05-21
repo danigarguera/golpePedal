@@ -1,15 +1,30 @@
 <div class="container mt-4">
-  <h2>Mis pedidos</h2>
+  <h2 class="texto-grande fw-bold mb-3">Mis pedidos</h2>
 
-  <table class="table table-striped mt-3" *ngIf="pedidos.length > 0; else sinPedidos">
-    <thead>
+  <table class="table table-bordered table-hover sombra-suave borde-claro" *ngIf="pedidos.length > 0; else sinPedidos">
+    <thead class="table-light">
       <tr>
-        <th>ID</th>
-        <th>Fecha</th>
-        <th>Estado</th>
-        <th>Total</th>
+        <th (click)="ordenarPor('id')" class="sortable">
+          ID
+          <i *ngIf="sortCampo === 'id'" class="bi" [ngClass]="sortAsc ? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
+        </th>
+        <th (click)="ordenarPor('fecha')" class="sortable">
+          Fecha
+          <i *ngIf="sortCampo === 'fecha'" class="bi"
+            [ngClass]="sortAsc ? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
+        </th>
+        <th (click)="ordenarPor('estado')" class="sortable">
+          Estado
+          <i *ngIf="sortCampo === 'estado'" class="bi"
+            [ngClass]="sortAsc ? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
+        </th>
+        <th (click)="ordenarPor('total')" class="sortable">
+          Total
+          <i *ngIf="sortCampo === 'total'" class="bi"
+            [ngClass]="sortAsc ? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
+        </th>
         <th>Dirección</th>
-        <th>Acciones</th> <!-- Nueva columna -->
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -17,11 +32,11 @@
         <td>{{ pedido.id }}</td>
         <td>{{ pedido.fecha | date: 'short' }}</td>
         <td>{{ pedido.estado }}</td>
-        <td>{{ pedido.total | currency: 'EUR' }}</td>
+        <td>{{ pedido.total | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
         <td>{{ pedido.direccionAlias }}</td>
         <td>
-          <a [routerLink]="['/pedido', pedido.id]" class="btn btn-outline-primary btn-sm">
-            <i class="bi bi-receipt"></i> Ver detalle
+          <a [routerLink]="['/pedido', pedido.id]" class="btn btn-sm btn-primario">
+            <i class="bi bi-receipt me-1"></i> Ver detalle
           </a>
         </td>
       </tr>

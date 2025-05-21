@@ -1,57 +1,99 @@
-<h2 class="mb-4">📦 Pedidos realizados por clientes</h2>
+<div class="container py-4">
+  <h2 class="texto-grande fw-bold mb-4">
+    <i class="bi bi-box-seam me-2"></i>Pedidos realizados por clientes
+  </h2>
 
-<div class="mb-3 d-flex align-items-center gap-3">
-  <label>
-    Desde:
-    <input type="date" [(ngModel)]="desde" class="form-control d-inline w-auto" />
-  </label>
-  <label>
-    Hasta:
-    <input type="date" [(ngModel)]="hasta" class="form-control d-inline w-auto" />
-  </label>
+  <!-- Filtros -->
+  <div class="row g-3 align-items-end mb-4 sombra-suave p-3 borde-claro rounded-3">
+    <div class="col-md-3">
+      <label for="desde" class="form-label">Desde</label>
+      <input type="date" id="desde" [(ngModel)]="desde" class="form-control input-estilizado" />
+    </div>
+    <div class="col-md-3">
+      <label for="hasta" class="form-label">Hasta</label>
+      <input type="date" id="hasta" [(ngModel)]="hasta" class="form-control input-estilizado" />
+    </div>
+    <div class="col-md-3">
+      <label for="estadoFiltro" class="form-label">Estado</label>
+      <select id="estadoFiltro" [(ngModel)]="estadoFiltro" class="form-select input-estilizado">
+        <option value="">Todos</option>
+        <option value="PENDIENTE">Pendiente</option>
+        <option value="ENVIADO">Enviado</option>
+        <option value="ENTREGADO">Entregado</option>
+        <option value="CANCELADO">Cancelado</option>
+      </select>
+    </div>
+    <div class="col-md-3 text-end">
+      <button class="btn btn-primario w-100" (click)="cargarPedidos()">
+        <i class="bi bi-filter me-1"></i> Filtrar
+      </button>
+    </div>
+  </div>
 
-  <label>
-    Estado:
-    <select [(ngModel)]="estadoFiltro" name="estadoFiltro" class="form-control d-inline w-auto ms-2">
-      <option value="">Todos</option>
-      <option value="PENDIENTE">PENDIENTE</option>
-      <option value="ENVIADO">ENVIADO</option>
-      <option value="ENTREGADO">ENTREGADO</option>
-      <option value="CANCELADO">CANCELADO</option>
-    </select>
-  </label>
+  <!-- Mensajes de estado -->
+  <div *ngIf="cargando" class="text-muted">Cargando pedidos...</div>
+  <div *ngIf="!pedidos.length && !cargando" class="alert alert-warning mt-3">
+    No hay pedidos para mostrar.
+  </div>
 
-  <button class="btn btn-primary ms-3" (click)="cargarPedidos()">Filtrar</button>
-</div>
-
-
-<div *ngIf="cargando">Cargando pedidos...</div>
-<div *ngIf="!pedidos.length && !cargando" class="alert alert-warning">No hay pedidos para mostrar.</div>
-
-<table *ngIf="pedidos.length" class="table table-bordered table-hover mt-3">
-    <thead class="table-light">
+  <!-- Tabla de pedidos -->
+  <div class="table-responsive mt-3" *ngIf="pedidos.length">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
         <tr>
-            <th (click)="ordenarPor('id')" style="cursor: pointer">ID</th>
-            <th (click)="ordenarPor('fecha')" style="cursor: pointer">Fecha</th>
-            <th (click)="ordenarPor('cliente')" style="cursor: pointer">Cliente</th>
-            <th (click)="ordenarPor('total')" style="cursor: pointer">Total</th>
-            <th>Estado</th>
+          <th class="sortable" (click)="ordenarPor('id')">
+            ID
+            <i *ngIf="campoOrden === 'id'" class="bi" [ngClass]="{
+              'bi-caret-up-fill': direccionOrden === 'asc',
+              'bi-caret-down-fill': direccionOrden === 'desc'
+            }"></i>
+          </th>
+          <th class="sortable" (click)="ordenarPor('fecha')">
+            Fecha
+            <i *ngIf="campoOrden === 'fecha'" class="bi" [ngClass]="{
+              'bi-caret-up-fill': direccionOrden === 'asc',
+              'bi-caret-down-fill': direccionOrden === 'desc'
+            }"></i>
+          </th>
+          <th class="sortable" (click)="ordenarPor('cliente')">
+            Cliente
+            <i *ngIf="campoOrden === 'cliente'" class="bi" [ngClass]="{
+              'bi-caret-up-fill': direccionOrden === 'asc',
+              'bi-caret-down-fill': direccionOrden === 'desc'
+            }"></i>
+          </th>
+          <th class="sortable text-end" (click)="ordenarPor('total')">
+            Total
+            <i *ngIf="campoOrden === 'total'" class="bi" [ngClass]="{
+              'bi-caret-up-fill': direccionOrden === 'asc',
+              'bi-caret-down-fill': direccionOrden === 'desc'
+            }"></i>
+          </th>
+          <th class="sortable" (click)="ordenarPor('estado')">
+            Estado
+            <i *ngIf="campoOrden === 'estado'" class="bi" [ngClass]="{
+              'bi-caret-up-fill': direccionOrden === 'asc',
+              'bi-caret-down-fill': direccionOrden === 'desc'
+            }"></i>
+          </th>
         </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
         <tr *ngFor="let pedido of pedidos" class="table-row-hover">
-            <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.id }}</td>
-            <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.fecha | date: 'short' }}</td>
-            <td>{{ pedido.cliente }}</td>
-            <td>{{ pedido.total | currency:'EUR' }}</td>
-            <td>
-                <select [(ngModel)]="pedido.estado" (change)="actualizarEstado(pedido)" class="form-select">
-                    <option value="PENDIENTE">PENDIENTE</option>
-                    <option value="ENVIADO">ENVIADO</option>
-                    <option value="ENTREGADO">ENTREGADO</option>
-                    <option value="CANCELADO">CANCELADO</option>
-                </select>
-            </td>
+          <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.id }}</td>
+          <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.fecha | date: 'short' }}</td>
+          <td>{{ pedido.cliente }}</td>
+          <td class="text-end">{{ pedido.total | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+          <td>
+            <select [(ngModel)]="pedido.estado" (change)="actualizarEstado(pedido)" class="form-select input-estilizado">
+              <option value="PENDIENTE">Pendiente</option>
+              <option value="ENVIADO">Enviado</option>
+              <option value="ENTREGADO">Entregado</option>
+              <option value="CANCELADO">Cancelado</option>
+            </select>
+          </td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+</div>

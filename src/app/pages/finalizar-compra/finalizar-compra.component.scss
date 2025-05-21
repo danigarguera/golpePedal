@@ -1,0 +1,46 @@
+@use '../../../styles/variables.scss' as *;
+@use '../../../styles/mixins' as *;
+
+h2, h4, h5 {
+  font-family: $fuente-principal;
+  color: $color-texto;
+}
+
+.card {
+  border: 1px solid $color-borde;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  font-family: $fuente-principal;
+  background-color: $color-fondo;
+}
+
+.card-body {
+  font-family: $fuente-secundaria;
+  font-size: 0.95rem;
+}
+
+table {
+  font-family: $fuente-secundaria;
+  font-size: 0.95rem;
+
+  thead {
+    background-color: $color-fondo;
+  }
+
+  th {
+    font-weight: 600;
+  }
+}
+
+.alert {
+  font-family: $fuente-secundaria;
+}
+
+button.btn-success {
+  @include boton-estandar($color-secundario);
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+}

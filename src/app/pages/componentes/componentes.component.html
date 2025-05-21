@@ -1,18 +1,18 @@
-<div class="container mt-4">
-  <h2 class="mb-4">Lista de Componentes</h2>
+<div class="container py-4">
+  <h2 class="mb-4 texto-grande fw-bold">Lista de Componentes</h2>
 
   <!-- Filtros -->
-  <div class="row mb-4">
+  <div class="row g-3 mb-4 sombra-suave p-3 borde-claro rounded-3">
     <div class="col-md-6">
       <label for="filtroTipo" class="form-label">Filtrar por tipo</label>
-      <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-select">
+      <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-select input-estilizado">
         <option value="">Todos</option>
         <option *ngFor="let tipo of tiposDisponibles" [value]="tipo">{{ tipo }}</option>
       </select>
     </div>
     <div class="col-md-6">
       <label for="filtroMarca" class="form-label">Filtrar por marca</label>
-      <select [(ngModel)]="filtroMarca" (change)="aplicarFiltros()" class="form-select">
+      <select [(ngModel)]="filtroMarca" (change)="aplicarFiltros()" class="form-select input-estilizado">
         <option value="">Todas</option>
         <option *ngFor="let marca of marcasDisponibles" [value]="marca">{{ marca }}</option>
       </select>
@@ -21,19 +21,21 @@
 
   <!-- Listado -->
   <div *ngIf="componentes.length > 0; else noComponentes">
-    <div class="row">
-      <div class="col-md-4 mb-4" *ngFor="let componente of componentes">
-        <app-tarjeta-producto [producto]="componente" />
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <div class="col" *ngFor="let componente of componentes">
+        <app-tarjeta-producto [producto]="componente" (productoAñadido)="mostrarBannerDesdeTarjeta()" />
       </div>
     </div>
   </div>
 
+
   <ng-template #noComponentes>
-    <p>No hay componentes disponibles.</p>
+    <div class="alert alert-info text-center mt-4">
+      No hay componentes disponibles.
+    </div>
   </ng-template>
 
   <div *ngIf="error" class="alert alert-danger mt-3">
     {{ error }}
   </div>
-
 </div>

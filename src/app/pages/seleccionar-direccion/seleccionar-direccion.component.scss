@@ -1,0 +1,31 @@
+@use '../../../styles/variables.scss' as *;
+@use '../../../styles/mixins' as *;
+
+h2, h4 {
+  font-family: $fuente-principal;
+}
+
+.card-title {
+  font-family: $fuente-principal;
+  font-size: 1.15rem;
+}
+
+.card-text {
+  font-family: $fuente-secundaria;
+  font-size: 0.95rem;
+}
+
+form {
+  background-color: white;
+  border-radius: 0.75rem;
+  font-family: $fuente-secundaria;
+}
+
+input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 107, 0, 0.2);
+  border-color: $color-secundario;
+}
+
+.alert {
+  font-family: $fuente-secundaria;
+}

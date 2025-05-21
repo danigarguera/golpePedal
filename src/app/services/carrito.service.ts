@@ -30,8 +30,9 @@ export class CarritoService {
 
     localStorage.setItem(this.claveLocalStorage, JSON.stringify(carrito));
     this.actualizarContador();
-    alert('Producto añadido al carrito');
+
   }
+
 
   obtenerCarrito(): ProductoCarrito[] {
     const data = localStorage.getItem(this.claveLocalStorage);

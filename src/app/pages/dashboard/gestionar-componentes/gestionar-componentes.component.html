@@ -1,38 +1,49 @@
 <div class="container mt-4">
-    <h2 class="mb-4">Gestión de Componentes</h2>
+    <h2 class="mb-4 texto-grande fw-bold">
+        <i class="bi bi-box-seam me-2"></i> Gestión de Componentes
+    </h2>
 
-    <!-- Botón y filtros alineados con estilos mejorados -->
-    <div class="d-flex align-items-end gap-3 flex-wrap mb-4">
-        <a routerLink="/dashboard/componentes/nuevo" class="btn btn-primary fs-6">
-            ➕ Nuevo Componente
-        </a>
-
-        <div>
-            <label for="filtroTipo" class="form-label fw-semibold">Tipo</label>
-            <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-select form-select-sm fs-6">
+    <!-- Botón y filtros -->
+    <div class="row g-3 align-items-end sombra-suave p-3 borde-claro rounded-3 mb-4">
+        <div class="col-md-3">
+            <a routerLink="/dashboard/componentes/nuevo" class="btn btn-secundario w-100">
+                <i class="bi bi-plus-circle me-1"></i> Nuevo Componente
+            </a>
+        </div>
+        <div class="col-md-4">
+            <label for="filtroTipo" class="form-label">Filtrar por tipo</label>
+            <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-select input-estilizado">
                 <option value="">Todos</option>
                 <option *ngFor="let tipo of tiposDisponibles" [value]="tipo">{{ tipo }}</option>
             </select>
         </div>
-
-        <div>
-            <label for="filtroMarca" class="form-label fw-semibold">Marca</label>
-            <select [(ngModel)]="filtroMarca" (change)="aplicarFiltros()" class="form-select form-select-sm fs-6">
+        <div class="col-md-4">
+            <label for="filtroMarca" class="form-label">Filtrar por marca</label>
+            <select [(ngModel)]="filtroMarca" (change)="aplicarFiltros()" class="form-select input-estilizado">
                 <option value="">Todas</option>
                 <option *ngFor="let marca of marcasDisponibles" [value]="marca">{{ marca }}</option>
             </select>
         </div>
     </div>
 
-
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="sortable" (click)="ordenarPor('nombre')">Nombre</th>
-                <th class="sortable" (click)="ordenarPor('descripcion')">Descripción</th>
-                <th class="sortable" (click)="ordenarPor('precio')">Precio</th>
-                <th class="sortable" (click)="ordenarPor('tipo')">Tipo</th>
-                <th class="sortable" (click)="ordenarPor('marca')">Marca</th>
+                <th class="sortable" (click)="ordenarPor('nombre')">
+                    Nombre <i class="bi" [ngClass]="getIconoOrden('nombre')"></i>
+                </th>
+                <th class="sortable" (click)="ordenarPor('descripcion')">
+                    Descripción <i class="bi" [ngClass]="getIconoOrden('descripcion')"></i>
+                </th>
+                <th class="sortable" (click)="ordenarPor('precio')">
+                    Precio <i class="bi" [ngClass]="getIconoOrden('precio')"></i>
+                </th>
+                <th class="sortable" (click)="ordenarPor('tipo')">
+                    Tipo <i class="bi" [ngClass]="getIconoOrden('tipo')"></i>
+                </th>
+                <th class="sortable" (click)="ordenarPor('marca')">
+                    Marca <i class="bi" [ngClass]="getIconoOrden('marca')"></i>
+                </th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -40,34 +51,23 @@
             <tr *ngFor="let componente of componentesFiltrados">
                 <td>{{ componente.nombre }}</td>
                 <td>{{ componente.descripcion }}</td>
-                <td>{{ componente.precio | currency:'EUR' }}</td>
+                <td>{{ componente.precio | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
                 <td>{{ componente.tipo }}</td>
                 <td>{{ componente.marca }}</td>
                 <td>
                     <a [routerLink]="['/dashboard/componentes/modificar', componente.id]"
-                        class="btn btn-sm btn-warning me-2">
-                        ✏️ Editar
+                        class="btn btn-sm btn-primario me-2">
+                        <i class="bi bi-pencil-square"></i> Editar
                     </a>
+
 
                     <button *ngIf="componente.id !== undefined" class="btn btn-sm btn-danger"
                         (click)="eliminar(componente.id!)">
-                        🗑️ Eliminar
+                        <i class="bi bi-trash"></i> Eliminar
                     </button>
                 </td>
             </tr>
         </tbody>
     </table>
+
 </div>
-
-<style>
-    th.sortable {
-        cursor: pointer;
-        user-select: none;
-        transition: color 0.2s ease-in-out;
-    }
-
-    th.sortable:hover {
-        color: #0d6efd;
-        text-decoration: underline;
-    }
-</style>

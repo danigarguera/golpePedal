@@ -1,40 +1,51 @@
-<h2>Área privada</h2>
-<p>Bienvenido, {{ email }} (Rol: {{ rol }})</p>
-
-<nav class="list-group mt-4">
-  <a routerLink="/crear-pedido" class="list-group-item list-group-item-action">
-    🛒 Crear pedido para cliente
-  </a>
-  <a routerLink="/dashboard/pedidos-clientes" class="list-group-item list-group-item-action">
-    📦 Ver pedidos de clientes
-  </a>
-
-
-  <div *ngIf="rol === 'ROLE_ADMIN'" class="mt-4">
-    <a routerLink="/admin/ventas" class="btn btn-primary">
-      📊 Ver ventas por empleados
-    </a>
+<div class="container mt-5 max-ancho">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold texto-grande">Área privada</h2>
+    <p class="text-muted">Bienvenido, <strong>{{ email }}</strong><br> Rol: {{ rol }}</p>
+    <hr>
   </div>
 
-  <div *ngIf="roleService.isAdmin()" class="mt-4">
-    <h5 class="mb-2">🧩 Gestión de componentes</h5>
-    <a routerLink="/dashboard/componentes" class="list-group-item list-group-item-action">
-      📋 Listar componentes
+  <div class="d-flex flex-column align-items-center gap-3">
+
+    <!-- Accesos generales (cliente / empleado) con botón primario -->
+    <a routerLink="/crear-pedido" class="btn btn-primario w-75 d-flex align-items-center justify-content-center gap-2">
+      <i class="bi bi-cart-plus-fill"></i> Crear pedido para cliente
     </a>
-    <a routerLink="/dashboard/componentes/nuevo" class="list-group-item list-group-item-action">
-      ➕ Crear nuevo componente
+
+    <a routerLink="/dashboard/pedidos-clientes"
+      class="btn btn-primario w-75 d-flex align-items-center justify-content-center gap-2">
+      <i class="bi bi-box-seam"></i> Ver pedidos de clientes
     </a>
+
+    <!-- Exclusivo para ADMIN con botón secundario (naranja) -->
+    <ng-container *ngIf="roleService.isAdmin()">
+      <a routerLink="/admin/ventas"
+        class="btn btn-secundario w-75 d-flex align-items-center justify-content-center gap-2">
+        <i class="bi bi-bar-chart-line-fill"></i> Ventas por empleados
+      </a>
+
+      <div class="text-center mt-4 mb-1">
+        <h5 class="fw-bold text-uppercase text-muted">Gestión de componentes</h5>
+      </div>
+
+      <a routerLink="/dashboard/componentes"
+        class="btn btn-secundario w-75 d-flex align-items-center justify-content-center gap-2">
+        <i class="bi bi-list-ul"></i> Listar componentes
+      </a>
+
+      <a routerLink="/dashboard/componentes/nuevo"
+        class="btn btn-secundario w-75 d-flex align-items-center justify-content-center gap-2">
+        <i class="bi bi-plus-circle-fill"></i> Crear nuevo componente
+      </a>
+
+      <a routerLink="/admin/usuarios"
+        class="btn btn-secundario w-75 d-flex align-items-center justify-content-center gap-2">
+        <i class="bi bi-people-fill"></i> Gestión de usuarios
+      </a>
+    </ng-container>
+
   </div>
 
-
-  <a *ngIf="roleService.isAdmin()" routerLink="/admin/usuarios" class="list-group-item list-group-item-action">
-    👥 Gestión de usuarios (solo admin)
-  </a>
-</nav>
-
-<hr />
-
-<!-- Aquí se cargan las vistas hijas del dashboard -->
-<router-outlet></router-outlet>
-
-<button class="btn btn-danger mt-4" (click)="logout()">Cerrar sesión</button>
+  <hr class="my-4" />
+  <router-outlet></router-outlet>
+</div>

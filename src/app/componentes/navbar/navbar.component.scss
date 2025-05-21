@@ -5,7 +5,8 @@
 .navbar {
   background-color: $color-primario;
   font-family: $fuente-principal;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1030; 
   padding: 0.5rem 1.5rem;
 }
 

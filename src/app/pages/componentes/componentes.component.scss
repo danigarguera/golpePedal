@@ -1,0 +1,10 @@
+@use '../../../styles/variables' as *;
+
+h2 {
+  font-family: $fuente-principal;
+}
+
+.input-estilizado {
+  border: 1px solid $color-borde;
+  font-family: $fuente-secundaria;
+}

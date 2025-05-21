@@ -1,41 +1,51 @@
 <div *ngIf="formUsuario" class="container mt-4">
-  <h2>Mis datos</h2>
+  <h2 class="mb-4 texto-grande fw-bold">Mis datos</h2>
 
-  <form [formGroup]="formUsuario" (ngSubmit)="guardarCambios()">
-    <div class="mb-3">
+  <form [formGroup]="formUsuario" (ngSubmit)="guardarCambios()" class="row g-3">
+    <div class="col-md-6">
       <label for="nombre" class="form-label">Nombre</label>
-      <input id="nombre" type="text" formControlName="nombre" class="form-control" required>
+      <input id="nombre" type="text" formControlName="nombre" class="form-control input-estilizado" required>
     </div>
 
-    <div class="mb-3">
+    <div class="col-md-6">
       <label for="apellido1" class="form-label">Primer Apellido</label>
-      <input id="apellido1" type="text" formControlName="apellido1" class="form-control" required>
+      <input id="apellido1" type="text" formControlName="apellido1" class="form-control input-estilizado" required>
     </div>
 
-    <div class="mb-3">
+    <div class="col-md-6">
       <label for="apellido2" class="form-label">Segundo Apellido</label>
-      <input id="apellido2" type="text" formControlName="apellido2" class="form-control">
+      <input id="apellido2" type="text" formControlName="apellido2" class="form-control input-estilizado">
     </div>
 
-    <div class="mb-3">
+    <div class="col-md-6">
       <label for="email" class="form-label">Correo electrónico</label>
-      <input type="email" class="form-control" formControlName="email" />
+      <input type="email" class="form-control input-estilizado" formControlName="email" />
     </div>
 
-    <div class="mb-3">
+    <div class="col-md-6">
       <label for="dni" class="form-label">DNI</label>
-      <input id="dni" type="text" formControlName="dni" class="form-control" required>
+      <input id="dni" type="text" formControlName="dni" class="form-control input-estilizado" required>
     </div>
 
-    <div class="mb-3">
+    <div class="col-md-6">
       <label for="telefono" class="form-label">Teléfono</label>
-      <input id="telefono" type="text" formControlName="telefono" class="form-control" required>
+      <input id="telefono" type="text" formControlName="telefono" class="form-control input-estilizado" required>
     </div>
 
-    <div *ngIf="mensaje" class="alert alert-success">{{ mensaje }}</div>
-    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+    <div class="col-12" *ngIf="mensaje">
+      <div class="alert alert-success">{{ mensaje }}</div>
+    </div>
+    <div class="col-12" *ngIf="error">
+      <div class="alert alert-danger">{{ error }}</div>
+    </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="formUsuario.invalid">Guardar cambios</button>
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-secundario" [disabled]="formUsuario.invalid">
+        <i class="bi bi-save me-1"></i>
+
+        Guardar cambios
+      </button>
+    </div>
   </form>
 </div>
 
