@@ -13,6 +13,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class PedidosClientesComponent implements OnInit {
   pedidos: any[] = [];
+  pedidosFiltrados: any[] = [];
   desde: string = '';
   hasta: string = '';
   estadoFiltro: string = '';
@@ -29,15 +30,17 @@ export class PedidosClientesComponent implements OnInit {
 
   cargarPedidos(): void {
     this.cargando = true;
+
     let params = new HttpParams();
     if (this.desde) params = params.set('desde', this.desde);
     if (this.hasta) params = params.set('hasta', this.hasta);
-    if (this.estadoFiltro) params = params.set('estado', this.estadoFiltro);
+    // estadoFiltro se filtra en frontend
 
     this.http.get<any[]>(`${environment.apiUrl}/pedidos/por-clientes`, { params }).subscribe({
       next: data => {
         this.pedidos = data;
-        this.ordenarPor(this.campoOrden); // reordena si ya había un campo
+        this.aplicarFiltroEstado();
+        this.ordenarPor(this.campoOrden); // si ya había orden
         this.cargando = false;
       },
       error: err => {
@@ -47,17 +50,20 @@ export class PedidosClientesComponent implements OnInit {
     });
   }
 
+  aplicarFiltroEstado(): void {
+    if (!this.estadoFiltro) {
+      this.pedidosFiltrados = [...this.pedidos];
+    } else {
+      this.pedidosFiltrados = this.pedidos.filter(p => p.estado === this.estadoFiltro);
+    }
+  }
+
   actualizarEstado(pedido: any): void {
     this.http.put(`${environment.apiUrl}/pedidos/${pedido.id}/estado`, JSON.stringify(pedido.estado), {
       headers: { 'Content-Type': 'application/json' }
     }).subscribe({
-      next: () => {
-        // aquí puedes usar un banner, toast, etc.
-        console.log('✅ Estado actualizado correctamente');
-      },
-      error: err => {
-        console.error('Error al actualizar estado:', err);
-      }
+      next: () => console.log('✅ Estado actualizado correctamente'),
+      error: err => console.error('Error al actualizar estado:', err)
     });
   }
 
@@ -69,7 +75,7 @@ export class PedidosClientesComponent implements OnInit {
       this.direccionOrden = 'asc';
     }
 
-    this.pedidos.sort((a, b) => {
+    this.pedidosFiltrados.sort((a, b) => {
       const valA = a[campo]?.toString().toLowerCase?.() ?? '';
       const valB = b[campo]?.toString().toLowerCase?.() ?? '';
 

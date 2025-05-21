@@ -1,0 +1,19 @@
+@use '../../../styles/variables' as *;
+
+
+// 🎯 Estilo de roles
+.rol-cliente {
+  color: $color-secundario;
+  font-weight: bold;
+}
+
+.rol-interno {
+  color: $color-primario;
+  font-weight: bold;
+}
+
+// 🔍 Búsqueda más estrecha y centrada
+.buscador-email {
+  max-width: 300px;
+  margin-bottom: 1.5rem;
+}
