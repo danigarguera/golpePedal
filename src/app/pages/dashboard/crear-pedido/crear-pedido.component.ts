@@ -45,6 +45,7 @@ export class CrearPedidoComponent implements OnInit {
     this.cargarClientes();
     this.cargarTiposComponente();
     this.cargarMarcas();
+    this.cargarTodosLosComponentes();
   }
 
   cargarClientes() {
@@ -56,9 +57,8 @@ export class CrearPedidoComponent implements OnInit {
 
   cargarTiposComponente() {
     this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-componente`).subscribe({
-      next: (res) => {
-        this.tiposComponente = [{ id: 0, nombre: '-- Todos los tipos --' }, ...res];
-      },
+      next: res => this.tiposComponente = res,
+
       error: () => this.error = 'Error cargando tipos de componente.'
     });
   }
@@ -87,21 +87,27 @@ export class CrearPedidoComponent implements OnInit {
     });
   }
 
-  ordenarPor(campo: 'nombre' | 'marca' | 'precio') {
-    if (this.ordenActual.campo === campo) {
-      this.ordenActual.ascendente = !this.ordenActual.ascendente;
+  campoOrden: string = '';
+  direccionOrden: 'asc' | 'desc' = 'asc';
+
+  ordenarPor(campo: string): void {
+    if (this.campoOrden === campo) {
+      this.direccionOrden = this.direccionOrden === 'asc' ? 'desc' : 'asc';
     } else {
-      this.ordenActual = { campo, ascendente: true };
+      this.campoOrden = campo;
+      this.direccionOrden = 'asc';
     }
 
-    this.componentesFiltrados.sort((a, b) => {
-      const valorA = a[campo] ?? '';
-      const valorB = b[campo] ?? '';
-      if (valorA < valorB) return this.ordenActual.ascendente ? -1 : 1;
-      if (valorA > valorB) return this.ordenActual.ascendente ? 1 : -1;
+    this.componentesFiltrados.sort((a: any, b: any) => {
+      const valorA = a[campo];
+      const valorB = b[campo];
+
+      if (valorA < valorB) return this.direccionOrden === 'asc' ? -1 : 1;
+      if (valorA > valorB) return this.direccionOrden === 'asc' ? 1 : -1;
       return 0;
     });
   }
+
 
   anadirAlCarrito(componente: ComponenteDTO) {
     const existente = this.carrito.find(c => c.componenteId === componente.id);
@@ -117,6 +123,16 @@ export class CrearPedidoComponent implements OnInit {
       });
     }
   }
+
+  cargarTodosLosComponentes() {
+    this.http.get<ComponenteDTO[]>(`${this.apiUrl}/componentes`).subscribe({
+      next: (res) => {
+        this.componentesFiltrados = res;
+      },
+      error: () => this.error = 'Error cargando los componentes.'
+    });
+  }
+
 
   eliminarDelCarrito(componenteId: number) {
     this.carrito = this.carrito.filter(c => c.componenteId !== componenteId);

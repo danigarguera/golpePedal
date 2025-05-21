@@ -1,16 +1,53 @@
-<div *ngIf="componente">
-  <h2>{{ componente.nombre }}</h2>
-  <p><strong>ID:</strong> {{ componente.id }}</p>
-  <p><strong>Tipo:</strong> {{ componente.tipo }}</p>
-  <p><strong>Marca:</strong> {{ componente.marca }}</p>
-  <p><strong>Descripción:</strong> {{ componente.descripcion }}</p>
-  <p><strong>Precio:</strong> {{ componente.precio | currency:'EUR' }}</p>
-</div>
+<div class="container py-4">
+  <div *ngIf="componente" class="sombra-suave borde-claro p-4 rounded-3 bg-white">
+    <div class="row g-4 align-items-start">
+      <!-- Columna imagen -->
+      <div class="col-md-5">
+        <img
+          [src]="componente.imagenUrl || 'https://placehold.co/500x350?text=Sin+imagen'"
+          alt="Imagen del componente"
+          class="img-fluid rounded border"
+        />
+      </div>
 
-<div *ngIf="!componente && !error">
-  <p class="text-muted">Cargando componente...</p>
-</div>
+      <!-- Columna detalles -->
+      <div class="col-md-7">
+        <h2 class="fw-bold mb-3 texto-grande d-flex align-items-center gap-2">
+          <i class="bi bi-box text-secondary"></i>
+          {{ componente.nombre }}
+        </h2>
 
-<div *ngIf="error" class="alert alert-danger">
-  {{ error }}
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <i class="bi bi-hash text-muted me-2"></i>
+            <strong>ID:</strong> {{ componente.id }}
+          </li>
+          <li class="mb-2">
+            <i class="bi bi-cpu text-muted me-2"></i>
+            <strong>Tipo:</strong> {{ componente.tipo }}
+          </li>
+          <li class="mb-2">
+            <i class="bi bi-tools text-muted me-2"></i>
+            <strong>Marca:</strong> {{ componente.marca }}
+          </li>
+          <li class="mb-2">
+            <i class="bi bi-card-text text-muted me-2"></i>
+            <strong>Descripción:</strong> {{ componente.descripcion || 'No disponible' }}
+          </li>
+          <li class="mb-2">
+            <i class="bi bi-tag text-muted me-2"></i>
+            <strong>Precio:</strong> {{ componente.precio | currency:'EUR' }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!componente && !error" class="alert alert-info mt-4">
+    <i class="bi bi-hourglass-split me-2"></i> Cargando componente...
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mt-4">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error }}
+  </div>
 </div>

@@ -1,9 +1,27 @@
-a {
-  text-decoration: none;
-  color: #007bff;
-}
+@use '../../../../styles/variables' as *;
 
-a.active {
-  font-weight: bold;
-  text-decoration: underline;
+.list-group-item {
+  font-family: $fuente-secundaria;
+  font-size: 1rem;
+  color: $color-texto;
+  border: none;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $color-fondo;
+  }
+
+  i {
+    color: $color-primario;
+  }
+
+  &.active {
+    background-color: $color-secundario;
+    color: white;
+
+    i {
+      color: white;
+    }
+  }
 }

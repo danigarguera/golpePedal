@@ -1,43 +1,67 @@
-<div class="container mt-4">
-  <h2>🛒 Crear Pedido</h2>
+<div class="container mt-4 max-ancho">
+  <h2 class="texto-grande fw-bold mb-4">
+    <i class="bi bi-bag-plus-fill me-2"></i> Crear Pedido
+  </h2>
 
-  <!-- Cliente -->
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label>Cliente</label>
-      <select class="form-select" [(ngModel)]="clienteSeleccionadoId" name="cliente">
-        <option *ngFor="let cliente of clientes" [value]="cliente.id">
-          {{ cliente.nombre }} {{ cliente.apellido1 }}
-        </option>
-      </select>
+  <div class="card sombra-suave borde-claro p-3 mb-4">
+    <h5 class="mb-3">Filtros de pedido</h5>
+
+    <div class="row g-3">
+      <!-- Cliente -->
+      <div class="col-md-4">
+        <label class="form-label">Cliente</label>
+        <select class="form-select input-estilizado" [(ngModel)]="clienteSeleccionadoId" name="cliente">
+          <option [ngValue]="null">-- Seleccionar cliente --</option>
+          <option *ngFor="let cliente of clientes" [value]="cliente.id">
+            {{ cliente.nombre }} {{ cliente.apellido1 }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Tipo de componente -->
+      <div class="col-md-4">
+        <label class="form-label">Tipo de componente</label>
+        <select class="form-select input-estilizado" [(ngModel)]="tipoSeleccionado"
+          (change)="filtrarComponentesPorTipo()" name="tipo">
+          <option [ngValue]="null">-- Todos los tipos --</option>
+          <option *ngFor="let tipo of tiposComponente" [ngValue]="tipo.id">{{ tipo.nombre }}</option>
+        </select>
+      </div>
+
+      <!-- Marca -->
+      <div class="col-md-4">
+        <label class="form-label">Marca</label>
+        <select class="form-select input-estilizado" [(ngModel)]="marcaSeleccionada"
+          (change)="filtrarComponentesPorTipo()" name="marca">
+          <option [ngValue]="null">-- Todas las marcas --</option>
+          <option *ngFor="let marca of marcas" [ngValue]="marca.id">{{ marca.nombre }}</option>
+        </select>
+      </div>
     </div>
   </div>
 
-  <!-- Filtro por tipo -->
-  <div class="mb-3">
-    <label>Tipo de componente</label>
-    <select class="form-select" [(ngModel)]="tipoSeleccionado" (change)="filtrarComponentesPorTipo()" name="tipo">
-      <option *ngFor="let tipo of tiposComponente" [value]="tipo.id">{{ tipo.nombre }}</option>
-    </select>
-  </div>
 
-  <!-- Filtro por marca -->
-  <div class="mb-3">
-    <label>Marca</label>
-    <select class="form-select" [(ngModel)]="marcaSeleccionada" (change)="filtrarComponentesPorTipo()" name="marca">
-      <option [ngValue]="null">-- Todas las marcas --</option>
-      <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre }}</option>
-    </select>
-  </div>
+  <!-- Componentes disponibles -->
+  <h4 class="mt-4 mb-3"><i class="bi bi-box-seam me-2"></i> Componentes disponibles</h4>
 
-  <!-- Componentes filtrados -->
-  <h4>📦 Componentes disponibles</h4>
-  <table class="table table-striped" *ngIf="componentesFiltrados.length > 0">
-    <thead>
+  <table class="table table-hover table-bordered align-middle sombra-suave">
+    <thead class="table-light">
       <tr>
-        <th (click)="ordenarPor('nombre')" style="cursor:pointer">Nombre</th>
-        <th (click)="ordenarPor('marca')" style="cursor:pointer">Marca</th>
-        <th (click)="ordenarPor('precio')" style="cursor:pointer">Precio</th>
+        <th class="sortable" (click)="ordenarPor('nombre')">
+          Nombre
+          <i *ngIf="campoOrden === 'nombre'" class="bi"
+            [ngClass]="{ 'bi-caret-up-fill': direccionOrden === 'asc', 'bi-caret-down-fill': direccionOrden === 'desc' }"></i>
+        </th>
+        <th class="sortable" (click)="ordenarPor('marca')">
+          Marca
+          <i *ngIf="campoOrden === 'marca'" class="bi"
+            [ngClass]="{ 'bi-caret-up-fill': direccionOrden === 'asc', 'bi-caret-down-fill': direccionOrden === 'desc' }"></i>
+        </th>
+        <th class="sortable" (click)="ordenarPor('precio')">
+          Precio
+          <i *ngIf="campoOrden === 'precio'" class="bi"
+            [ngClass]="{ 'bi-caret-up-fill': direccionOrden === 'asc', 'bi-caret-down-fill': direccionOrden === 'desc' }"></i>
+        </th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -45,26 +69,42 @@
       <tr *ngFor="let comp of componentesFiltrados">
         <td>{{ comp.nombre }}</td>
         <td>{{ comp.marca }}</td>
-        <td>{{ comp.precio | currency:'EUR' }}</td>
+        <td>{{ comp.precio | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
         <td>
-          <button class="btn btn-sm btn-success" (click)="anadirAlCarrito(comp)">➕ Añadir</button>
+          <button class="btn btn-sm btn-primario" (click)="anadirAlCarrito(comp)">
+            <i class="bi bi-cart-plus"></i> Añadir
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
 
+
   <!-- Carrito -->
-  <h4 class="mt-4">🧾 Componentes seleccionados</h4>
-  <ul class="list-group mb-3">
+  <h4 class="mt-5 mb-3"><i class="bi bi-clipboard-check me-2"></i> Componentes seleccionados</h4>
+  <ul class="list-group mb-3 sombra-suave">
     <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of carrito">
-      {{ item.nombre }} × {{ item.cantidad }} → {{ item.precio * item.cantidad | currency:'EUR' }}
-      <button class="btn btn-sm btn-danger" (click)="eliminarDelCarrito(item.componenteId)">❌</button>
+      <span>
+        {{ item.nombre }} × {{ item.cantidad }}
+      </span>
+      <span>
+        {{ item.precio * item.cantidad |currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+        <button class="btn btn-sm btn-outline-danger ms-2" (click)="eliminarDelCarrito(item.componenteId)">
+          <i class="bi bi-trash-fill"></i>
+        </button>
+      </span>
     </li>
   </ul>
 
-  <p><strong>Total:</strong> {{ calcularTotal() | currency:'EUR' }}</p>
-  <button class="btn btn-primary" (click)="crearPedido()">✅ Finalizar Pedido</button>
+  <!-- Total y Acción -->
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <h5>Total: {{ calcularTotal() |currency:'EUR':'symbol':'1.2-2':'es-ES' }}</h5>
+    <button class="btn btn-secundario" (click)="crearPedido()">
+      <i class="bi bi-check-circle me-1"></i> Finalizar Pedido
+    </button>
+  </div>
 
+  <!-- Mensajes -->
   <div *ngIf="mensaje" class="alert alert-success mt-3">{{ mensaje }}</div>
   <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
 </div>

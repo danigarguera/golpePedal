@@ -1,7 +1,7 @@
 <div class="container mt-4" *ngIf="direccion && carrito.length > 0; else cargando">
-  <h2>Revisar y confirmar pedido</h2>
+  <h2 class="texto-grande fw-bold">Revisar y confirmar pedido</h2>
 
-  <div class="card mt-4">
+  <div class="card mt-4 sombra-suave borde-claro rounded-3">
     <div class="card-header bg-light">
       <strong>Dirección de envío</strong>
     </div>
@@ -17,9 +17,9 @@
   </div>
 
   <div class="mt-4">
-    <h4>Productos en el pedido</h4>
+    <h4 class="fw-semibold">Productos en el pedido</h4>
     <table class="table table-bordered table-striped">
-      <thead>
+      <thead class="table-light">
         <tr>
           <th>Producto</th>
           <th>Cantidad</th>
@@ -31,19 +31,19 @@
         <tr *ngFor="let item of carrito">
           <td>{{ item.nombre }}</td>
           <td>{{ item.cantidad }}</td>
-          <td>{{ item.precio | currency:'EUR' }}</td>
-          <td>{{ item.precio * item.cantidad | currency:'EUR' }}</td>
+          <td>{{ item.precio | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+          <td>{{ item.precio * item.cantidad | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
         </tr>
       </tbody>
     </table>
 
-    <div class="text-end">
-      <h5>Total: {{ totalPedido | currency:'EUR' }}</h5>
+    <div class="text-end mt-3">
+      <h5>Total: {{ totalPedido | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</h5>
     </div>
   </div>
 
   <div class="mt-4 text-end">
-    <button class="btn btn-success" (click)="finalizarCompra()">Finalizar compra</button>
+    <button class="btn btn-secundario" (click)="finalizarCompra()">Finalizar compra</button>
   </div>
 </div>
 

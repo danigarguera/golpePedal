@@ -18,10 +18,10 @@ export class PedidosClientesComponent implements OnInit {
   estadoFiltro: string = '';
   cargando = false;
 
-  sortField: string = '';
-  sortDirection: 'asc' | 'desc' = 'asc';
+  campoOrden: string = '';
+  direccionOrden: 'asc' | 'desc' = 'asc';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.cargarPedidos();
@@ -33,11 +33,11 @@ export class PedidosClientesComponent implements OnInit {
     if (this.desde) params = params.set('desde', this.desde);
     if (this.hasta) params = params.set('hasta', this.hasta);
     if (this.estadoFiltro) params = params.set('estado', this.estadoFiltro);
-    console.log('🔍 Filtro estado enviado:', this.estadoFiltro);
 
     this.http.get<any[]>(`${environment.apiUrl}/pedidos/por-clientes`, { params }).subscribe({
       next: data => {
         this.pedidos = data;
+        this.ordenarPor(this.campoOrden); // reordena si ya había un campo
         this.cargando = false;
       },
       error: err => {
@@ -51,29 +51,30 @@ export class PedidosClientesComponent implements OnInit {
     this.http.put(`${environment.apiUrl}/pedidos/${pedido.id}/estado`, JSON.stringify(pedido.estado), {
       headers: { 'Content-Type': 'application/json' }
     }).subscribe({
-      next: () => alert('Estado actualizado correctamente'),
+      next: () => {
+        // aquí puedes usar un banner, toast, etc.
+        console.log('✅ Estado actualizado correctamente');
+      },
       error: err => {
         console.error('Error al actualizar estado:', err);
-        alert('No se pudo actualizar el estado');
       }
     });
   }
 
-
   ordenarPor(campo: string): void {
-    if (this.sortField === campo) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    if (this.campoOrden === campo) {
+      this.direccionOrden = this.direccionOrden === 'asc' ? 'desc' : 'asc';
     } else {
-      this.sortField = campo;
-      this.sortDirection = 'asc';
+      this.campoOrden = campo;
+      this.direccionOrden = 'asc';
     }
 
     this.pedidos.sort((a, b) => {
-      const valA = a[campo];
-      const valB = b[campo];
+      const valA = a[campo]?.toString().toLowerCase?.() ?? '';
+      const valB = b[campo]?.toString().toLowerCase?.() ?? '';
 
-      if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
-      if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+      if (valA < valB) return this.direccionOrden === 'asc' ? -1 : 1;
+      if (valA > valB) return this.direccionOrden === 'asc' ? 1 : -1;
       return 0;
     });
   }

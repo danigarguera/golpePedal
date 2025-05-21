@@ -8,9 +8,10 @@ export interface Componente {
   nombre: string;
   descripcion: string;
   precio: number;
-  tipo: string;         
-  marca: string;        
+  tipo: string;
+  marca: string;
   tipoBicicleta: string;
+  imagenUrl?: string;
 }
 
 

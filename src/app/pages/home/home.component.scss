@@ -1,0 +1,9 @@
+@use '../../../styles/variables' as *;
+
+h1, .card-title {
+  font-family: $fuente-principal;
+}
+
+.lead {
+  font-family: $fuente-secundaria;
+}

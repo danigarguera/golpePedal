@@ -1,50 +1,74 @@
-<h2>Mis direcciones</h2>
+<div class="container mt-4">
+  <h2 class="mb-4 texto-grande fw-bold">Mis direcciones</h2>
 
-<ul *ngIf="direcciones.length > 0; else sinDirecciones">
-  <li *ngFor="let dir of direcciones">
-    <strong>{{ dir.alias }}</strong>: {{ dir.calle }}, {{ dir.numero }}
-    <span *ngIf="dir.piso">, Piso {{ dir.piso }}</span> -
-    {{ dir.ciudad }}, {{ dir.provincia }} ({{ dir.codigoPostal }}), {{ dir.pais }}
-
-    <button (click)="editarDireccion(dir)">Editar</button>
-    <button (click)="eliminarDireccion(dir.id)">Eliminar</button>
-  </li>
-</ul>
-
-<ng-template #sinDirecciones>
-  <p class="text-muted">No tienes direcciones registradas.</p>
-</ng-template>
-
-<button (click)="iniciarNueva()">Añadir dirección</button>
-
-<form *ngIf="mostrarFormulario" [formGroup]="formDireccion" (ngSubmit)="onSubmit()">
-  <div *ngFor="let campo of ['alias', 'calle', 'numero', 'piso', 'ciudad', 'provincia', 'codigoPostal', 'pais']">
-    <label [for]="campo" class="form-label text-capitalize">{{ campo }}:</label>
-
-    <input type="text" [formControlName]="campo" [id]="campo" class="form-control"
-      [ngClass]="{ 'is-invalid': formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched }"
-      [attr.inputmode]="campo === 'numero' || campo === 'codigoPostal' ? 'numeric' : null"
-      [attr.pattern]="campo === 'numero' ? '\\d+' : campo === 'codigoPostal' ? '\\d{5}' : null" />
-
-
-    <div *ngIf="formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched" class="invalid-feedback">
-      <div *ngIf="formDireccion.get(campo)?.errors?.['required']">
-        Este campo es obligatorio.
-      </div>
-      <div *ngIf="formDireccion.get(campo)?.errors?.['minlength']">
-        Debe tener al menos 3 caracteres.
-      </div>
-      <div *ngIf="campo === 'numero' && formDireccion.get(campo)?.errors?.['pattern']">
-        Solo se permiten números enteros.
-      </div>
-      <div *ngIf="campo === 'codigoPostal' && formDireccion.get(campo)?.errors?.['pattern']">
-        Debe tener 5 dígitos numéricos.
+  <!-- Lista de direcciones -->
+  <div *ngIf="direcciones.length > 0; else sinDirecciones">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="col" *ngFor="let dir of direcciones">
+        <div class="card h-100 sombra-suave borde-claro">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ dir.alias }}</h5>
+            <p class="card-text small">
+              {{ dir.calle }}, {{ dir.numero }}
+              <span *ngIf="dir.piso">, piso {{ dir.piso }}</span><br />
+              {{ dir.codigoPostal }} {{ dir.ciudad }} ({{ dir.provincia }})<br />
+              {{ dir.pais }}
+            </p>
+            <div class="d-flex justify-content-end gap-2">
+              <button class="btn btn-secundario btn-sm me-2" (click)="editarDireccion(dir)">
+                <i class="bi bi-pencil"></i> Editar
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="eliminarDireccion(dir.id)">
+                <i class="bi bi-trash"></i> Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <br />
   </div>
 
-  <button type="submit" class="btn btn-success" [disabled]="formDireccion.invalid">
-    {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
-  </button>
-</form>
+  <!-- Sin direcciones -->
+  <ng-template #sinDirecciones>
+    <button class="btn btn-primario d-flex align-items-center gap-2" (click)="iniciarNueva()">
+      <i class="bi bi-plus"></i> Añadir dirección
+    </button>
+  </ng-template>
+
+  <!-- Botón añadir -->
+  <div class="mt-4">
+    <button class="btn btn-primario d-flex align-items-center gap-2" (click)="iniciarNueva()">
+      <i class="bi-file-earmark-plus"></i> Añadir dirección
+    </button>
+  </div>
+
+  <!-- Formulario -->
+  <form *ngIf="mostrarFormulario" [formGroup]="formDireccion" (ngSubmit)="onSubmit()" class="mt-4">
+    <div class="row g-3">
+      <div class="col-md-4"
+        *ngFor="let campo of ['alias', 'calle', 'numero', 'piso', 'ciudad', 'provincia', 'codigoPostal', 'pais']">
+        <label [for]="campo" class="form-label text-capitalize">{{ campo }}:</label>
+        <input type="text" class="form-control input-estilizado" [formControlName]="campo" [id]="campo"
+          [ngClass]="{ 'is-invalid': formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched }"
+          [attr.inputmode]="campo === 'numero' || campo === 'codigoPostal' ? 'numeric' : null"
+          [attr.pattern]="campo === 'numero' ? '\\d+' : campo === 'codigoPostal' ? '\\d{5}' : null" />
+
+        <div *ngIf="formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched" class="invalid-feedback">
+          <div *ngIf="formDireccion.get(campo)?.errors?.['required']">Este campo es obligatorio.</div>
+          <div *ngIf="formDireccion.get(campo)?.errors?.['minlength']">Debe tener al menos 3 caracteres.</div>
+          <div *ngIf="campo === 'numero' && formDireccion.get(campo)?.errors?.['pattern']">Solo se permiten números.
+          </div>
+          <div *ngIf="campo === 'codigoPostal' && formDireccion.get(campo)?.errors?.['pattern']">Debe tener 5 dígitos.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-secundario" [disabled]="formDireccion.invalid">
+        <i class="bi bi-save me-1"></i>
+        {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
+</div>

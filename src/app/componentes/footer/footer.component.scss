@@ -1,0 +1,11 @@
+@use '../../../styles/variables' as *;
+
+footer {
+  font-family: $fuente-secundaria;
+  font-size: 0.9rem;
+  border-top: 1px solid $color-borde;
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

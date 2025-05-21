@@ -97,6 +97,11 @@ export class GestionarComponentesComponent implements OnInit {
         : String(valorB).localeCompare(String(valorA));
     });
   }
+  getIconoOrden(campo: keyof ComponenteDTO): string {
+    if (this.ordenCampo !== campo) return '';
+    return this.ordenAscendente ? 'bi-caret-up-fill' : 'bi-caret-down-fill';
+  }
+
 
   limpiarFiltros(): void {
     this.filtroTipo = '';

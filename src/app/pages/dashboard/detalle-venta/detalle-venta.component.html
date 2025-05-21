@@ -1,57 +1,70 @@
-<div class="container mt-4" *ngIf="pedido; else cargando">
-  <h2 class="h4">🧾 Detalle de Venta #{{ pedido.id }}</h2>
+<div class="container py-4" *ngIf="pedido; else cargando">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="texto-grande fw-bold">Detalle de Venta #{{ pedido.id }}</h2>
+    <button class="btn btn-outline-dark d-print-none" (click)="imprimir()">
+      <i class="bi bi-printer"></i> Imprimir
+    </button>
+  </div>
 
-  <p><strong>Fecha:</strong> {{ pedido.fecha | date:'short' }}</p>
-  <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+  <div class="row g-4">
+    <!-- Info cliente y dirección -->
+    <div class="col-md-8">
+      <div class="card sombra-suave borde-claro mb-4">
+        <div class="card-body">
+          <p><strong>Fecha:</strong> {{ pedido.fecha | date:'short' }}</p>
+          <p><strong>Estado:</strong> {{ pedido.estado }}</p>
 
-  <hr>
+          <hr class="my-3" />
 
-  <h5>Cliente</h5>
-  <p>
-    {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }} {{ pedido.usuario.apellido2 }}<br>
-    {{ pedido.usuario.email }}<br>
-    {{ pedido.usuario.telefono }}
-  </p>
+          <h5>Cliente</h5>
+          <p class="mb-2">
+            {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }} {{ pedido.usuario.apellido2 }}<br />
+            {{ pedido.usuario.email }}<br />
+            {{ pedido.usuario.telefono }}
+          </p>
+        </div>
+      </div>
+    </div>
 
-  <ng-container *ngIf="pedido.direccion">
-    <h5>Dirección asociada</h5>
-    <address>
-      {{ pedido.direccion.alias }}<br>
-      {{ pedido.direccion.calle }}, {{ pedido.direccion.numero }}
-      <span *ngIf="pedido.direccion.piso">, piso {{ pedido.direccion.piso }}</span><br>
-      {{ pedido.direccion.codigoPostal }} {{ pedido.direccion.ciudad }} ({{ pedido.direccion.provincia }})<br>
-      {{ pedido.direccion.pais }}
-    </address>
-  </ng-container>
+    <!-- Logotipo o imagen empresa -->
+    <div class="col-md-4 d-flex justify-content-center align-items-start d-print-none">
+      <img src="/assets/logo-placeholder.svg" alt="Logotipo" class="img-fluid" style="max-height: 120px;" />
+    </div>
+  </div>
 
   <h5 class="mt-4">Componentes</h5>
-  <table class="table table-bordered table-sm">
-    <thead class="table-light">
-      <tr>
-        <th>Producto</th>
-        <th class="text-center">Cantidad</th>
-        <th class="text-end">Precio unitario</th>
-        <th class="text-end">Subtotal</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let linea of pedido.lineas">
-        <td>{{ linea.nombre }}</td>
-        <td class="text-center">{{ linea.cantidad }}</td>
-        <td class="text-end">{{ linea.precioUnitario | currency:'EUR' }}</td>
-        <td class="text-end">{{ linea.precioUnitario * linea.cantidad | currency:'EUR' }}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="text-end">
-    <h5>Total: {{ pedido.total | currency:'EUR' }}</h5>
+  <div class="table-responsive">
+    <table class="table table-bordered table-sm align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Producto</th>
+          <th class="text-center">Cantidad</th>
+          <th class="text-end">Precio unitario</th>
+          <th class="text-end">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let linea of pedido.lineas">
+          <td>{{ linea.nombre }}</td>
+          <td class="text-center">{{ linea.cantidad }}</td>
+          <td class="text-end">{{ linea.precioUnitario | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+          <td class="text-end">{{ linea.precioUnitario * linea.cantidad | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <div class="mt-4 text-center d-print-none">
-</div>
 
+  <div class="text-end mt-3">
+    <h5>Total: {{ pedido.total | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</h5>
+  </div>
+
+  <div class="text-center text-muted small mt-4">
+    Gracias por confiar en Golpe de Pedal<br>
+    Si tienes dudas sobre tu pedido, contáctanos en soporte&#64;golpedepedal.com
+  </div>
 </div>
 
 <ng-template #cargando>
-  <div class="alert alert-warning">Cargando venta...</div>
+  <div class="alert alert-warning mt-4">Cargando venta...</div>
 </ng-template>

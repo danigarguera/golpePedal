@@ -1,62 +1,82 @@
 <div class="container mt-4" *ngIf="pedido">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="h4">Factura del pedido #{{ pedido.id }}</h2>
-    <button class="btn btn-outline-secondary d-print-none" (click)="imprimir()">
+  <!-- Cabecera -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="texto-grande fw-bold">Factura del pedido #{{ pedido.id }}</h2>
+    <button class="btn btn-outline-dark d-print-none" (click)="imprimir()">
       <i class="bi bi-printer"></i> Imprimir
     </button>
   </div>
 
-  <p><strong>Fecha:</strong> {{ pedido.fecha | date:'short' }}</p>
-  <p><strong>Estado:</strong> {{ pedido.estado }}</p>
-
-  <hr>
-
-  <h5>Datos del cliente</h5>
-  <p>
-    {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }} {{ pedido.usuario.apellido2 }}<br>
-    {{ pedido.usuario.email }}<br>
-    {{ pedido.usuario.telefono }}
-  </p>
-
-  <h5>Dirección de envío</h5>
-  <address>
-    {{ pedido.direccion.alias }}<br>
-    {{ pedido.direccion.calle }}, {{ pedido.direccion.numero }}
-    <span *ngIf="pedido.direccion.piso">, piso {{ pedido.direccion.piso }}</span><br>
-    {{ pedido.direccion.codigoPostal }} {{ pedido.direccion.ciudad }} ({{ pedido.direccion.provincia }})<br>
-    {{ pedido.direccion.pais }}
-  </address>
-
-  <hr>
-
-  <h5>Productos</h5>
-  <table class="table table-bordered table-sm">
-    <thead class="table-light">
-      <tr>
-        <th>Producto</th>
-        <th class="text-center">Cantidad</th>
-        <th class="text-end">Precio unitario</th>
-        <th class="text-end">Subtotal</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let linea of pedido.lineas">
-        <td>{{ linea.nombre }}</td>
-        <td class="text-center">{{ linea.cantidad }}</td>
-        <td class="text-end">{{ linea.precioUnitario | currency:'EUR' }}</td>
-        <td class="text-end">{{ linea.precioUnitario * linea.cantidad | currency:'EUR' }}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="text-end">
-    <h5>Total: {{ pedido.total | currency:'EUR' }}</h5>
+  <!-- Fecha y Estado -->
+  <div class="mb-3">
+    <p><strong>Fecha:</strong> {{ pedido.fecha | date:'short' }}</p>
+    <p><strong>Estado:</strong> {{ pedido.estado }}</p>
   </div>
 
-  <hr class="mt-4">
+  <!-- Información cliente + logo -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-8">
+      <div class="sombra-suave borde-claro rounded-3 p-3 bg-white">
+        <h5 class="fw-semibold">Datos del cliente</h5>
+        <p>
+          {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }} {{ pedido.usuario.apellido2 }}<br>
+          {{ pedido.usuario.email }}<br>
+          {{ pedido.usuario.telefono }}
+        </p>
 
+        <h5 class="fw-semibold mt-4">Dirección de envío</h5>
+        <address class="mb-0">
+          {{ pedido.direccion.alias }}<br>
+          {{ pedido.direccion.calle }}, {{ pedido.direccion.numero }}
+          <span *ngIf="pedido.direccion.piso">, piso {{ pedido.direccion.piso }}</span><br>
+          {{ pedido.direccion.codigoPostal }} {{ pedido.direccion.ciudad }} ({{ pedido.direccion.provincia }})<br>
+          {{ pedido.direccion.pais }}
+        </address>
+      </div>
+    </div>
+
+    <!-- Lugar reservado para logotipo -->
+    <div class="col-md-4 text-center">
+      <div class="bg-light border rounded-3 p-4 h-100 d-flex align-items-center justify-content-center">
+        <img src="/assets/logo-placeholder.svg" alt="Logo Golpe de Pedal" class="img-fluid" style="max-height: 80px;" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Productos -->
+  <div class="card sombra-suave borde-claro rounded-3 mb-4">
+    <div class="card-header bg-light fw-semibold">Productos</div>
+    <div class="card-body p-0">
+      <table class="table table-bordered table-sm mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Producto</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-end">Precio unitario</th>
+            <th class="text-end">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let linea of pedido.lineas">
+            <td>{{ linea.nombre }}</td>
+            <td class="text-center">{{ linea.cantidad }}</td>
+            <td class="text-end">{{ linea.precioUnitario | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+            <td class="text-end">{{ linea.precioUnitario * linea.cantidad | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Total -->
+  <div class="text-end mb-4">
+    <h5 class="fw-bold">Total: {{ pedido.total | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</h5>
+  </div>
+
+  <!-- Mensaje final -->
   <div class="text-center text-muted small mt-4">
-    Gracias por confiar en Golpe de Pedal 🚴‍♂️<br>
+    Gracias por confiar en Golpe de Pedal<br>
     Si tienes dudas sobre tu pedido, contáctanos en soporte&#64;golpedepedal.com
   </div>
 </div>
