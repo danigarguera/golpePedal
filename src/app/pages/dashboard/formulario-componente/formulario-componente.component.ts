@@ -28,6 +28,8 @@ export class FormularioComponenteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    window.scrollTo({ top: 0});
+
     this.formulario = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],

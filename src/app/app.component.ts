@@ -11,7 +11,7 @@ import { BannerCarritoComponent } from './componentes/banner-carrito/banner-carr
   standalone: true,
   imports: [RouterOutlet, NavbarComponent, CommonModule, FooterComponent, BannerCarritoComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'golpe-pedal-frontend';
