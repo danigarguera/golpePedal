@@ -160,3 +160,65 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+// ✅ Botón de usuario logueado
+// 🟠 Botón de usuario estilo secundario
+.btn-usuario {
+  @include boton-estandar($color-secundario);
+
+  &:hover {
+    background-color: white;
+    color: $color-secundario;
+    border: 1px solid $color-secundario;
+  }
+
+  &:focus,
+  &:active {
+    background-color: white;
+    color: $color-secundario;
+    border: 1px solid $color-secundario;
+    box-shadow: 0 0 0 0.25rem rgba(255, 107, 0, 0.25);
+  }
+
+  min-width: 200px;
+  text-align: left;
+}
+
+
+// 🧾 Menú desplegable: mismo ancho que el botón
+.dropdown-menu-ajustada {
+  min-width: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+// 🧩 Estilos de ítems
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-family: $fuente-secundaria;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+// ❌ Botón de logout destacado
+.dropdown-item.logout {
+  color: $color-secundario;
+  font-weight: bold;
+
+  &:hover {
+    background-color: rgba(255, 107, 0, 0.1);
+  }
+}
+@media (max-width: 768px) {
+  .dropdown-menu-ajustada {
+    min-width: 100% !important;
+    width: 100% !important;
+  }
+}

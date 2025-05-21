@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     public roleService: RoleService,
     private carritoService: CarritoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Carga inicial del contador al iniciar app
@@ -40,9 +40,16 @@ export class NavbarComponent implements OnInit {
   }
 
   mostrarDashboard(): boolean {
-  const rol = this.roleService.getRol();
-  return rol === 'ROLE_ADMIN' || rol === 'ROLE_EMPLEADO';
-}
+    const rol = this.roleService.getRol();
+    return rol === 'ROLE_ADMIN' || rol === 'ROLE_EMPLEADO';
+  }
+
+  getNavbarClass(): string {
+    const rol = this.roleService.getRol();
+    return rol === 'ROLE_ADMIN' || rol === 'ROLE_EMPLEADO'
+      ? 'navbar-admin'
+      : 'navbar-cliente';
+  }
 
 
   logout(): void {
