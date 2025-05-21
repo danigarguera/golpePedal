@@ -2,42 +2,45 @@
 @use '../../../styles/mixins' as *;
 
 
-.navbar {
+// Tema por rol
+.navbar-cliente {
   background-color: $color-primario;
-  font-family: $fuente-principal;
-   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1030; 
-  padding: 0.5rem 1.5rem;
-}
 
-.navbar-brand {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: $color-secundario !important;
-}
+  .navbar-brand {
+    color: $color-secundario !important;
+  }
 
-.navbar .btn {
-  font-weight: 500;
-  font-family: $fuente-principal;
-}
+  .btn,
+  .btn-outline-light {
+    background-color: $color-secundario;
+    color: white;
+    border: none;
 
-.btn-outline-light {
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  color: white;
-
-  &:hover {
-    background-color: white;
-    color: $color-primario;
-    transition: 0.2s ease-in-out;
+    &:hover {
+      background-color: white;
+      color: $color-secundario;
+      border: 1px solid $color-secundario;
+    }
   }
 }
 
-.dropdown-menu {
-  font-family: $fuente-secundaria;
-  font-size: 0.95rem;
-}
+.navbar-admin {
+  background-color: $color-secundario;
 
-.badge {
-  font-size: 0.7rem;
-  padding: 0.35em 0.6em;
+  .navbar-brand {
+    color: $color-primario !important;
+  }
+
+  .btn,
+  .btn-outline-light {
+    background-color: $color-primario;
+    color: white;
+    border: none;
+
+    &:hover {
+      background-color: white;
+      color: $color-primario;
+      border: 1px solid $color-primario;
+    }
+  }
 }
