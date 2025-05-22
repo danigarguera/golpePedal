@@ -234,3 +234,25 @@ body {
     border: 1px solid transparent;
   }
 }
+
+.logo-img {
+  width: 100%;
+  max-width: 200px; // más grande que antes
+  height: auto;
+  display: block;
+
+  // Móviles pequeños
+  @media (max-width: 576px) {
+    max-width: 100px;
+  }
+
+  // Pantallas medianas
+  @media (min-width: 768px) {
+    max-width: 240px;
+  }
+
+  // Escritorio grande
+  @media (min-width: 1200px) {
+    max-width: 300px;
+  }
+}
