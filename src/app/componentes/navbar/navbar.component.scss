@@ -1,13 +1,16 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
-
 // Tema por rol
 .navbar-cliente {
   background-color: $color-primario;
 
   .navbar-brand {
     color: $color-secundario !important;
+  }
+
+  .logo-bg {
+    fill: $color-primario;
   }
 
   .btn,
@@ -31,6 +34,10 @@
     color: $color-primario !important;
   }
 
+  .logo-bg {
+    fill: $color-secundario;
+  }
+
   .btn,
   .btn-outline-light {
     background-color: $color-primario;
@@ -44,3 +51,14 @@
     }
   }
 }
+
+.logo-svg {
+  width: clamp(120px, 25vw, 200px);
+  height: auto;
+  display: block;
+
+  path {
+    fill: currentColor;
+  }
+}
+

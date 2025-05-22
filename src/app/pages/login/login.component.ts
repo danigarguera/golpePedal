@@ -68,4 +68,10 @@ export class LoginComponent {
     this.error = '';
     this.mensaje = '';
   }
+
+  continuarSinRegistrarse(): void {
+  this.router.navigate(['/']);
+}
+
+  
 }
