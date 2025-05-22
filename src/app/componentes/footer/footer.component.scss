@@ -1,11 +1,51 @@
-@use '../../../styles/variables' as *;
+@use '../../../styles/variables.scss' as *;
+@use '../../../styles/mixins' as *;
 
 footer {
+  background-color: $color-primario;
+  color: white;
   font-family: $fuente-secundaria;
   font-size: 0.9rem;
-  border-top: 1px solid $color-borde;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: none;
 
-  a:hover {
-    text-decoration: underline;
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 1;
+    flex-wrap: wrap;
+
+    .logo-svg {
+      width: 100%;
+      max-width: 80px;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .footer-text {
+      color: white;
+      display: flex;
+      flex-direction: column;
+
+      ul.list-inline {
+        flex-shrink: 0;
+      }
+
+      h5,
+      p {
+        margin: 0;
+      }
+    }
   }
 }

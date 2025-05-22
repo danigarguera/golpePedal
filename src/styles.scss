@@ -216,9 +216,21 @@ body {
     background-color: rgba(255, 107, 0, 0.1);
   }
 }
+
 @media (max-width: 768px) {
   .dropdown-menu-ajustada {
     min-width: 100% !important;
     width: 100% !important;
+  }
+}
+
+.btn-primario-invertido {
+  @include boton-estandar(white, $color-primario);
+  border: 1px solid $color-primario;
+
+  &:hover {
+    background-color: $color-primario;
+    color: white;
+    border: 1px solid transparent;
   }
 }

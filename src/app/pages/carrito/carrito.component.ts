@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { CarritoService, ProductoCarrito } from '../../services/carrito.service';
 
 
@@ -14,8 +14,10 @@ import { CarritoService, ProductoCarrito } from '../../services/carrito.service'
 })
 export class CarritoComponent implements OnInit {
   carrito: ProductoCarrito[] = [];
+  mostrarAvisoLogin = false;
 
-constructor(private carritoService: CarritoService, private router: Router) {}
+
+  constructor(private carritoService: CarritoService, private router: Router) { }
   ngOnInit(): void {
     this.cargarCarrito();
   }
@@ -39,20 +41,20 @@ constructor(private carritoService: CarritoService, private router: Router) {}
   }
 
   irASeleccionDireccion(): void {
-  console.log('🧪 Validando sesión manualmente...');
+    const token = localStorage.getItem('token');
 
-  const token = localStorage.getItem('token');
-  if (token) {
-    console.log('✅ Token encontrado, navegando...');
-    this.router.navigate(['/seleccionar-direccion']);
-  } else {
-    console.log('❌ Sin token, redirigiendo a login');
-    alert('Debes iniciar sesión para continuar');
-    this.router.navigate(['/login'], {
-      queryParams: { redirectTo: '/seleccionar-direccion' }
-    });
+    if (token) {
+      this.router.navigate(['/seleccionar-direccion']);
+    } else {
+      this.mostrarAvisoLogin = true;
+
+      // Oculta el aviso después de 3 segundos
+      setTimeout(() => {
+        this.mostrarAvisoLogin = false;
+      }, 1500);
+    }
   }
-}
+
 
 
 
