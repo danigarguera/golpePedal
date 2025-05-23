@@ -1,7 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AppComponent } from '../../app.component';
 import { ComponentesService, Componente } from '../../services/componentes.service';
+import { environment } from '../../../environments/environment';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-detalle-componente',
@@ -10,11 +13,23 @@ import { ComponentesService, Componente } from '../../services/componentes.servi
   templateUrl: './detalle-componente.component.html',
   styleUrls: ['./detalle-componente.component.scss']
 })
+
+
 export class DetalleComponenteComponent implements OnInit {
   componente: Componente | null = null;
   error = '';
+  apiUrl = environment.apiUrl;
+  imagenError = false;
+  bannerVisible = false;
+  appComponent = inject(AppComponent);
+
+
   componentesService = inject(ComponentesService);
   route = inject(ActivatedRoute);
+  carritoService = inject(CarritoService);
+
+  @Output() productoAñadido = new EventEmitter<void>();
+
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -30,4 +45,23 @@ export class DetalleComponenteComponent implements OnInit {
       this.error = 'ID inválido';
     }
   }
+
+  marcarImagenComoFallida(): void {
+    this.imagenError = true;
+  }
+
+  agregarAlCarrito(): void {
+  if (!this.componente) return;
+
+  this.carritoService.agregarProducto({
+    id: this.componente.id,
+    nombre: this.componente.nombre,
+    precio: this.componente.precio,
+    imagenUrl: `${this.apiUrl}/componentes/${this.componente.id}/imagen`
+  });
+
+  this.appComponent.mostrarBannerCarrito(); 
+}
+
+
 }

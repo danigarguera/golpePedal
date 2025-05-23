@@ -3,11 +3,12 @@
     <div class="row g-4 align-items-start">
       <!-- Columna imagen -->
       <div class="col-md-5">
-        <img
-          [src]="componente.imagenUrl || 'https://placehold.co/500x350?text=Sin+imagen'"
-          alt="Imagen del componente"
-          class="img-fluid rounded border"
-        />
+        <img *ngIf="componente && !imagenError" [src]="apiUrl + '/componentes/' + componente.id + '/imagen'"
+          (error)="marcarImagenComoFallida()" alt="Imagen del componente" class="img-fluid rounded border" />
+
+        <img *ngIf="imagenError" src="assets/img/imagen-no-disponible.webp" alt="Imagen por defecto"
+          class="img-fluid rounded border" />
+
       </div>
 
       <!-- Columna detalles -->
@@ -38,6 +39,10 @@
             <i class="bi bi-tag text-muted me-2"></i>
             <strong>Precio:</strong> {{ componente.precio | currency:'EUR' }}
           </li>
+          <button class="btn btn-secundario mt-3" (click)="agregarAlCarrito()" [disabled]="!componente">
+            <i class="bi bi-cart-plus me-1"></i>
+            Añadir al carrito
+          </button>
         </ul>
       </div>
     </div>

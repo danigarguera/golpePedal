@@ -1,11 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RoleService } from '../../services/role.service';
 
 @Component({
   selector: 'app-banner-carrito',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './banner-carrito.component.html',
-  styleUrl: './banner-carrito.component.scss'
+  styleUrls: ['./banner-carrito.component.scss']
 })
 export class BannerCarritoComponent {
+  private roleService = inject(RoleService);
 
+  getClasePorRol(): string {
+    const rol = this.roleService.getRol(); // ej: ROLE_CLIENTE, ROLE_ADMIN, ROLE_EMPLEADO
+
+    return rol === 'ROLE_ADMIN' || rol === 'ROLE_EMPLEADO'
+      ? 'banner-admin'
+      : 'banner-cliente';
+  }
 }
