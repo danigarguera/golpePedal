@@ -1,7 +1,13 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
-// Tema por rol
+.navbar-cliente,
+.navbar-admin {
+  position: sticky;
+  top: 0;
+  z-index: 1060; // mayor que el banner
+}
+
 .navbar-cliente {
   background-color: $color-primario;
 

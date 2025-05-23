@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { CarritoService } from '../../services/carrito.service'; 
+import { environment } from '../../../../src/environments/environment';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-tarjeta-producto',
@@ -19,14 +20,20 @@ export class TarjetaProductoComponent {
     imagenUrl?: string;
   };
 
-  @Output() productoAñadido = new EventEmitter<void>(); // ✅ emisor del banner
+  @Output() productoAñadido = new EventEmitter<void>();
 
-  constructor(private carritoService: CarritoService) {}
+  apiUrl = environment.apiUrl;
+  imagenFallida: { [id: number]: boolean } = {}; // ⬅️ NUEVO: mapa por ID
+
+  constructor(private carritoService: CarritoService) { }
 
   agregarAlCarrito(event: MouseEvent): void {
-    event.stopPropagation(); 
+    event.stopPropagation();
     this.carritoService.agregarProducto(this.producto);
+    this.productoAñadido.emit();
+  }
 
-    this.productoAñadido.emit(); // ✅ notificar al padre para mostrar banner
+  marcarImagenComoFallida(id: number): void {
+    this.imagenFallida[id] = true;
   }
 }

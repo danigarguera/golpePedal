@@ -8,37 +8,33 @@
       <!-- Nombre -->
       <div class="mb-3">
         <label for="nombre" class="form-label fw-semibold">Nombre</label>
-        <input id="nombre" type="text" class="form-control input-estilizado"
-               formControlName="nombre"
-               [ngClass]="{'is-invalid': formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched}" />
+        <input id="nombre" type="text" class="form-control input-estilizado" formControlName="nombre"
+          [ngClass]="{'is-invalid': formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched}" />
         <div class="invalid-feedback">El nombre es obligatorio.</div>
       </div>
 
       <!-- Descripción -->
       <div class="mb-3">
         <label for="descripcion" class="form-label fw-semibold">Descripción</label>
-        <textarea id="descripcion" rows="3" class="form-control input-estilizado"
-                  formControlName="descripcion"
-                  [ngClass]="{'is-invalid': formulario.get('descripcion')?.invalid && formulario.get('descripcion')?.touched}"></textarea>
+        <textarea id="descripcion" rows="3" class="form-control input-estilizado" formControlName="descripcion"
+          [ngClass]="{'is-invalid': formulario.get('descripcion')?.invalid && formulario.get('descripcion')?.touched}"></textarea>
         <div class="invalid-feedback">La descripción es obligatoria.</div>
       </div>
 
       <!-- Precio -->
       <div class="mb-3">
         <label for="precio" class="form-label fw-semibold">Precio (€)</label>
-        <input id="precio" type="number" min="0.01" step="0.01"
-               class="form-control input-estilizado"
-               formControlName="precio"
-               [ngClass]="{'is-invalid': formulario.get('precio')?.invalid && formulario.get('precio')?.touched}" />
+        <input id="precio" type="number" min="0.01" step="0.01" class="form-control input-estilizado"
+          formControlName="precio"
+          [ngClass]="{'is-invalid': formulario.get('precio')?.invalid && formulario.get('precio')?.touched}" />
         <div class="invalid-feedback">Introduce un precio válido mayor que cero.</div>
       </div>
 
       <!-- Tipo de Componente -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Tipo de Componente</label>
-        <select class="form-select input-estilizado"
-                formControlName="tipoComponenteId"
-                [ngClass]="{'is-invalid': formulario.get('tipoComponenteId')?.invalid && formulario.get('tipoComponenteId')?.touched}">
+        <select class="form-select input-estilizado" formControlName="tipoComponenteId"
+          [ngClass]="{'is-invalid': formulario.get('tipoComponenteId')?.invalid && formulario.get('tipoComponenteId')?.touched}">
           <option [ngValue]="null">-- Seleccionar --</option>
           <option *ngFor="let tipo of tiposComponente" [ngValue]="tipo.id">{{ tipo.nombre }}</option>
         </select>
@@ -48,9 +44,8 @@
       <!-- Marca -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Marca</label>
-        <select class="form-select input-estilizado"
-                formControlName="marcaId"
-                [ngClass]="{'is-invalid': formulario.get('marcaId')?.invalid && formulario.get('marcaId')?.touched}">
+        <select class="form-select input-estilizado" formControlName="marcaId"
+          [ngClass]="{'is-invalid': formulario.get('marcaId')?.invalid && formulario.get('marcaId')?.touched}">
           <option [ngValue]="null">-- Seleccionar --</option>
           <option *ngFor="let marca of marcas" [ngValue]="marca.id">{{ marca.nombre }}</option>
         </select>
@@ -60,14 +55,20 @@
       <!-- Tipo de Bicicleta -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Tipo de Bicicleta</label>
-        <select class="form-select input-estilizado"
-                formControlName="tipoBicicletaId"
-                [ngClass]="{'is-invalid': formulario.get('tipoBicicletaId')?.invalid && formulario.get('tipoBicicletaId')?.touched}">
+        <select class="form-select input-estilizado" formControlName="tipoBicicletaId"
+          [ngClass]="{'is-invalid': formulario.get('tipoBicicletaId')?.invalid && formulario.get('tipoBicicletaId')?.touched}">
           <option [ngValue]="null">-- Seleccionar --</option>
           <option *ngFor="let tipoBici of tiposBicicleta" [ngValue]="tipoBici.id">{{ tipoBici.nombre }}</option>
         </select>
         <div class="invalid-feedback">Selecciona un tipo de bicicleta.</div>
       </div>
+
+      <!-- Imagen -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Imagen del Componente</label>
+        <input type="file" class="form-control input-estilizado" (change)="onFileSelected($event)" accept="image/*" />
+      </div>
+
 
       <!-- Acciones -->
       <div class="d-flex justify-content-between mt-4">

@@ -1,10 +1,12 @@
 <div class="card tarjeta-producto sombra-suave borde-claro rounded-3 overflow-hidden">
   <a [routerLink]="['/componentes', producto.id]" class="text-decoration-none text-dark">
-    <img
-      [src]="producto.imagenUrl || 'https://placehold.co/300x200?text=Producto'"
-      class="card-img-top img-fluid"
-      alt="Imagen del producto"
-    />
+    <img *ngIf="!imagenFallida[producto.id]" [src]="apiUrl + '/componentes/' + producto.id + '/imagen'"
+      (error)="marcarImagenComoFallida(producto.id)" class="card-img-top img-fluid"
+      [alt]="'Imagen de ' + producto.nombre" />
+
+    <img *ngIf="imagenFallida[producto.id]" src="assets/img/imagen-no-disponible.webp" class="card-img-top img-fluid"
+      alt="Imagen por defecto" />
+
   </a>
 
   <div class="card-body d-flex flex-column">
