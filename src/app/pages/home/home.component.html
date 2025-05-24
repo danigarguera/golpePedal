@@ -1,28 +1,75 @@
-<div class="container py-5">
-  <h1 class="text-center mb-3 display-5 fw-bold texto-grande">
-    Bienvenido a Golpe de Pedal
-  </h1>
-  <p class="lead text-center">
-    Tu tienda online de bicicletas y componentes de confianza.
-  </p>
-  <hr class="my-4">
+<div class="container py-4">
 
-  <div class="row mt-4">
-    <div class="col-md-4 mb-4" *ngFor="let categoria of categorias">
-      <div class="card h-100 text-center sombra-suave borde-claro p-3">
-        <div class="card-body d-flex flex-column justify-content-center align-items-center">
-          <h5 class="card-title mb-3">{{ categoria }}</h5>
-          <button class="btn btn-secundario" (click)="verCategoria(categoria)">
-            Ver {{ categoria }}
-          </button>
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold texto-grande" style="font-family: $fuente-principal;">
+      ¡Bienvenido a Golpe de Pedal!
+    </h1>
+    <p class="lead" style="font-family: $fuente-secundaria;">
+      Energía y tecnología para tu bicicleta. Explora nuestras bicicletas y componentes de calidad.
+    </p>
+  </div>
+
+  <!-- Carrusel de bicicletas -->
+  <div id="carouselBicicletas" class="carousel slide mb-5 sombra-suave" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item" *ngFor="let bici of bicicletas; let i = index" [class.active]="i === 0">
+        <div class="contenedor-carrusel tarjeta-carrusel text-center">
+          <img *ngIf="!imagenFallida[bici.id]" [src]="apiUrl + '/componentes/' + bici.id + '/imagen'"
+            alt="{{ bici.nombre }}" (click)="verDetalle(bici.id)" (error)="marcarImagenComoFallida(bici.id)" />
+
+          <img *ngIf="imagenFallida[bici.id]" src="assets/img/imagen-no-disponible.webp" alt="Imagen no disponible"
+            (click)="verDetalle(bici.id)" />
+
+          <div class="descripcion-carrusel mt-3">
+            <h5>{{ bici.nombre }}</h5>
+            <p>{{ bici.descripcion }}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselBicicletas" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselBicicletas" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+
+
+  <!-- Título -->
+  <h2 class="text-center mb-4 texto-grande">Componentes destacados</h2>
+
+  <!-- Tarjetas aleatorias -->
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let c of destacados">
+      <div class="card h-100 sombra-suave borde-claro text-center">
+        <img *ngIf="!imagenFallida[c.id]" [src]="apiUrl + '/componentes/' + c.id + '/imagen'" class="card-img-top"
+          alt="{{ c.nombre }}" (error)="marcarImagenComoFallida(c.id)" style="object-fit: cover; max-height: 200px;" />
+
+        <img *ngIf="imagenFallida[c.id]" src="assets/img/imagen-no-disponible.webp" class="card-img-top"
+          alt="Imagen no disponible" style="object-fit: cover; max-height: 200px;" />
+
+        <div class="card-body">
+          <h5 class="card-title">{{ c.nombre }}</h5>
+          <p class="card-text">{{ c.descripcion }}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <button class="btn btn-sm btn-primario" (click)="verDetalle(c.id)">
+              Ver detalle
+            </button>
+            <button class="btn btn-sm btn-secundario" (click)="agregarAlCarrito(c)">
+              Añadir al carrito
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="text-center mt-5">
-    <a routerLink="/componentes" class="btn btn-primario btn-lg">
-      Ver todos los componentes
-    </a>
+  <!-- CTA -->
+  <div class="text-center mt-4">
+    <a routerLink="/componentes" class="btn btn-secundario btn-lg">Ver todos los componentes</a>
   </div>
 </div>

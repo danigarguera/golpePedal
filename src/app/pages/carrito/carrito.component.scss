@@ -18,8 +18,72 @@
     opacity: 0;
     transform: translateY(-5px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+// Estilo responsive para la tabla
+.table-responsive {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+}
+
+// Ajustes para filas y celdas en pantallas pequeñas
+@media (max-width: 576px) {
+  .table {
+    font-size: 0.875rem;
+  }
+
+  .table td,
+  .table th {
+    white-space: nowrap;
+    padding: 0.5rem;
+  }
+
+  .table thead {
+    display: none; // oculta cabecera en móvil
+  }
+
+  .table tbody tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    border: 1px solid $color-borde;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: white;
+  }
+
+  .table tbody td {
+    border: none !important;
+  }
+
+  .table tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.25rem;
+    color: $color-texto;
+  }
+}
+
+// Estilo para total + botones
+@media (max-width: 768px) {
+  .total-carrito {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+
+  .total-carrito h4 {
+    margin-bottom: 0.5rem;
+  }
+
+  .total-carrito button {
+    width: 100%;
+    margin-top: 0.5rem;
   }
 }

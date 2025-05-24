@@ -1,0 +1,70 @@
+@use '../../../styles/variables' as *;
+
+// Filtros y botón "Nuevo componente"
+@media (max-width: 576px) {
+  .row.g-3 > div {
+    margin-bottom: 1rem;
+  }
+
+  .row.g-3 .col-md-3 {
+    order: 3;
+  }
+
+  .row.g-3 .col-md-4:nth-child(2) {
+    order: 1;
+  }
+
+  .row.g-3 .col-md-4:nth-child(3) {
+    order: 2;
+  }
+}
+
+// Tabla responsive tipo tarjetas
+@media (max-width: 768px) {
+  .table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tbody tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid $color-borde;
+    border-radius: 0.5rem;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border: none !important;
+    font-family: $fuente-secundaria;
+
+    &::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: $color-texto;
+      margin-right: 1rem;
+    }
+  }
+
+  .table tbody td:last-child {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .table tbody td:last-child a,
+  .table tbody td:last-child button {
+    width: 100%;
+  }
+}
