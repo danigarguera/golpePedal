@@ -49,24 +49,23 @@
         </thead>
         <tbody>
             <tr *ngFor="let componente of componentesFiltrados">
-                <td>{{ componente.nombre }}</td>
-                <td>{{ componente.descripcion }}</td>
-                <td>{{ componente.precio | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
-                <td>{{ componente.tipo }}</td>
-                <td>{{ componente.marca }}</td>
-                <td>
+                <td data-label="Nombre">{{ componente.nombre }}</td>
+                <td data-label="Descripción">{{ componente.descripcion }}</td>
+                <td data-label="Precio">{{ componente.precio | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+                <td data-label="Tipo">{{ componente.tipo }}</td>
+                <td data-label="Marca">{{ componente.marca }}</td>
+                <td data-label="Acciones">
                     <a [routerLink]="['/dashboard/componentes/modificar', componente.id]"
                         class="btn btn-sm btn-primario me-2">
                         <i class="bi bi-pencil-square"></i> Editar
                     </a>
-
-
                     <button *ngIf="componente.id !== undefined" class="btn btn-sm btn-danger"
                         (click)="eliminar(componente.id!)">
                         <i class="bi bi-trash"></i> Eliminar
                     </button>
                 </td>
             </tr>
+
         </tbody>
     </table>
 

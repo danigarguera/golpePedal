@@ -78,12 +78,13 @@
     </thead>
     <tbody>
       <tr *ngFor="let venta of ventas" (click)="irADetalle(venta.id)" style="cursor: pointer">
-        <td>{{ venta.id }}</td>
-        <td>{{ venta.fecha | date: 'short' }}</td>
-        <td>{{ venta.cliente }}</td>
-        <td>{{ venta.empleado }}</td>
-        <td>{{ venta.total | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+        <td data-label="ID">{{ venta.id }}</td>
+        <td data-label="Fecha">{{ venta.fecha | date: 'short' }}</td>
+        <td data-label="Cliente">{{ venta.cliente }}</td>
+        <td data-label="Empleado">{{ venta.empleado }}</td>
+        <td data-label="Total">{{ venta.total | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
       </tr>
     </tbody>
+
   </table>
 </div>
