@@ -1,13 +1,15 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
+// Estilos comunes
 .navbar-cliente,
 .navbar-admin {
   position: sticky;
   top: 0;
-  z-index: 1060; // mayor que el banner
+  z-index: 1060; // Mayor que banners y overlays
 }
 
+// Estilo para CLIENTES
 .navbar-cliente {
   background-color: $color-primario;
 
@@ -17,6 +19,19 @@
 
   .logo-bg {
     fill: $color-primario;
+  }
+
+  .navbar-collapse,
+  .navbar-nav {
+    background-color: $color-primario;
+  }
+
+  .nav-link {
+    color: white !important;
+
+    &:hover {
+      color: lighten(white, 20%) !important;
+    }
   }
 
   .btn,
@@ -33,6 +48,7 @@
   }
 }
 
+// Estilo para ADMINISTRADORES
 .navbar-admin {
   background-color: $color-secundario;
 
@@ -42,6 +58,19 @@
 
   .logo-bg {
     fill: $color-secundario;
+  }
+
+  .navbar-collapse,
+  .navbar-nav {
+    background-color: $color-secundario;
+  }
+
+  .nav-link {
+    color: white !important;
+
+    &:hover {
+      color: lighten(white, 20%) !important;
+    }
   }
 
   .btn,
@@ -58,6 +87,7 @@
   }
 }
 
+// Logo adaptable
 .logo-svg {
   width: clamp(120px, 25vw, 200px);
   height: auto;
@@ -67,4 +97,3 @@
     fill: currentColor;
   }
 }
-
