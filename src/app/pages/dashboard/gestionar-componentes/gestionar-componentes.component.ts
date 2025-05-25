@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-gestionar-componentes',
@@ -67,13 +69,41 @@ export class GestionarComponentesComponent implements OnInit {
   }
 
   eliminar(id: number): void {
-    if (confirm('¿Estás seguro de que quieres eliminar este componente?')) {
-      this.componentesService.eliminar(id).subscribe({
-        next: () => this.cargarComponentes(),
-        error: (err) => console.error('❌ Error al eliminar componente:', err)
-      });
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará el componente permanentemente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.componentesService.eliminar(id).subscribe({
+          next: () => {
+            this.cargarComponentes();
+            Swal.fire({
+              icon: 'success',
+              title: 'Eliminado',
+              text: 'El componente fue eliminado correctamente',
+              timer: 1500,
+              showConfirmButton: false
+            });
+          },
+          error: (err) => {
+            console.error('❌ Error al eliminar componente:', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No se pudo eliminar el componente'
+            });
+          }
+        });
+      }
+    });
   }
+
 
   ordenarPor(campo: keyof ComponenteDTO, alternar: boolean = true): void {
     if (!campo) return;
