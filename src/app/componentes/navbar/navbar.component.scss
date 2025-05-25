@@ -14,11 +14,15 @@
   background-color: $color-primario;
 
   .navbar-brand {
-    color: $color-secundario !important;
+    color: $color-secundario;
   }
 
   .logo-bg {
     fill: $color-primario;
+  }
+
+  .logo-gb{
+    fill: $color-secundario;
   }
 
   .navbar-collapse,
