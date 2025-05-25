@@ -1,0 +1,53 @@
+[33mb9eb965[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfrontend-dev[m[33m, [m[1;31morigin/frontend-dev[m[33m)[m cambiando alerts
+[33m3db1971[m intentando arreglar las rutas
+[33m5f72b7a[m intentando arreglar las rutas
+[33m621d120[m Arreglado el deploy
+[33m85d3d4e[m Arregladas las rutas
+[33me7046f8[m Arreglado vista de pedidos
+[33m2b63bbc[m Arreglado vista de pedidos
+[33m3883860[m Arreglado vista de pedidos
+[33mea496e1[m Arreglado colores en movil
+[33mdef6d0e[m Arreglado el responsive
+[33me58ee52[m commit para despliegue en vercel
+[33mfe53020[m Enviroment cambiado
+[33m8c66452[m banner y añadir imagenes funcionando
+[33mff2137f[m[33m ([m[1;31morigin/desarrollo-frontend[m[33m, [m[1;32mdesarrollo-frontend[m[33m)[m Solo faltan imagenes
+[33m2c477a7[m Logo vectorizado guay en assets y metido
+[33m9a7ace2[m mejoras visuales, modal metido en inicio/registro
+[33m15e2622[m Mas estilos
+[33mbe7e34d[m Estilos en toda la pagina implementados
+[33m06deaf2[m estilos generales hasta gestion de componentes
+[33m538c680[m implementando estilos globales con boostrap
+[33m8d1ecb5[m validaciones listas y registro arreglado
+[33mf8e64cb[m todo listo y funcionando
+[33m8c88f89[m Añadido pedidos desde dasboard con modificacion de estado y navegacion a detalles de pedido
+[33m74fa06a[m Arreglado crear direccion desde carrito
+[33m1c597b1[m Todo funcionando, a la espera de estilos
+[33mb43ea89[m vistas para crud de componentes
+[33md6b57a5[m nuevas vistas de detalles de venta y cambio de rol de usuarios
+[33m0a2940e[m pedido-usuario y detalle peiddo-usuario funcionando
+[33mddff7dc[m crear pedido como empleado listo, a la espera de validar pedido
+[33m2eacce9[m Añadida vista protegida en dashboard para admin y vendedor que permite realizar ventas a los vendedores
+[33m594b6f6[m Implementado la vista del listado de pedidos
+[33m80a51e4[m Carrito implementado con seleccion de direccion, validar direccion y detalles de pedido
+[33m50e5dda[m añadido el carrito y acceso a componentes para usuarios no registrados
+[33m7048528[m añadido tarjeta producto, modificado componente y detalle componente y pagina de inicio
+[33mdbd34c5[m Añadidas nuevas vistas en usuario y funcionalidades de creacion de direcciones
+[33m5510d8f[m constante para la url al backend modificada e implementada en los servicios
+[33m57629e0[m vercel.json modificado para ajustar las rutas
+[33m1687bf8[m vercel.json modificado para apuntar a dist
+[33ma0c2130[m mas pruebas
+[33m7175fa1[m modificando angular.json
+[33mff8f2fd[m seguimos intentando desplegar
+[33mb46e996[m añadido favicon
+[33m826101d[m app routes con pathmatch full
+[33m2d10fc9[m nuevo intento modificando el vercel.json
+[33m6bab90d[m nuevo intento metiendo la carpeta dist
+[33m0a51b91[m seguimos probando cosas
+[33mbf3eadd[m añadido agnular.json
+[33m7e6bcd8[m ✅ Añadido vercel.json para redirecciones en Vercel
+[33m76f77ac[m 🔧 Corrigiendo ruta de build para Vercel
+[33mb1c608e[m ✅ Versión para el primer despliegue frontend lista para despliegue en Vercel
+[33m71dfc70[m ✅ Versión final frontend lista para despliegue en Vercel
+[33mb31d95a[m[33m ([m[1;32mmaster[m[33m)[m feat: frontend standalone Angular con autenticación y control de roles
+[33m39fc806[m initial commit
