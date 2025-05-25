@@ -1,0 +1,1 @@
+import{Ia as o,k as r,n as i,ya as e}from"./chunk-YAXSTRSO.js";var a=class t{constructor(n){this.http=n}apiUrl=`${o.apiUrl}/auth/me`;getUsuarioActual(){return this.http.get(this.apiUrl)}static \u0275fac=function(p){return new(p||t)(i(e))};static \u0275prov=r({token:t,factory:t.\u0275fac,providedIn:"root"})};export{a};

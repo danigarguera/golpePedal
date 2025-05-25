@@ -1,10 +1,15 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
 # Compiled output
-/dist
+# /dist ← COMENTADO PARA PERMITIR build de Angular
+#/dist
 /tmp
 /out-tsc
 /bazel-out
+
+# Solo permitir la carpeta necesaria para el build de producción
+!dist/golpe-pedal-frontend/browser/
+!dist/golpe-pedal-frontend/browser/**
 
 # Node
 /node_modules
@@ -40,4 +45,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Vercel
 .vercel
