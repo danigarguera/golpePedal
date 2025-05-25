@@ -13,10 +13,9 @@
     <p><strong>Estado:</strong> {{ pedido.estado }}</p>
   </div>
 
-  <!-- Información cliente + logo -->
-  <div class="row g-4 mb-4">
-    <div class="col-md-8">
-      <div class="sombra-suave borde-claro rounded-3 p-3 bg-white">
+  <div class="row align-items-start mb-4 datos-impresion">
+    <div class="col-12 col-md-8 cliente-info">
+      <div class="p-3 rounded border bg-white">
         <h5 class="fw-semibold">Datos del cliente</h5>
         <p>
           {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }} {{ pedido.usuario.apellido2 }}<br>
@@ -35,13 +34,12 @@
       </div>
     </div>
 
-    <!-- Lugar reservado para logotipo -->
-    <div class="col-md-4 text-center">
-      <div class="bg-light border rounded-3 p-4 h-100 d-flex align-items-center justify-content-center">
-        <img src="assets/logos/LogoNaranjaBueno.png" alt="Logo Golpe de Pedal" class="img-fluid" style="max-height: 80px;" />
-      </div>
+    <div class="col-12 col-md-4 text-md-end text-center mt-4 mt-md-0">
+      <img src="assets/logos/LogoNaranjaBueno.png" alt="Logo Golpe de Pedal" class="logo-factura" />
     </div>
   </div>
+
+
 
   <!-- Productos -->
   <div class="card sombra-suave borde-claro rounded-3 mb-4">
@@ -61,7 +59,8 @@
             <td>{{ linea.nombre }}</td>
             <td class="text-center">{{ linea.cantidad }}</td>
             <td class="text-end">{{ linea.precioUnitario | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
-            <td class="text-end">{{ linea.precioUnitario * linea.cantidad | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+            <td class="text-end">
+              {{ linea.precioUnitario * linea.cantidad | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
             </td>
           </tr>
         </tbody>
@@ -71,7 +70,9 @@
 
   <!-- Total -->
   <div class="text-end mb-4">
-    <h5 class="fw-bold">Total: {{ pedido.total | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</h5>
+    <h5 class="fw-bold">
+      Total: {{ pedido.total | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+    </h5>
   </div>
 
   <!-- Mensaje final -->
