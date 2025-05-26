@@ -63,11 +63,15 @@
         <div class="invalid-feedback">Selecciona un tipo de bicicleta.</div>
       </div>
 
-      <!-- Imagen -->
       <div class="mb-3">
-        <label class="form-label fw-semibold">Imagen del Componente</label>
-        <input type="file" class="form-control input-estilizado" (change)="onFileSelected($event)" accept="image/*" />
+        <label class="form-label fw-semibold d-block">Imagen del Componente</label>
+
+        <label class="btn btn-primario">
+          <i class="bi bi-upload me-2"></i> Seleccionar imagen
+          <input type="file" hidden (change)="onFileSelected($event)" accept="image/*" />
+        </label>
       </div>
+
 
 
       <!-- Acciones -->
