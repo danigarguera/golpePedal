@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RoleService } from '../../services/role.service';
 
@@ -12,9 +12,10 @@ import { RoleService } from '../../services/role.service';
 export class BannerCarritoComponent {
   private roleService = inject(RoleService);
 
-  getClasePorRol(): string {
-    const rol = this.roleService.getRol(); // ej: ROLE_CLIENTE, ROLE_ADMIN, ROLE_EMPLEADO
+  @Input() mostrar = false;
 
+  getClasePorRol(): string {
+    const rol = this.roleService.getRol(); 
     return rol === 'ROLE_ADMIN' || rol === 'ROLE_EMPLEADO'
       ? 'banner-admin'
       : 'banner-cliente';

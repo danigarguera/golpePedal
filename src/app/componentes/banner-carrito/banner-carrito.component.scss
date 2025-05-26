@@ -1,19 +1,35 @@
 @use '../../../styles/variables' as *;
 
+:host {
+  position: fixed;
+  top: 70px; // mismo alto que la navbar
+  left: 0;
+  right: 0;
+  z-index: 2500; // debajo de navbar, encima del resto
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
 .banner-carrito {
-  position: relative;
-  top: unset; 
-  margin: 0;
-  z-index: 1055;
-  color: white;
+  background-color: $color-secundario;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
   font-family: $fuente-principal;
   font-size: 1rem;
-  text-align: center;
-  padding: 0.75rem;
-  background-color: $color-secundario; // será sobrescrito por clase dinámica
-  animation: fadeInOut 1.5s ease-in-out forwards;
+  color: white;
+  transform: translateY(-100%);
+  transition: transform 0.4s ease-in-out;
+  pointer-events: auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 
+  // Estado visible
+  &.visible {
+    transform: translateY(0%);
+  }
+
+  // Variantes por rol
   &.banner-cliente {
     background-color: $color-secundario;
   }

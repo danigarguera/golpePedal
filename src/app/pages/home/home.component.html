@@ -1,5 +1,11 @@
 <div class="container py-4">
 
+  <div class="text-start mb-4">
+    <a routerLink="/componentes" class="btn btn-secundario btn-lg">
+      Ver todos los componentes
+    </a>
+  </div>
+
   <div class="text-center mb-5">
     <h1 class="display-5 fw-bold texto-grande" style="font-family: $fuente-principal;">
       ¡Bienvenido a Golpe de Pedal!
@@ -10,7 +16,7 @@
   </div>
 
   <!-- Carrusel de bicicletas -->
-  <div id="carouselBicicletas" class="carousel slide mb-5 sombra-suave" data-bs-ride="carousel">
+  <div id="carouselBicicletas" class="carousel slide mb-5 sombra-suave" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-inner">
       <div class="carousel-item" *ngFor="let bici of bicicletas; let i = index" [class.active]="i === 0">
         <div class="contenedor-carrusel tarjeta-carrusel text-center">
@@ -66,10 +72,5 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="text-center mt-4">
-    <a routerLink="/componentes" class="btn btn-secundario btn-lg">Ver todos los componentes</a>
   </div>
 </div>

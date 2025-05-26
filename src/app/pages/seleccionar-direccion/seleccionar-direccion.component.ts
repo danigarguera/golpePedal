@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { DireccionDTO, DireccionService } from '../../services/direccion.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service'; // ajusta si necesario
+import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-seleccionar-direccion',
@@ -15,40 +16,40 @@ import { AuthService } from '../../services/auth.service'; // ajusta si necesari
 export class SeleccionarDireccionComponent implements OnInit {
   direcciones: DireccionDTO[] = [];
   nuevaDireccion: DireccionDTO = this.inicializarDireccion();
-  usuarioId: number = 0; 
+  usuarioId: number = 0;
 
-  constructor(private direccionService: DireccionService, private router: Router,   private authService: AuthService) {
-     console.log('📌 Constructor SeleccionarDireccionComponent');
+  constructor(private direccionService: DireccionService, private router: Router, private authService: AuthService) {
+    console.log('📌 Constructor SeleccionarDireccionComponent');
   }
-  
-ngOnInit(): void {
-  this.authService.getUsuarioActual().subscribe({
-    next: (usuario) => {
-      this.usuarioId = usuario.id;
-      this.cargarDirecciones();
-    },
-    error: () => {
-      alert('Para finalizar la compra, por favor inicia sesión.');
-      this.router.navigate(['/login'], {
-        queryParams: { redirectTo: '/seleccionar-direccion' }
-      });
-    }
-  });
-}
+
+  ngOnInit(): void {
+    this.authService.getUsuarioActual().subscribe({
+      next: (usuario) => {
+        this.usuarioId = usuario.id;
+        this.cargarDirecciones();
+      },
+      error: () => {
+        alert('Para finalizar la compra, por favor inicia sesión.');
+        this.router.navigate(['/login'], {
+          queryParams: { redirectTo: '/seleccionar-direccion' }
+        });
+      }
+    });
+  }
 
 
-cargarDirecciones(): void {
-  this.direccionService.obtenerMisDirecciones().subscribe({
-    next: (direcciones) => {
-      console.log('✅ Direcciones cargadas:', direcciones);
-      this.direcciones = direcciones;
-    },
-    error: (err) => {
-      console.error('❌ Error al cargar direcciones:', err);
-      alert('No se pudieron cargar tus direcciones.');
-    }
-  });
-}
+  cargarDirecciones(): void {
+    this.direccionService.obtenerMisDirecciones().subscribe({
+      next: (direcciones) => {
+        console.log('✅ Direcciones cargadas:', direcciones);
+        this.direcciones = direcciones;
+      },
+      error: (err) => {
+        console.error('❌ Error al cargar direcciones:', err);
+        alert('No se pudieron cargar tus direcciones.');
+      }
+    });
+  }
 
 
   seleccionarDireccion(direccion: DireccionDTO): void {
@@ -63,7 +64,12 @@ cargarDirecciones(): void {
       next: dir => {
         this.direcciones.push(dir);
         this.nuevaDireccion = this.inicializarDireccion();
-        alert('Dirección añadida correctamente');
+        Swal.fire({
+          icon: 'success',
+          title: 'Dirección añadida correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        });
       },
       error: err => console.error('Error al crear dirección:', err)
     });
