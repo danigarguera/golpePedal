@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UsuarioService, Usuario } from '../../../services/usuario.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-mis-datos',
@@ -20,7 +22,7 @@ export class MisDatosComponent implements OnInit {
     private usuarioService: UsuarioService,
     private fb: FormBuilder,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.usuarioService.getDatosUsuario().subscribe({
@@ -41,6 +43,7 @@ export class MisDatosComponent implements OnInit {
     });
   }
 
+
   guardarCambios(): void {
     if (this.formUsuario.invalid) return;
 
@@ -48,14 +51,34 @@ export class MisDatosComponent implements OnInit {
 
     this.usuarioService.actualizarDatosUsuario(datosActualizados).subscribe({
       next: () => {
-        this.mensaje = '✅ Datos actualizados correctamente.';
+        this.mensaje = '';
         this.error = '';
+
+        Swal.fire({
+          title: '<i class="bi bi-check-circle-fill text-success me-2"></i> Datos actualizados',
+          html: 'Tus datos se han guardado correctamente.',
+          showConfirmButton: true,
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: 'btn btn-primario'
+          }
+        });
       },
       error: (err: HttpErrorResponse) => {
         console.error('❌ Error al actualizar datos:', err);
         this.mensaje = '';
-        this.error = '❌ Error al actualizar los datos.';
+
+        Swal.fire({
+          title: '<i class="bi bi-exclamation-triangle-fill text-danger me-2"></i> Error',
+          html: 'Hubo un problema al actualizar tus datos.',
+          showConfirmButton: true,
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: 'btn btn-danger'
+          }
+        });
       }
     });
   }
+
 }

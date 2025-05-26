@@ -8,7 +8,8 @@ import { UsuarioService, Usuario, PedidoComponenteDTO } from '../../../../../src
 import { PedidoService, PedidoRequestDTO, PedidoResponseDTO } from '../../../../../src/app/services/pedido.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../src/environments/environment';
-
+import Swal
+  from 'sweetalert2';
 @Component({
   selector: 'app-crear-pedido',
   standalone: true,
@@ -160,20 +161,38 @@ export class CrearPedidoComponent implements OnInit {
 
     this.pedidoService.crearPedidoComoEmpleado(body).subscribe({
       next: (pedidoCreado) => {
-        this.mensaje = ' Pedido creado exitosamente';
+        this.mensaje = '';
         this.error = '';
         this.carrito = [];
 
-        setTimeout(() => {
-          this.mensaje = '';
+        Swal.fire({
+          title: '<i class="bi bi-check-circle-fill text-success me-2"></i> Pedido creado',
+          html: 'El pedido ha sido creado correctamente.',
+          showConfirmButton: true,
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: 'btn btn-primario'
+          }
+        }).then(() => {
+          // Navega tras cerrar el alert
           this.router.navigate(['/dashboard/detalle-venta', pedidoCreado.id], {
             state: { pedido: pedidoCreado }
           });
-        }, 1000);
+        });
       },
       error: () => {
-        this.error = 'Error al crear el pedido';
+        this.error = '';
         this.mensaje = '';
+
+        Swal.fire({
+          title: '<i class="bi bi-exclamation-triangle-fill text-danger me-2"></i> Error',
+          html: 'No se pudo crear el pedido.',
+          showConfirmButton: true,
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: 'btn btn-danger'
+          }
+        });
       }
     });
   }
