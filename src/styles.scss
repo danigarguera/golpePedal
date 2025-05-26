@@ -11,6 +11,25 @@ $color-borde: #E0E0E0;
 $fuente-principal: 'Montserrat', sans-serif;
 $fuente-secundaria: 'Open Sans', sans-serif;
 
+.fondo-global {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, #ffffff 0%, #f7f8fa 100%);
+  background-image: repeating-linear-gradient(
+  45deg,
+  #ffffff,
+  #ffffff 10px,
+  #f7f8fa 10px,
+  #f7f8fa 20px
+);
+  pointer-events: none;
+}
+
+
 // 🔘 Botones personalizados
 @mixin boton-estandar($bg-color, $text-color: white) {
   background-color: $bg-color;
@@ -292,7 +311,7 @@ body {
     fill: white !important;
   }
 
-  
+
 
   .datos-impresion {
     display: flex !important;
