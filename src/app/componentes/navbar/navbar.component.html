@@ -56,9 +56,10 @@
                 <hr class="dropdown-divider" />
               </li>
               <li>
-                <a class="dropdown-item logout" (click)="logout(); cerrarMenu()">
+                <a href="#" class="dropdown-item logout" (click)="logout(); cerrarMenu(); $event.preventDefault()">
                   <i class="bi bi-box-arrow-right"></i> Cerrar sesión
                 </a>
+
               </li>
             </ul>
           </div>
