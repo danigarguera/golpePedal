@@ -1,5 +1,27 @@
 @use '../../../styles/variables' as *;
 
+
+.logo-home svg {
+  color: $color-primario; // O secundario, según quieras
+  max-width: 260px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.logo-svg .letras {
+  fill: currentColor;
+  stroke: none;
+  mask: url(#logo-mask);
+}
+
+.logo-svg .agujeros {
+  fill: white;
+  stroke: none;
+}
+
+
+
 h1,
 h2 {
   font-family: $fuente-principal;
