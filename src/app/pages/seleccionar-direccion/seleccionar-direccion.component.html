@@ -33,48 +33,48 @@
   </ng-template>
 
   <!-- Formulario para nueva dirección -->
-  <div class="mt-5">
-    <h4 class="mb-3"><i class="bi bi-plus-circle-fill me-2"></i>Añadir nueva dirección</h4>
-    <form (ngSubmit)="crearDireccion()" #direccionForm="ngForm" class="sombra-suave p-4 rounded-3 bg-white borde-claro">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label for="alias" class="form-label">Alias</label>
-          <input type="text" id="alias" class="form-control input-estilizado" [(ngModel)]="nuevaDireccion.alias" name="alias" required>
-        </div>
-        <div class="col-md-6">
-          <label for="calle" class="form-label">Calle</label>
-          <input type="text" id="calle" class="form-control input-estilizado" [(ngModel)]="nuevaDireccion.calle" name="calle" required>
-        </div>
-        <div class="col-md-3">
-          <label for="numero" class="form-label">Número</label>
-          <input type="text" id="numero" class="form-control input-estilizado" [(ngModel)]="nuevaDireccion.numero" name="numero" required>
-        </div>
-        <div class="col-md-3">
-          <label for="piso" class="form-label">Piso (opcional)</label>
-          <input type="text" id="piso" class="form-control input-estilizado" [(ngModel)]="nuevaDireccion.piso" name="piso">
-        </div>
-        <div class="col-md-3">
-          <label for="ciudad" class="form-label">Ciudad</label>
-          <input type="text" id="ciudad" class="form-control input-estilizado" [(ngModel)]="nuevaDireccion.ciudad" name="ciudad" required>
-        </div>
-        <div class="col-md-3">
-          <label for="provincia" class="form-label">Provincia</label>
-          <input type="text" id="provincia" class="form-control input-estilizado" [(ngModel)]="nuevaDireccion.provincia" name="provincia" required>
-        </div>
-        <div class="col-md-3">
-          <label for="codigoPostal" class="form-label">Código Postal</label>
-          <input type="text" id="codigoPostal" class="form-control input-estilizado" [(ngModel)]="nuevaDireccion.codigoPostal" name="codigoPostal" required>
-        </div>
-        <div class="col-md-3">
-          <label for="pais" class="form-label">País</label>
-          <input type="text" id="pais" class="form-control input-estilizado" [(ngModel)]="nuevaDireccion.pais" name="pais" required>
-        </div>
-        <div class="col-12 text-end mt-3">
-          <button type="submit" class="btn btn-secundario">
-            <i class="bi bi-save me-1"></i> Guardar dirección
-          </button>
+<div class="mt-5">
+  <h4 class="mb-3"><i class="bi bi-plus-circle-fill me-2"></i>Añadir nueva dirección</h4>
+
+  <form [formGroup]="formDireccion" (ngSubmit)="onSubmit()" class="sombra-suave p-4 rounded-3 bg-white borde-claro">
+    <div class="row g-3">
+      <div class="col-md-4"
+        *ngFor="let campo of ['alias', 'calle', 'numero', 'piso', 'ciudad', 'provincia', 'codigoPostal', 'pais']">
+        <label [for]="campo" class="form-label text-capitalize">{{ campo }}:</label>
+        <input
+          type="text"
+          class="form-control input-estilizado"
+          [formControlName]="campo"
+          [id]="campo"
+          [ngClass]="{ 'is-invalid': formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched }"
+          [attr.inputmode]="['numero', 'codigoPostal', 'piso'].includes(campo) ? 'numeric' : 'text'"
+          [attr.pattern]="
+            campo === 'numero' || campo === 'piso' ? '\\d+' :
+            campo === 'codigoPostal' ? '\\d{5}' : null
+          "
+        />
+
+        <!-- Validación -->
+        <div *ngIf="formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched" class="invalid-feedback">
+          <div *ngIf="formDireccion.get(campo)?.errors?.['required']">Este campo es obligatorio.</div>
+          <div *ngIf="formDireccion.get(campo)?.errors?.['minlength']">Debe tener al menos 3 caracteres.</div>
+          <div *ngIf="formDireccion.get(campo)?.errors?.['pattern']">
+            <ng-container [ngSwitch]="campo">
+              <span *ngSwitchCase="'numero'">Solo se permiten números.</span>
+              <span *ngSwitchCase="'codigoPostal'">Debe tener 5 dígitos.</span>
+              <span *ngSwitchCase="'piso'">Solo se permiten números.</span>
+              <span *ngSwitchDefault>Formato inválido.</span>
+            </ng-container>
+          </div>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+
+    <!-- Botón guardar -->
+    <div class="mt-4 text-end">
+      <button type="submit" class="btn btn-secundario" [disabled]="formDireccion.invalid">
+        <i class="bi bi-save me-1"></i> Guardar dirección
+      </button>
+    </div>
+  </form>
 </div>
