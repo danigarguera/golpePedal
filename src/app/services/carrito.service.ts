@@ -61,4 +61,9 @@ export class CarritoService {
   private actualizarContador() {
     this.refrescarContador();
   }
+
+  guardarCarrito(carrito: ProductoCarrito[]): void {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+  }
+
 }

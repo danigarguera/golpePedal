@@ -5,6 +5,8 @@ import { ComponentesService, Componente } from '../../../../src/app/services/com
 import { NgFor } from '@angular/common';
 import { environment } from '../../../../src/environments/environment';
 import { CarritoService } from '../../../../src/app/services/carrito.service';
+import { BannerService } from '../../services/banner.service';
+
 
 
 @Component({
@@ -23,7 +25,9 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private componentesService: ComponentesService,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private bannerService: BannerService
+
 
   ) { }
 
@@ -55,7 +59,9 @@ export class HomeComponent implements OnInit {
   }
 
   agregarAlCarrito(componente: Componente): void {
-  this.carritoService.agregarProducto(componente);
-}
+    this.carritoService.agregarProducto(componente);
+    this.bannerService.mostrarBannerTemporal(); 
+  }
+
 
 }

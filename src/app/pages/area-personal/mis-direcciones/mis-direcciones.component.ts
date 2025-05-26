@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService, Direccion } from '../../../services/usuario.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-mis-direcciones',
@@ -60,12 +62,26 @@ export class MisDireccionesComponent implements OnInit {
   }
 
   eliminarDireccion(id: number): void {
-    if (confirm('¿Seguro que deseas eliminar esta dirección?')) {
-      this.usuarioService.eliminarDireccion(id).subscribe({
-        next: () => this.cargarDirecciones(),
-        error: (err) => console.error('❌ Error al eliminar dirección', err)
-      });
-    }
+    Swal.fire({
+      title: '¿Eliminar dirección?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '<i class="bi bi-trash-fill"></i> Eliminar',
+      cancelButtonText: '<i class="bi bi-x-circle"></i> Cancelar',
+      customClass: {
+        confirmButton: 'btn btn-primario me-2',
+        cancelButton: 'btn btn-secundario'
+      },
+      buttonsStyling: false
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.usuarioService.eliminarDireccion(id).subscribe({
+          next: () => this.cargarDirecciones(),
+          error: (err) => console.error('❌ Error al eliminar dirección', err)
+        });
+      }
+    });
   }
 
   onSubmit(): void {

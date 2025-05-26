@@ -1,13 +1,17 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
-// Estilos comunes
 .navbar-cliente,
 .navbar-admin {
-  position: sticky;
+  position: fixed;
+  height: 70px;
   top: 0;
-  z-index: 1060; // Mayor que banners y overlays
+  left: 0;
+  right: 0;
+  z-index: 3000;
+  width: 100%;
 }
+
 
 // Estilo para CLIENTES
 .navbar-cliente {
@@ -21,7 +25,7 @@
     fill: $color-primario;
   }
 
-  .logo-gb{
+  .logo-gb {
     fill: $color-secundario;
   }
 

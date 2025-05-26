@@ -4,7 +4,7 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ComponentesService, Componente } from '../../services/componentes.service';
 import { TarjetaProductoComponent } from '../../componentes/tarjeta-producto/tarjeta-producto.component';
-import { AppComponent } from '../../app.component'; 
+import { BannerService } from '../../services/banner.service';
 
 @Component({
   selector: 'app-componentes',
@@ -21,7 +21,8 @@ import { AppComponent } from '../../app.component';
 export class ComponentesComponent implements OnInit {
   componentesService = inject(ComponentesService);
   route = inject(ActivatedRoute);
-  app = inject(AppComponent); 
+  bannerService = inject(BannerService);
+
 
   componentes: Componente[] = [];
   componentesOriginales: Componente[] = [];
@@ -62,6 +63,8 @@ export class ComponentesComponent implements OnInit {
 
   // ✅ Método que muestra el banner
   mostrarBannerDesdeTarjeta(): void {
-    this.app.mostrarBannerCarrito();
+    this.bannerService.mostrarBannerTemporal();
+
   }
+
 }

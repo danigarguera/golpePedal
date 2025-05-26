@@ -31,7 +31,17 @@
       <tbody>
         <tr *ngFor="let item of carrito">
           <td class="fw-semibold">{{ item.nombre }}</td>
-          <td>{{ item.cantidad }}</td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-sm btn-outline-secondary" (click)="restarCantidad(item)">
+                <i class="bi bi-dash"></i>
+              </button>
+              <span>{{ item.cantidad }}</span>
+              <button class="btn btn-sm btn-outline-secondary" (click)="sumarCantidad(item)">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+          </td>
           <td>{{ item.precio | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
           <td>{{ item.precio * item.cantidad | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
           <td>
