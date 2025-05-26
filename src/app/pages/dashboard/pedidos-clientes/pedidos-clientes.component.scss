@@ -1,0 +1,21 @@
+.estado-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+
+    select.form-select {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 0.25rem 0.5rem;
+        line-height: 1.2;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+    .estado-wrapper select.form-select {
+        font-size: 0.85rem;
+    }
+}

@@ -160,7 +160,7 @@ export class CrearPedidoComponent implements OnInit {
 
     this.pedidoService.crearPedidoComoEmpleado(body).subscribe({
       next: (pedidoCreado) => {
-        this.mensaje = '✅ Pedido creado exitosamente';
+        this.mensaje = ' Pedido creado exitosamente';
         this.error = '';
         this.carrito = [];
 
@@ -172,7 +172,7 @@ export class CrearPedidoComponent implements OnInit {
         }, 1000);
       },
       error: () => {
-        this.error = '❌ Error al crear el pedido';
+        this.error = 'Error al crear el pedido';
         this.mensaje = '';
       }
     });
