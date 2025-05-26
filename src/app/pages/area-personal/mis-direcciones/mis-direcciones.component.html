@@ -50,25 +50,31 @@
         <label [for]="campo" class="form-label text-capitalize">{{ campo }}:</label>
         <input type="text" class="form-control input-estilizado" [formControlName]="campo" [id]="campo"
           [ngClass]="{ 'is-invalid': formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched }"
-          [attr.inputmode]="campo === 'numero' || campo === 'codigoPostal' ? 'numeric' : null"
-          [attr.pattern]="campo === 'numero' ? '\\d+' : campo === 'codigoPostal' ? '\\d{5}' : null" />
+          [attr.inputmode]="['numero', 'codigoPostal', 'piso'].includes(campo) ? 'numeric' : 'text'" [attr.pattern]="
+          campo === 'numero' || campo === 'piso' ? '\\d+' :
+          campo === 'codigoPostal' ? '\\d{5}' : null
+        " />
 
+        <!-- Validación -->
         <div *ngIf="formDireccion.get(campo)?.invalid && formDireccion.get(campo)?.touched" class="invalid-feedback">
           <div *ngIf="formDireccion.get(campo)?.errors?.['required']">Este campo es obligatorio.</div>
           <div *ngIf="formDireccion.get(campo)?.errors?.['minlength']">Debe tener al menos 3 caracteres.</div>
-          <div *ngIf="campo === 'numero' && formDireccion.get(campo)?.errors?.['pattern']">Solo se permiten números.
-          </div>
-          <div *ngIf="campo === 'codigoPostal' && formDireccion.get(campo)?.errors?.['pattern']">Debe tener 5 dígitos.
+          <div *ngIf="formDireccion.get(campo)?.errors?.['pattern']">
+            <ng-container [ngSwitch]="campo">
+              <span *ngSwitchCase="'numero'">Solo se permiten números.</span>
+              <span *ngSwitchCase="'codigoPostal'">Debe tener 5 dígitos.</span>
+              <span *ngSwitchCase="'piso'">Solo se permiten números.</span>
+              <span *ngSwitchDefault>Formato inválido.</span>
+            </ng-container>
           </div>
         </div>
       </div>
-    </div>
-
+      <!-- Botón guardar -->
     <div class="mt-4">
       <button type="submit" class="btn btn-secundario" [disabled]="formDireccion.invalid">
         <i class="bi bi-save me-1"></i>
         {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
       </button>
     </div>
+    </div>
   </form>
-</div>
