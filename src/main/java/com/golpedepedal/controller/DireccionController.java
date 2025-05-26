@@ -32,9 +32,9 @@ public class DireccionController {
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         if (usuario.getRol().getNombre().equals("ROLE_ADMIN")) {
-            return service.obtenerTodas();  // ADMIN puede ver todas
+            return service.obtenerTodas();  
         } else {
-            return service.buscarPorUsuarioId(usuario.getId());  // CLIENTE solo sus direcciones
+            return service.buscarPorUsuarioId(usuario.getId());
         }
     }
 
