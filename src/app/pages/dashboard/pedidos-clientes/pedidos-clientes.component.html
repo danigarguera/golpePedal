@@ -85,14 +85,17 @@
           <td>{{ pedido.cliente }}</td>
           <td class="text-end">{{ pedido.total | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
           <td>
-            <select [(ngModel)]="pedido.estado" (change)="actualizarEstado(pedido)"
-              class="form-select input-estilizado">
-              <option value="PENDIENTE">Pendiente</option>
-              <option value="ENVIADO">Enviado</option>
-              <option value="ENTREGADO">Entregado</option>
-              <option value="CANCELADO">Cancelado</option>
-            </select>
+            <div class="estado-wrapper">
+              <select [(ngModel)]="pedido.estado" (change)="actualizarEstado(pedido)"
+                class="form-select input-estilizado">
+                <option value="PENDIENTE">Pendiente</option>
+                <option value="ENVIADO">Enviado</option>
+                <option value="ENTREGADO">Entregado</option>
+                <option value="CANCELADO">Cancelado</option>
+              </select>
+            </div>
           </td>
+
         </tr>
       </tbody>
     </table>
