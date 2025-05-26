@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { RoleService } from '../../services/role.service';
 import { CarritoService } from '../../services/carrito.service';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +17,8 @@ import { CarritoService } from '../../services/carrito.service';
 export class NavbarComponent implements OnInit {
   carritoCantidad = 0;
   logoUrl = '';
+
+  @ViewChild('navbarCollapse') navbarCollapse!: ElementRef;
 
   constructor(
     private router: Router,
@@ -63,5 +67,14 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('token');
     this.carritoService.vaciarCarrito();
     this.router.navigate(['/login']);
+  }
+
+  cerrarMenu(): void {
+    if (this.navbarCollapse?.nativeElement?.classList.contains('show')) {
+      const bsCollapse = new bootstrap.Collapse(this.navbarCollapse.nativeElement, {
+        toggle: false
+      });
+      bsCollapse.hide();
+    }
   }
 }

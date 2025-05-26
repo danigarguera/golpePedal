@@ -4,7 +4,7 @@
 .navbar-cliente,
 .navbar-admin {
   position: fixed;
-  height: 70px;
+  min-height: 70px;
   top: 0;
   left: 0;
   right: 0;
@@ -103,5 +103,21 @@
 
   path {
     fill: currentColor;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .navbar-collapse .btn,
+  .navbar-collapse .btn-usuario {
+    width: 100%;
+  }
+
+  .dropdown-menu-ajustada {
+    width: 100% !important;
   }
 }

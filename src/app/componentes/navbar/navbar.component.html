@@ -19,11 +19,11 @@
     </button>
 
     <!-- Contenido colapsable -->
-    <div class="collapse navbar-collapse" id="navbarContenido">
+    <div class="collapse navbar-collapse" id="navbarContenido" #navbarCollapse>
       <div class="ms-auto d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 mt-3 mt-lg-0">
 
         <!-- Carrito -->
-        <a class="btn btn-outline-light position-relative" routerLink="/carrito" title="Carrito">
+        <a class="btn btn-outline-light position-relative" routerLink="/carrito" (click)="cerrarMenu()" title="Carrito">
           <i class="bi bi-cart3"></i>
           <span *ngIf="carritoCantidad > 0"
             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -33,7 +33,7 @@
 
         <!-- Dashboard (empleado/admin) -->
         <a *ngIf="mostrarDashboard()" class="btn btn-outline-light d-flex align-items-center gap-1"
-          routerLink="/dashboard">
+          routerLink="/dashboard" (click)="cerrarMenu()">
           <i class="bi bi-arrow-left-circle"></i> Área de empleado
         </a>
 
@@ -48,7 +48,7 @@
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-ajustada" aria-labelledby="userDropdown">
               <li>
-                <a class="dropdown-item" routerLink="/area-personal">
+                <a class="dropdown-item" routerLink="/area-personal" (click)="cerrarMenu()">
                   <i class="bi bi-person-gear"></i> Área personal
                 </a>
               </li>
@@ -56,7 +56,7 @@
                 <hr class="dropdown-divider" />
               </li>
               <li>
-                <a class="dropdown-item logout" (click)="logout()">
+                <a class="dropdown-item logout" (click)="logout(); cerrarMenu()">
                   <i class="bi bi-box-arrow-right"></i> Cerrar sesión
                 </a>
               </li>
@@ -66,11 +66,11 @@
 
         <!-- Login si no está logueado -->
         <ng-template #loginBtn>
-          <a class="btn btn-secundario d-flex align-items-center gap-2 w-100 w-lg-auto" routerLink="/login">
+          <a class="btn btn-secundario d-flex align-items-center gap-2 w-100 w-lg-auto" routerLink="/login"
+            (click)="cerrarMenu()">
             <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
           </a>
         </ng-template>
-
       </div>
     </div>
   </div>
