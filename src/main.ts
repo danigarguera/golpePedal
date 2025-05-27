@@ -16,3 +16,4 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptors([AuthInterceptorFn]))
   ]
 });
+
