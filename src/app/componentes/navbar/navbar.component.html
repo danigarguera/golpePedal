@@ -11,6 +11,7 @@
           style="stroke:none" />
       </svg>
     </a>
+  <app-buscador class="ms-lg-auto me-2"></app-buscador>
 
     <!-- Botón hamburguesa -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido"
@@ -20,16 +21,8 @@
 
     <!-- Contenido colapsable -->
     <div class="collapse navbar-collapse" id="navbarContenido" #navbarCollapse>
-      <div class="ms-auto d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 mt-3 mt-lg-0">
-
-        <!-- Carrito -->
-        <a class="btn btn-outline-light position-relative" routerLink="/carrito" (click)="cerrarMenu()" title="Carrito">
-          <i class="bi bi-cart3"></i>
-          <span *ngIf="carritoCantidad > 0"
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {{ carritoCantidad }}
-          </span>
-        </a>
+      <div
+        class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 mt-3 mt-lg-0 ms-lg-auto">
 
         <!-- Dashboard (empleado/admin) -->
         <a *ngIf="mostrarDashboard()" class="btn btn-outline-light d-flex align-items-center gap-1"
@@ -70,6 +63,16 @@
           <a class="btn btn-secundario d-flex align-items-center gap-2 w-100 w-lg-auto" routerLink="/login"
             (click)="cerrarMenu()">
             <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+          </a>
+
+          <!-- Carrito -->
+          <a class="btn btn-outline-light position-relative" routerLink="/carrito" (click)="cerrarMenu()"
+            title="Carrito">
+            <i class="bi bi-cart3"></i>
+            <span *ngIf="carritoCantidad > 0"
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ carritoCantidad }}
+            </span>
           </a>
         </ng-template>
       </div>

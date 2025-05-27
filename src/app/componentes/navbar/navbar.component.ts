@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { RoleService } from '../../services/role.service';
 import { CarritoService } from '../../services/carrito.service';
+import { BuscadorComponent } from '../buscador/buscador.component';
+
 
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, BuscadorComponent],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
