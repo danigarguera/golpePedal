@@ -1,0 +1,18 @@
+<div class="buscador-navbar">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Buscar tipo de artículo"
+    [(ngModel)]="tipoInput"
+    list="sugerenciasTipos"
+    (keyup.enter)="onBuscar()"
+    (change)="onBuscar()" 
+  />
+
+  <datalist id="sugerenciasTipos">
+    <ng-container *ngIf="tipoInput.length > 0">
+      <option *ngFor="let tipo of tiposSugeridos" [value]="tipo"></option>
+    </ng-container>
+  </datalist>
+</div>
+

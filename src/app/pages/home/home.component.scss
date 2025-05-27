@@ -105,8 +105,34 @@ p.lead {
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: rgba(0, 0, 0, 0.5); // Fondo oscuro
-  border-radius: 50%;
-  padding: 1rem; // Tamaño más grande
-  filter: invert(1); // Flecha blanca
+  background-color: transparent !important;
+  background-image: none !important;
+  width: 3.5rem;
+  height: 3.5rem;
+  position: relative;
+}
+
+.carousel-control-prev-icon::after {
+  content: '‹';
+  font-size: 3.5rem;
+  color: $color-secundario;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.carousel-control-next-icon::after {
+  content: '›';
+  font-size: 3.5rem;
+  color: $color-secundario;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#carouselBicicletas {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
