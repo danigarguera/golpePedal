@@ -20,8 +20,8 @@
         <option *ngFor="let emp of empleados" [value]="emp.id">{{ emp.email }}</option>
       </select>
     </div>
-    <div class="col-md-2 text-end">
-      <button class="btn btn-primario w-100" (click)="cargarVentas()">
+    <div class="col-12 col-md-2 text-md-end">
+      <button class="btn btn-primario w-100 w-md-auto" (click)="cargarVentas()">
         <i class="bi bi-search me-1"></i> Filtrar
       </button>
     </div>
@@ -36,55 +36,35 @@
   </div>
 
   <!-- Tabla -->
-  <table *ngIf="ventas.length" class="table table-bordered table-hover mt-4">
-    <thead class="table-light">
-      <tr>
-        <th class="sortable" (click)="ordenarPor('id')">
-          ID
-          <i *ngIf="sortField === 'id'" class="bi" [ngClass]="{
-            'bi-caret-up-fill': sortDirection === 'asc',
-            'bi-caret-down-fill': sortDirection === 'desc'
-          }"></i>
-        </th>
-        <th class="sortable" (click)="ordenarPor('fecha')">
-          Fecha
-          <i *ngIf="sortField === 'fecha'" class="bi" [ngClass]="{
-            'bi-caret-up-fill': sortDirection === 'asc',
-            'bi-caret-down-fill': sortDirection === 'desc'
-          }"></i>
-        </th>
-        <th class="sortable" (click)="ordenarPor('cliente')">
-          Cliente
-          <i *ngIf="sortField === 'cliente'" class="bi" [ngClass]="{
-            'bi-caret-up-fill': sortDirection === 'asc',
-            'bi-caret-down-fill': sortDirection === 'desc'
-          }"></i>
-        </th>
-        <th class="sortable" (click)="ordenarPor('empleado')">
-          Empleado
-          <i *ngIf="sortField === 'empleado'" class="bi" [ngClass]="{
-            'bi-caret-up-fill': sortDirection === 'asc',
-            'bi-caret-down-fill': sortDirection === 'desc'
-          }"></i>
-        </th>
-        <th class="sortable" (click)="ordenarPor('total')">
-          Total
-          <i *ngIf="sortField === 'total'" class="bi" [ngClass]="{
-            'bi-caret-up-fill': sortDirection === 'asc',
-            'bi-caret-down-fill': sortDirection === 'desc'
-          }"></i>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let venta of ventas" (click)="irADetalle(venta.id)" style="cursor: pointer">
-        <td data-label="ID">{{ venta.id }}</td>
-        <td data-label="Fecha">{{ venta.fecha | date: 'short' }}</td>
-        <td data-label="Cliente">{{ venta.cliente }}</td>
-        <td data-label="Empleado">{{ venta.empleado }}</td>
-        <td data-label="Total">{{ venta.total | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
-      </tr>
-    </tbody>
-
-  </table>
-</div>
+  <div class="table-responsive mt-4">
+    <table *ngIf="ventas.length" class="table table-bordered table-hover clickable-table">
+      <thead class="table-light">
+        <tr>
+          <th class="sortable" (click)="ordenarPor('id')">ID <i *ngIf="sortField === 'id'" class="bi"
+              [ngClass]="{ 'bi-caret-up-fill': sortDirection === 'asc', 'bi-caret-down-fill': sortDirection === 'desc' }"></i>
+          </th>
+          <th class="sortable" (click)="ordenarPor('fecha')">Fecha <i *ngIf="sortField === 'fecha'" class="bi"
+              [ngClass]="{ 'bi-caret-up-fill': sortDirection === 'asc', 'bi-caret-down-fill': sortDirection === 'desc' }"></i>
+          </th>
+          <th class="sortable" (click)="ordenarPor('cliente')">Cliente <i *ngIf="sortField === 'cliente'" class="bi"
+              [ngClass]="{ 'bi-caret-up-fill': sortDirection === 'asc', 'bi-caret-down-fill': sortDirection === 'desc' }"></i>
+          </th>
+          <th class="sortable" (click)="ordenarPor('empleado')">Empleado <i *ngIf="sortField === 'empleado'" class="bi"
+              [ngClass]="{ 'bi-caret-up-fill': sortDirection === 'asc', 'bi-caret-down-fill': sortDirection === 'desc' }"></i>
+          </th>
+          <th class="sortable" (click)="ordenarPor('total')">Total <i *ngIf="sortField === 'total'" class="bi"
+              [ngClass]="{ 'bi-caret-up-fill': sortDirection === 'asc', 'bi-caret-down-fill': sortDirection === 'desc' }"></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venta of ventas" (click)="irADetalle(venta.id)">
+          <td data-label="ID">{{ venta.id }}</td>
+          <td data-label="Fecha">{{ venta.fecha | date: 'short' }}</td>
+          <td data-label="Cliente">{{ venta.cliente }}</td>
+          <td data-label="Empleado">{{ venta.empleado }}</td>
+          <td data-label="Total">{{ venta.total | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

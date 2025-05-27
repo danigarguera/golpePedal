@@ -9,7 +9,8 @@ import { environment } from '../../../../environments/environment';
   selector: 'app-ventas-empleados',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './ventas-empleados.component.html'
+  templateUrl: './ventas-empleados.component.html',
+  styleUrl:'./ventas-empleados.component.scss'
 })
 export class VentasEmpleadosComponent implements OnInit {
   ventas: any[] = [];
