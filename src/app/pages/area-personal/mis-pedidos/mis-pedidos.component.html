@@ -6,7 +6,7 @@
       <thead class="table-light">
         <tr>
           <th (click)="ordenarPor('id')" class="sortable">
-            ID
+            Pedido
             <i class="bi" [ngClass]="getIconoOrden('id')"></i>
           </th>
           <th (click)="ordenarPor('fecha')" class="sortable">
@@ -27,7 +27,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let pedido of pedidosPaginados">
-          <td>{{ pedido.id }}</td>
+          <td>{{ pedido.numeroPedido }}</td>
           <td>{{ pedido.fecha | date: 'short' }}</td>
           <td>{{ pedido.estado }}</td>
           <td>{{ pedido.total | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>

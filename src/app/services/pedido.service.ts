@@ -13,6 +13,7 @@ export interface LineaPedidoDTO {
 
 export interface PedidoResumenDTO {
   id: number;
+  numeroPedido: string;
   fecha: string;
   estado: string;
   total: number;
@@ -21,6 +22,7 @@ export interface PedidoResumenDTO {
 
 export interface VentaEmpleadoDTO {
   id: number;
+  numeroPedido: string;
   fecha: string; // o Date si lo parseas
   cliente: string;
   empleado: string;
@@ -36,6 +38,7 @@ export interface PedidoRequestDTO {
 
 export interface PedidoResponseDTO {
   id: number;
+  numeroPedido: string;
   usuarioId: number;
   fecha: string;
   estado: string;

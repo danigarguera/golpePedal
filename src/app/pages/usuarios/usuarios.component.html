@@ -19,7 +19,6 @@
     <table *ngIf="usuariosFiltrados.length" class="table table-bordered table-hover sombra-suave align-middle">
       <thead class="table-light">
         <tr>
-          <th>ID</th>
           <th>Nombre</th>
           <th>Email</th>
           <th>Rol</th>
@@ -28,12 +27,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let usuario of usuariosPaginados">
-          <td>{{ usuario.id }}</td>
           <td>{{ usuario.nombre }} {{ usuario.apellido1 }}</td>
           <td>{{ usuario.email }}</td>
           <td>
             <span [ngClass]="usuario.rol.nombre === 'ROLE_CLIENTE' ? 'rol-cliente' : 'rol-interno'">
-              {{ usuario.rol.nombre }}
+              {{ formatearRol(usuario.rol.nombre) }}
+
             </span>
           </td>
           <td>
@@ -63,7 +62,7 @@
         <button class="page-link" (click)="page = page - 1" [disabled]="page === 1">&laquo;</button>
       </li>
       <li class="page-item" *ngFor="let p of [].constructor(totalPaginas); let i = index"
-          [class.active]="page === i + 1">
+        [class.active]="page === i + 1">
         <button class="page-link" (click)="page = i + 1">{{ i + 1 }}</button>
       </li>
       <li class="page-item" [class.disabled]="page === totalPaginas">

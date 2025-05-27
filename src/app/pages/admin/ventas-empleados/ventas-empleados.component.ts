@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './ventas-empleados.component.html',
-  styleUrl:'./ventas-empleados.component.scss'
+  styleUrl: './ventas-empleados.component.scss'
 })
 export class VentasEmpleadosComponent implements OnInit {
   ventas: any[] = [];
@@ -21,13 +21,16 @@ export class VentasEmpleadosComponent implements OnInit {
   hasta: string = '';
   cargando = false;
 
+  paginaActual: number = 1;
+  ventasPorPagina: number = 10;
+
   sortField: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cargarEmpleados();
@@ -45,6 +48,22 @@ export class VentasEmpleadosComponent implements OnInit {
     });
   }
 
+  get ventasPaginadas(): any[] {
+    const inicio = (this.paginaActual - 1) * this.ventasPorPagina;
+    return this.ventas.slice(inicio, inicio + this.ventasPorPagina);
+  }
+
+  // Total de páginas calculado dinámicamente
+  get totalPaginas(): number {
+    return Math.ceil(this.ventas.length / this.ventasPorPagina);
+  }
+
+  // Cambiar de página
+  cambiarPagina(pagina: number): void {
+    if (pagina >= 1 && pagina <= this.totalPaginas) {
+      this.paginaActual = pagina;
+    }
+  }
   cargarVentas(): void {
     this.cargando = true;
 

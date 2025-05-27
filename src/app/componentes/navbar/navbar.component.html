@@ -11,7 +11,7 @@
           style="stroke:none" />
       </svg>
     </a>
-  <app-buscador class="ms-lg-auto me-2"></app-buscador>
+    <app-buscador class="ms-lg-auto me-2"></app-buscador>
 
     <!-- Botón hamburguesa -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido"
@@ -64,17 +64,16 @@
             (click)="cerrarMenu()">
             <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
           </a>
-
-          <!-- Carrito -->
-          <a class="btn btn-outline-light position-relative" routerLink="/carrito" (click)="cerrarMenu()"
-            title="Carrito">
-            <i class="bi bi-cart3"></i>
-            <span *ngIf="carritoCantidad > 0"
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {{ carritoCantidad }}
-            </span>
-          </a>
         </ng-template>
+
+        <!-- Carrito (siempre visible) -->
+        <a class="btn btn-outline-light position-relative" routerLink="/carrito" (click)="cerrarMenu()" title="Carrito">
+          <i class="bi bi-cart3"></i>
+          <span *ngIf="carritoCantidad > 0"
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ carritoCantidad }}
+          </span>
+        </a>
       </div>
     </div>
   </div>
