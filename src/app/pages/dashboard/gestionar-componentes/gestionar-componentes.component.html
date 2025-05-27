@@ -1,78 +1,77 @@
 <div class="container px-3 px-md-5 mt-4">
-    <!-- ya dentro de una container forzada a 100vw -->
-    <h2 class="texto-grande fw-bold mb-4">
-        <i class="bi bi-box-seam me-2"></i> Gestión de Componentes
-    </h2>
+  <h2 class="texto-grande fw-bold mb-4">
+    <i class="bi bi-box-seam me-2"></i> Gestión de Componentes
+  </h2>
 
-    <div class="row g-3 align-items-end sombra-suave p-3 borde-claro rounded-3 mb-4">
-        <!-- Filtro por tipo -->
-        <div class="col-12 col-md-4 order-1 order-md-2 mb-3">
-            <label for="filtroTipo" class="form-label">Filtrar por tipo</label>
-            <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-select input-estilizado">
-                <option value="">Todos</option>
-                <option *ngFor="let tipo of tiposDisponibles" [value]="tipo">{{ tipo }}</option>
-            </select>
-        </div>
-
-        <!-- Filtro por marca -->
-        <div class="col-12 col-md-4 order-2 order-md-3 mb-3">
-            <label for="filtroMarca" class="form-label">Filtrar por marca</label>
-            <select [(ngModel)]="filtroMarca" (change)="aplicarFiltros()" class="form-select input-estilizado">
-                <option value="">Todas</option>
-                <option *ngFor="let marca of marcasDisponibles" [value]="marca">{{ marca }}</option>
-            </select>
-        </div>
-
-        <!-- Botón Nuevo -->
-        <div class="col-12 col-md-3 order-3 order-md-1 mb-3">
-            <a routerLink="/dashboard/componentes/nuevo" class="btn btn-secundario w-100">
-                <i class="bi bi-plus-circle me-1"></i> Nuevo Componente
-            </a>
-        </div>
+  <div class="row g-3 align-items-end sombra-suave p-3 borde-claro rounded-3 mb-4">
+    <div class="col-12 col-md-4 order-1 order-md-2 mb-3">
+      <label for="filtroTipo" class="form-label">Filtrar por tipo</label>
+      <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-select input-estilizado">
+        <option value="">Todos</option>
+        <option *ngFor="let tipo of tiposDisponibles" [value]="tipo">{{ tipo }}</option>
+      </select>
     </div>
 
-
-    <div class="table-responsive">
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th class="sortable" (click)="ordenarPor('nombre')">Nombre <i class="bi"
-                            [ngClass]="getIconoOrden('nombre')"></i></th>
-                    <th class="sortable" (click)="ordenarPor('descripcion')">Descripción <i class="bi"
-                            [ngClass]="getIconoOrden('descripcion')"></i></th>
-                    <th class="sortable" (click)="ordenarPor('precio')">Precio <i class="bi"
-                            [ngClass]="getIconoOrden('precio')"></i></th>
-                    <th class="sortable" (click)="ordenarPor('tipo')">Tipo <i class="bi"
-                            [ngClass]="getIconoOrden('tipo')"></i></th>
-                    <th class="sortable" (click)="ordenarPor('marca')">Marca <i class="bi"
-                            [ngClass]="getIconoOrden('marca')"></i></th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let componente of componentesFiltrados">
-                    <td data-label="Nombre">{{ componente.nombre }}</td>
-                    <td data-label="Descripción">{{ componente.descripcion }}</td>
-                    <td data-label="Precio">{{ componente.precio | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
-                    <td data-label="Tipo">{{ componente.tipo }}</td>
-                    <td data-label="Marca">{{ componente.marca }}</td>
-                    <td data-label="Acciones">
-                        <div class="d-flex flex-wrap gap-2">
-                            <a [routerLink]="['/dashboard/componentes/modificar', componente.id]"
-                                class="btn btn-sm btn-primario">
-                                <i class="bi bi-pencil-square"></i> Editar
-                            </a>
-                            <button *ngIf="componente.id !== undefined"
-                                class="btn btn-sm btn-primario bg-danger border-0" (click)="eliminar(componente.id!)">
-                                <i class="bi bi-trash"></i> Eliminar
-                            </button>
-
-                        </div>
-                    </td>
-
-                </tr>
-            </tbody>
-        </table>
+    <div class="col-12 col-md-4 order-2 order-md-3 mb-3">
+      <label for="filtroMarca" class="form-label">Filtrar por marca</label>
+      <select [(ngModel)]="filtroMarca" (change)="aplicarFiltros()" class="form-select input-estilizado">
+        <option value="">Todas</option>
+        <option *ngFor="let marca of marcasDisponibles" [value]="marca">{{ marca }}</option>
+      </select>
     </div>
+
+    <div class="col-12 col-md-3 order-3 order-md-1 mb-3">
+      <a routerLink="/dashboard/componentes/nuevo" class="btn btn-secundario w-100">
+        <i class="bi bi-plus-circle me-1"></i> Nuevo Componente
+      </a>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="sortable" (click)="ordenarPor('nombre')">Nombre <i class="bi" [ngClass]="getIconoOrden('nombre')"></i></th>
+          <th class="sortable" (click)="ordenarPor('descripcion')">Descripción <i class="bi" [ngClass]="getIconoOrden('descripcion')"></i></th>
+          <th class="sortable" (click)="ordenarPor('precio')">Precio <i class="bi" [ngClass]="getIconoOrden('precio')"></i></th>
+          <th class="sortable" (click)="ordenarPor('tipo')">Tipo <i class="bi" [ngClass]="getIconoOrden('tipo')"></i></th>
+          <th class="sortable" (click)="ordenarPor('marca')">Marca <i class="bi" [ngClass]="getIconoOrden('marca')"></i></th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let componente of componentesPaginados">
+          <td>{{ componente.nombre }}</td>
+          <td>{{ componente.descripcion }}</td>
+          <td>{{ componente.precio | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+          <td>{{ componente.tipo }}</td>
+          <td>{{ componente.marca }}</td>
+          <td>
+            <div class="d-flex flex-wrap gap-2">
+              <a [routerLink]="['/dashboard/componentes/modificar', componente.id]" class="btn btn-sm btn-primario">
+                <i class="bi bi-pencil-square"></i> Editar
+              </a>
+              <button class="btn btn-sm btn-primario bg-danger border-0" (click)="eliminar(componente.id!)">
+                <i class="bi bi-trash"></i> Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <nav *ngIf="totalPaginas > 1" class="d-flex justify-content-center mt-4">
+    <ul class="pagination mb-0">
+      <li class="page-item" [class.disabled]="page === 1">
+        <button class="page-link" (click)="page = page - 1" [disabled]="page === 1">&laquo;</button>
+      </li>
+      <li class="page-item" *ngFor="let p of [].constructor(totalPaginas); let i = index" [class.active]="page === i + 1">
+        <button class="page-link" (click)="page = i + 1">{{ i + 1 }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="page === totalPaginas">
+        <button class="page-link" (click)="page = page + 1" [disabled]="page === totalPaginas">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
 </div>

@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-gestionar-componentes',
   standalone: true,
@@ -24,6 +23,9 @@ export class GestionarComponentesComponent implements OnInit {
 
   ordenCampo: keyof ComponenteDTO | '' = '';
   ordenAscendente: boolean = true;
+
+  page: number = 1;
+  pageSize: number = 10;
 
   constructor(
     private componentesService: ComponentesService,
@@ -65,7 +67,9 @@ export class GestionarComponentesComponent implements OnInit {
       const coincideMarca = this.filtroMarca ? c.marca === this.filtroMarca : true;
       return coincideTipo && coincideMarca;
     });
-    if (this.ordenCampo) this.ordenarPor(this.ordenCampo, false); // mantener orden actual
+
+    this.page = 1;
+    if (this.ordenCampo) this.ordenarPor(this.ordenCampo, false);
   }
 
   eliminar(id: number): void {
@@ -104,13 +108,12 @@ export class GestionarComponentesComponent implements OnInit {
     });
   }
 
-
   ordenarPor(campo: keyof ComponenteDTO, alternar: boolean = true): void {
     if (!campo) return;
 
     if (this.ordenCampo === campo && alternar) {
       this.ordenAscendente = !this.ordenAscendente;
-    } else if (alternar) {
+    } else if (alternar || this.ordenCampo !== campo) {
       this.ordenCampo = campo;
       this.ordenAscendente = true;
     }
@@ -127,15 +130,24 @@ export class GestionarComponentesComponent implements OnInit {
         : String(valorB).localeCompare(String(valorA));
     });
   }
+
   getIconoOrden(campo: keyof ComponenteDTO): string {
     if (this.ordenCampo !== campo) return '';
     return this.ordenAscendente ? 'bi-caret-up-fill' : 'bi-caret-down-fill';
   }
 
-
   limpiarFiltros(): void {
     this.filtroTipo = '';
     this.filtroMarca = '';
     this.aplicarFiltros();
+  }
+
+  get componentesPaginados(): ComponenteDTO[] {
+    const start = (this.page - 1) * this.pageSize;
+    return this.componentesFiltrados.slice(start, start + this.pageSize);
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.componentesFiltrados.length / this.pageSize);
   }
 }

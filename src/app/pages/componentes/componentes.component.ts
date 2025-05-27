@@ -23,7 +23,6 @@ export class ComponentesComponent implements OnInit {
   route = inject(ActivatedRoute);
   bannerService = inject(BannerService);
 
-
   componentes: Componente[] = [];
   componentesOriginales: Componente[] = [];
   error: string = '';
@@ -32,6 +31,9 @@ export class ComponentesComponent implements OnInit {
   filtroMarca: string = '';
   tiposDisponibles: string[] = [];
   marcasDisponibles: string[] = [];
+
+  page: number = 1;
+  pageSize: number = 10;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -59,12 +61,20 @@ export class ComponentesComponent implements OnInit {
       const coincideMarca = this.filtroMarca ? componente.marca === this.filtroMarca : true;
       return coincideTipo && coincideMarca;
     });
+
+    this.page = 1;
   }
 
-  // ✅ Método que muestra el banner
+  get componentesPaginados(): Componente[] {
+    const start = (this.page - 1) * this.pageSize;
+    return this.componentes.slice(start, start + this.pageSize);
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.componentes.length / this.pageSize);
+  }
+
   mostrarBannerDesdeTarjeta(): void {
     this.bannerService.mostrarBannerTemporal();
-
   }
-
 }

@@ -21,19 +21,38 @@
   <!-- Listado -->
   <div *ngIf="componentes.length > 0; else noComponentes">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-      <div class="col" *ngFor="let componente of componentes">
+      <div class="col" *ngFor="let componente of componentesPaginados">
         <app-tarjeta-producto [producto]="componente" (productoAñadido)="mostrarBannerDesdeTarjeta()" />
       </div>
     </div>
+
+    <!-- Paginación -->
+    <nav *ngIf="totalPaginas > 1" class="d-flex justify-content-center mt-4">
+      <ul class="pagination mb-0">
+        <li class="page-item" [class.disabled]="page === 1">
+          <button class="page-link" (click)="page = page - 1" [disabled]="page === 1">&laquo;</button>
+        </li>
+
+        <li class="page-item" *ngFor="let p of [].constructor(totalPaginas); let i = index"
+          [class.active]="page === i + 1">
+          <button class="page-link" (click)="page = i + 1">{{ i + 1 }}</button>
+        </li>
+
+        <li class="page-item" [class.disabled]="page === totalPaginas">
+          <button class="page-link" (click)="page = page + 1" [disabled]="page === totalPaginas">&raquo;</button>
+        </li>
+      </ul>
+    </nav>
   </div>
 
-
+  <!-- Sin resultados -->
   <ng-template #noComponentes>
     <div class="alert alert-info text-center mt-4">
       No hay componentes disponibles.
     </div>
   </ng-template>
 
+  <!-- Error -->
   <div *ngIf="error" class="alert alert-danger mt-3">
     {{ error }}
   </div>
