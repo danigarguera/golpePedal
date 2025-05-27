@@ -1,47 +1,60 @@
 <div class="container mt-4">
   <h2 class="texto-grande fw-bold mb-3">Mis pedidos</h2>
 
-  <table class="table table-bordered table-hover sombra-suave borde-claro" *ngIf="pedidos.length > 0; else sinPedidos">
-    <thead class="table-light">
-      <tr>
-        <th (click)="ordenarPor('id')" class="sortable">
-          ID
-          <i *ngIf="sortCampo === 'id'" class="bi" [ngClass]="sortAsc ? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
-        </th>
-        <th (click)="ordenarPor('fecha')" class="sortable">
-          Fecha
-          <i *ngIf="sortCampo === 'fecha'" class="bi"
-            [ngClass]="sortAsc ? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
-        </th>
-        <th (click)="ordenarPor('estado')" class="sortable">
-          Estado
-          <i *ngIf="sortCampo === 'estado'" class="bi"
-            [ngClass]="sortAsc ? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
-        </th>
-        <th (click)="ordenarPor('total')" class="sortable">
-          Total
-          <i *ngIf="sortCampo === 'total'" class="bi"
-            [ngClass]="sortAsc ? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
-        </th>
-        <th>Dirección</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let pedido of pedidos">
-        <td>{{ pedido.id }}</td>
-        <td>{{ pedido.fecha | date: 'short' }}</td>
-        <td>{{ pedido.estado }}</td>
-        <td>{{ pedido.total | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
-        <td>{{ pedido.direccionAlias }}</td>
-        <td>
-          <a [routerLink]="['/pedido', pedido.id]" class="btn btn-sm btn-primario">
-            <i class="bi bi-receipt me-1"></i> Ver detalle
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover sombra-suave borde-claro" *ngIf="pedidos.length > 0; else sinPedidos">
+      <thead class="table-light">
+        <tr>
+          <th (click)="ordenarPor('id')" class="sortable">
+            ID
+            <i class="bi" [ngClass]="getIconoOrden('id')"></i>
+          </th>
+          <th (click)="ordenarPor('fecha')" class="sortable">
+            Fecha
+            <i class="bi" [ngClass]="getIconoOrden('fecha')"></i>
+          </th>
+          <th (click)="ordenarPor('estado')" class="sortable">
+            Estado
+            <i class="bi" [ngClass]="getIconoOrden('estado')"></i>
+          </th>
+          <th (click)="ordenarPor('total')" class="sortable">
+            Total
+            <i class="bi" [ngClass]="getIconoOrden('total')"></i>
+          </th>
+          <th>Dirección</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidosPaginados">
+          <td>{{ pedido.id }}</td>
+          <td>{{ pedido.fecha | date: 'short' }}</td>
+          <td>{{ pedido.estado }}</td>
+          <td>{{ pedido.total | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+          <td>{{ pedido.direccionAlias }}</td>
+          <td>
+            <a [routerLink]="['/pedido', pedido.id]" class="btn btn-sm btn-primario">
+              <i class="bi bi-receipt me-1"></i> Ver detalle
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <nav *ngIf="totalPaginas > 1" class="d-flex justify-content-center mt-3">
+    <ul class="pagination mb-0">
+      <li class="page-item" [class.disabled]="page === 1">
+        <button class="page-link" (click)="page = page - 1" [disabled]="page === 1">&laquo;</button>
+      </li>
+      <li class="page-item" *ngFor="let p of [].constructor(totalPaginas); let i = index" [class.active]="page === i + 1">
+        <button class="page-link" (click)="page = i + 1">{{ i + 1 }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="page === totalPaginas">
+        <button class="page-link" (click)="page = page + 1" [disabled]="page === totalPaginas">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
 
   <ng-template #sinPedidos>
     <div class="alert alert-info mt-3">No tienes pedidos realizados.</div>

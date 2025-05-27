@@ -10,11 +10,12 @@ import { environment } from '../../../../environments/environment';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './pedidos-clientes.component.html',
- styleUrls: ['./pedidos-clientes.component.scss'],
+  styleUrls: ['./pedidos-clientes.component.scss'],
 })
 export class PedidosClientesComponent implements OnInit {
   pedidos: any[] = [];
   pedidosFiltrados: any[] = [];
+
   desde: string = '';
   hasta: string = '';
   estadoFiltro: string = '';
@@ -23,7 +24,10 @@ export class PedidosClientesComponent implements OnInit {
   campoOrden: string = '';
   direccionOrden: 'asc' | 'desc' = 'asc';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  page: number = 1;
+  pageSize: number = 10;
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.cargarPedidos();
@@ -35,13 +39,12 @@ export class PedidosClientesComponent implements OnInit {
     let params = new HttpParams();
     if (this.desde) params = params.set('desde', this.desde);
     if (this.hasta) params = params.set('hasta', this.hasta);
-    // estadoFiltro se filtra en frontend
 
     this.http.get<any[]>(`${environment.apiUrl}/pedidos/por-clientes`, { params }).subscribe({
       next: data => {
         this.pedidos = data;
         this.aplicarFiltroEstado();
-        this.ordenarPor(this.campoOrden); // si ya había orden
+        this.ordenarPor(this.campoOrden);
         this.cargando = false;
       },
       error: err => {
@@ -57,18 +60,12 @@ export class PedidosClientesComponent implements OnInit {
     } else {
       this.pedidosFiltrados = this.pedidos.filter(p => p.estado === this.estadoFiltro);
     }
-  }
-
-  actualizarEstado(pedido: any): void {
-    this.http.put(`${environment.apiUrl}/pedidos/${pedido.id}/estado`, JSON.stringify(pedido.estado), {
-      headers: { 'Content-Type': 'application/json' }
-    }).subscribe({
-      next: () => console.log('✅ Estado actualizado correctamente'),
-      error: err => console.error('Error al actualizar estado:', err)
-    });
+    this.page = 1;
   }
 
   ordenarPor(campo: string): void {
+    if (!campo) return;
+
     if (this.campoOrden === campo) {
       this.direccionOrden = this.direccionOrden === 'asc' ? 'desc' : 'asc';
     } else {
@@ -86,7 +83,25 @@ export class PedidosClientesComponent implements OnInit {
     });
   }
 
+  actualizarEstado(pedido: any): void {
+    this.http.put(`${environment.apiUrl}/pedidos/${pedido.id}/estado`, JSON.stringify(pedido.estado), {
+      headers: { 'Content-Type': 'application/json' }
+    }).subscribe({
+      next: () => console.log('✅ Estado actualizado correctamente'),
+      error: err => console.error('Error al actualizar estado:', err)
+    });
+  }
+
   irADetalle(id: number): void {
     this.router.navigate(['/dashboard/detalle-venta', id]);
+  }
+
+  get pedidosPaginados(): any[] {
+    const start = (this.page - 1) * this.pageSize;
+    return this.pedidosFiltrados.slice(start, start + this.pageSize);
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.pedidosFiltrados.length / this.pageSize);
   }
 }
