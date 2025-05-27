@@ -38,7 +38,7 @@
   </div>
 
   <div class="table-responsive mt-3">
-    <table *ngIf="pedidosFiltrados.length" class="table table-bordered align-middle sombra-suave">
+    <table *ngIf="pedidosFiltrados.length" class="table table-bordered align-middle sombra-suave clickable-pedidos">
       <thead class="table-light">
         <tr>
           <th class="sortable" (click)="ordenarPor('id')">
@@ -81,13 +81,15 @@
       <tbody>
         <tr *ngFor="let pedido of pedidosFiltrados">
           <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.id }}</td>
-          <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.fecha | date: 'short' }}</td>
+          <td (click)="irADetalle(pedido.id)">
+            <span class="fecha-link">{{ pedido.fecha | date: 'short' }}</span>
+          </td>
           <td>{{ pedido.cliente }}</td>
           <td class="text-end">{{ pedido.total | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
           <td>
             <div class="estado-wrapper">
               <select [(ngModel)]="pedido.estado" (change)="actualizarEstado(pedido)"
-                class="form-select input-estilizado">
+                class="form-select input-estilizado" [ngClass]="'estado-' + pedido.estado.toLowerCase()">
                 <option value="PENDIENTE">Pendiente</option>
                 <option value="ENVIADO">Enviado</option>
                 <option value="ENTREGADO">Entregado</option>
@@ -95,7 +97,6 @@
               </select>
             </div>
           </td>
-
         </tr>
       </tbody>
     </table>
