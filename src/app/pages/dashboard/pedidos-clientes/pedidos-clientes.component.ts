@@ -9,7 +9,8 @@ import { environment } from '../../../../environments/environment';
   selector: 'app-pedidos-clientes',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './pedidos-clientes.component.html'
+  templateUrl: './pedidos-clientes.component.html',
+ styleUrls: ['./pedidos-clientes.component.scss'],
 })
 export class PedidosClientesComponent implements OnInit {
   pedidos: any[] = [];
@@ -22,7 +23,7 @@ export class PedidosClientesComponent implements OnInit {
   campoOrden: string = '';
   direccionOrden: 'asc' | 'desc' = 'asc';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.cargarPedidos();

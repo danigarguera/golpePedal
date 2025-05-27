@@ -1,6 +1,6 @@
 @use '../../../styles/variables' as *;
 
-// Roles
+// 🎨 Roles
 .rol-cliente {
   color: $color-secundario;
   font-weight: bold;
@@ -11,57 +11,18 @@
   font-weight: bold;
 }
 
-// Buscador
+// 🔍 Buscador
 .buscador-email {
   max-width: 300px;
   margin-bottom: 1.5rem;
 }
 
-// Ajustes responsive tabla
-@media (max-width: 768px) {
+// 📱 Tabla responsive clásica con scroll horizontal (sin tarjetas)
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+
   .table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-  }
-
-  .table thead {
-    display: none;
-  }
-
-  .table tbody tr {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border: 1px solid $color-borde;
-    border-radius: 0.5rem;
-    background-color: white;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  }
-
-  .table tbody td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: none !important;
-
-    &::before {
-      content: attr(data-label);
-      font-weight: bold;
-      color: $color-texto;
-      margin-right: 0.5rem;
-    }
-  }
-
-  .table tbody td:last-child {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .table tbody td button {
-    width: 100%;
+    min-width: 700px;
   }
 }
