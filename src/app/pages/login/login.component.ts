@@ -11,7 +11,8 @@ import { jwtDecode } from 'jwt-decode';
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   email = '';
@@ -30,7 +31,7 @@ export class LoginComponent {
     private registroService: RegistroService,
     private carritoService: CarritoService,
     private router: Router
-  ) {}
+  ) { }
 
   login(): void {
     this.error = '';
@@ -48,9 +49,14 @@ export class LoginComponent {
     });
   }
 
-  registrarUsuario(): void {
+  registrarUsuario(form?: any): void {
     this.error = '';
     this.mensaje = '';
+
+    if (form?.invalid) {
+      return; // detiene el envío si hay errores de Angular
+    }
+
     this.registroService.registrar(this.usuario).subscribe({
       next: (res) => {
         localStorage.setItem('token', res.token);
@@ -63,6 +69,10 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    // Esto es opcional si ya controlas desde fuera cuándo mostrarlo
+  }
+
   toggleRegistro(): void {
     this.mostrarRegistro = !this.mostrarRegistro;
     this.error = '';
@@ -70,8 +80,8 @@ export class LoginComponent {
   }
 
   continuarSinRegistrarse(): void {
-  this.router.navigate(['/']);
-}
+    this.router.navigate(['/']);
+  }
 
-  
+
 }

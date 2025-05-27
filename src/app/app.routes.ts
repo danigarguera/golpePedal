@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
-import { RegistroComponent } from './pages/registro/registro.component';
 import { ComponentesComponent } from './pages/componentes/componentes.component';
 import { MisDatosComponent } from './pages/area-personal/mis-datos/mis-datos.component';
 import { MisDireccionesComponent } from './pages/area-personal/mis-direcciones/mis-direcciones.component';
@@ -15,7 +14,6 @@ import { RoleGuard } from './guards/role.guard';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegistroComponent },
 
   { path: 'componentes', component: ComponentesComponent },
   {
@@ -26,7 +24,6 @@ export const routes: Routes = [
 
   { path: 'carrito', component: CarritoComponent },
 
-  // ✅ Dashboard con vista de bienvenida como hijo
   {
     path: 'dashboard',
     component: DashboardComponent,
