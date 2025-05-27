@@ -1,109 +1,115 @@
-<!-- BACKDROP -->
-<div class="modal-backdrop show fade" style="background: rgba(0,0,0,0.5); position: fixed; inset: 0; z-index: 1040;">
-</div>
+<div class="container my-5 d-flex justify-content-center">
+  <div class="card sombra-suave rounded-4 p-4 w-100" style="max-width: 600px;">
 
-<!-- MODAL -->
-<div class="modal d-block" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4 rounded-4 sombra-suave">
-
-      <!-- CABECERA -->
-      <div class="modal-header border-0">
-        <h5 class="modal-title texto-grande">
-          {{ mostrarRegistro ? 'Registro de Usuario' : 'Iniciar Sesión' }}
-        </h5>
-      </div>
-
-      <!-- BODY -->
-      <div class="modal-body">
-        <!-- FORMULARIO LOGIN -->
-        <!-- FORMULARIO LOGIN -->
-        <form *ngIf="!mostrarRegistro" (ngSubmit)="login()">
-          <div class="mb-3">
-            <label>Email</label>
-            <input type="email" [(ngModel)]="email" name="email" class="form-control input-estilizado" required />
-          </div>
-
-          <div class="mb-3">
-            <label>Contraseña</label>
-            <input type="password" [(ngModel)]="password" name="password" class="form-control input-estilizado"
-              required />
-          </div>
-
-          <button type="submit" class="btn btn-primario w-100">
-            <i class="bi bi-box-arrow-in-right me-2"></i> Iniciar sesión
-          </button>
-
-          <!-- BOTÓN CONTINUAR SIN REGISTRARSE -->
-          <button type="button" class="btn btn-primario-invertido w-100 mt-3" (click)="continuarSinRegistrarse()">
-            <i class="bi bi-box-arrow-right me-2"></i> Continuar sin registrarse
-          </button>
-
-          <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
-        </form>
-
-
-        <!-- FORMULARIO REGISTRO -->
-        <form *ngIf="mostrarRegistro" (ngSubmit)="registrarUsuario()" novalidate>
-          <div class="mb-3">
-            <label>Nombre</label>
-            <input type="text" [(ngModel)]="usuario.nombre" name="nombre" class="form-control input-estilizado"
-              required />
-          </div>
-
-          <div class="mb-3">
-            <label>Primer Apellido</label>
-            <input type="text" [(ngModel)]="usuario.apellido1" name="apellido1" class="form-control input-estilizado"
-              required />
-          </div>
-
-          <div class="mb-3">
-            <label>Segundo Apellido</label>
-            <input type="text" [(ngModel)]="usuario.apellido2" name="apellido2" class="form-control input-estilizado" />
-          </div>
-
-          <div class="mb-3">
-            <label>DNI</label>
-            <input type="text" [(ngModel)]="usuario.dni" name="dni" class="form-control input-estilizado" required
-              pattern="^[0-9]{8}[A-Z]$" />
-          </div>
-
-          <div class="mb-3">
-            <label>Teléfono</label>
-            <input type="text" [(ngModel)]="usuario.telefono" name="telefono" class="form-control input-estilizado"
-              required pattern="^[0-9]{9}$" />
-          </div>
-
-          <div class="mb-3">
-            <label>Email</label>
-            <input type="email" [(ngModel)]="usuario.email" name="email" class="form-control input-estilizado"
-              required />
-          </div>
-
-          <div class="mb-3">
-            <label>Contraseña</label>
-            <input type="password" [(ngModel)]="usuario.password" name="password" class="form-control input-estilizado"
-              required minlength="6" />
-          </div>
-
-          <button type="submit" class="btn btn-primario w-100">
-            <i class="bi bi-person-check"></i> Registrarse
-          </button>
-
-          <div *ngIf="mensaje" class="text-success mt-2">{{ mensaje }}</div>
-          <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
-        </form>
-      </div>
-
-      <!-- FOOTER SIEMPRE VISIBLE -->
-      <div class="modal-footer border-0 justify-content-between">
-        <span>{{ mostrarRegistro ? '¿Ya tienes cuenta?' : '¿No tienes cuenta?' }}</span>
-        <button class="btn btn-secundario btn-sm" (click)="toggleRegistro()">
-          <i [class]="mostrarRegistro ? 'bi bi-box-arrow-in-left' : 'bi bi-person-plus'"></i>
-          {{ mostrarRegistro ? 'Volver a login' : 'Crear cuenta' }}
-        </button>
-      </div>
-
+    <!-- CABECERA -->
+    <div class="mb-4">
+      <h5 class="texto-grande">
+        {{ mostrarRegistro ? 'Registro de Usuario' : 'Iniciar Sesión' }}
+      </h5>
     </div>
+
+    <!-- FORMULARIO LOGIN -->
+    <form *ngIf="!mostrarRegistro" (ngSubmit)="login()">
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="email" class="form-control input-estilizado" required />
+      </div>
+
+      <div class="mb-3">
+        <label>Contraseña</label>
+        <input type="password" [(ngModel)]="password" name="password" class="form-control input-estilizado" required />
+      </div>
+
+      <button type="submit" class="btn btn-primario w-100">
+        <i class="bi bi-box-arrow-in-right me-2"></i> Iniciar sesión
+      </button>
+
+      <button type="button" class="btn btn-primario-invertido w-100 mt-3" (click)="continuarSinRegistrarse()">
+        <i class="bi bi-box-arrow-right me-2"></i> Continuar sin registrarse
+      </button>
+
+      <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
+    </form>
+
+    <!-- FORMULARIO REGISTRO -->
+    <form *ngIf="mostrarRegistro" #registroForm="ngForm" (ngSubmit)="registrarUsuario(registroForm)" novalidate>
+      <div class="mb-3">
+        <label>Nombre</label>
+        <input type="text" name="nombre" class="form-control input-estilizado" [(ngModel)]="usuario.nombre" required
+          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$" #nombre="ngModel"
+          [class.is-invalid]="registroForm.submitted && nombre.invalid" />
+        <div class="invalid-feedback" *ngIf="nombre.errors?.['required']">El nombre es obligatorio.</div>
+        <div class="invalid-feedback" *ngIf="nombre.errors?.['pattern']">Solo letras permitidas.</div>
+      </div>
+
+      <div class="mb-3">
+        <label>Primer Apellido</label>
+        <input type="text" name="apellido1" class="form-control input-estilizado" [(ngModel)]="usuario.apellido1"
+          required pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$" #apellido1="ngModel"
+          [class.is-invalid]="registroForm.submitted && apellido1.invalid" />
+        <div class="invalid-feedback" *ngIf="apellido1.errors?.['required']">El primer apellido es obligatorio.</div>
+        <div class="invalid-feedback" *ngIf="apellido1.errors?.['pattern']">Solo letras permitidas.</div>
+      </div>
+
+      <div class="mb-3">
+        <label>Segundo Apellido</label>
+        <input type="text" name="apellido2" class="form-control input-estilizado" [(ngModel)]="usuario.apellido2"
+          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]*$" #apellido2="ngModel"
+          [class.is-invalid]="registroForm.submitted && apellido2.invalid" />
+        <div class="invalid-feedback" *ngIf="apellido2.errors?.['pattern']">Solo letras permitidas.</div>
+      </div>
+
+      <div class="mb-3">
+        <label>DNI</label>
+        <input type="text" name="dni" class="form-control input-estilizado" [(ngModel)]="usuario.dni" required
+          pattern="^[0-9]{8}[A-Z]$" #dni="ngModel" [class.is-invalid]="registroForm.submitted && dni.invalid" />
+        <div class="invalid-feedback" *ngIf="dni.errors?.['required']">El DNI es obligatorio.</div>
+        <div class="invalid-feedback" *ngIf="dni.errors?.['pattern']">Debe tener formato 12345678A.</div>
+      </div>
+
+      <div class="mb-3">
+        <label>Teléfono</label>
+        <input type="text" name="telefono" class="form-control input-estilizado" [(ngModel)]="usuario.telefono"
+          required pattern="^[0-9]{9}$" #telefono="ngModel"
+          [class.is-invalid]="registroForm.submitted && telefono.invalid" />
+        <div class="invalid-feedback" *ngIf="telefono.errors?.['required']">El teléfono es obligatorio.</div>
+        <div class="invalid-feedback" *ngIf="telefono.errors?.['pattern']">Debe tener 9 dígitos numéricos.</div>
+      </div>
+
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control input-estilizado" [(ngModel)]="usuario.email" required
+          email #email="ngModel" [class.is-invalid]="registroForm.submitted && email.invalid" />
+        <div class="invalid-feedback" *ngIf="email.errors?.['required']">El email es obligatorio.</div>
+        <div class="invalid-feedback" *ngIf="email.errors?.['email']">Debe ser un email válido.</div>
+      </div>
+
+      <div class="mb-3">
+        <label>Contraseña</label>
+        <input type="password" name="password" class="form-control input-estilizado" [(ngModel)]="usuario.password"
+          required minlength="6" pattern="^\S+$" #password="ngModel"
+          [class.is-invalid]="registroForm.submitted && password.invalid" />
+        <div class="invalid-feedback" *ngIf="password.errors?.['required']">La contraseña es obligatoria.</div>
+        <div class="invalid-feedback" *ngIf="password.errors?.['minlength']">Mínimo 6 caracteres.</div>
+        <div class="invalid-feedback" *ngIf="password.errors?.['pattern']">No se permiten espacios.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primario w-100">
+        <i class="bi bi-person-check"></i> Registrarse
+      </button>
+
+      <div *ngIf="mensaje" class="text-success mt-2">{{ mensaje }}</div>
+      <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
+    </form>
+
+    <!-- TOGGLE -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <span>{{ mostrarRegistro ? '¿Ya tienes cuenta?' : '¿No tienes cuenta?' }}</span>
+      <button class="btn btn-secundario btn-sm" (click)="toggleRegistro()">
+        <i [class]="mostrarRegistro ? 'bi bi-box-arrow-in-left' : 'bi bi-person-plus'"></i>
+        {{ mostrarRegistro ? 'Volver a login' : 'Crear cuenta' }}
+      </button>
+    </div>
+
   </div>
 </div>
