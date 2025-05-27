@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -44,6 +45,10 @@ public class Pedido {
     private Estado estado;
 
     private BigDecimal total;
+    
+    @Column(name = "numero_pedido", unique = true)
+    private String numeroPedido;
+
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoComponente> pedidoComponentes;
@@ -123,6 +128,14 @@ public class Pedido {
 
 	public void setEmpleado(Usuario empleado) {
 		this.empleado = empleado;
+	}
+
+	public String getNumeroPedido() {
+		return numeroPedido;
+	}
+
+	public void setNumeroPedido(String numeroPedido) {
+		this.numeroPedido = numeroPedido;
 	}
     
     

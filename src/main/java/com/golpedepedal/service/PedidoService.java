@@ -28,7 +28,8 @@ public interface PedidoService {
     public PedidoResponseDTO getPedidoDetallePorId(Long id);
     
     PedidoResponseDTO crearPedidoComoEmpleado(PedidoRequestDTO dto, String emailEmpleado);
+    
+    String generarNumeroPedido();
 
-    List<Pedido> findByUsuarioAndDireccionIsNotNull(Usuario usuario);
 
 }

@@ -10,10 +10,13 @@ public class PedidoResumenDTO {
     private String estado;
     private BigDecimal total;
     private String direccionAlias;
+    private String numeroPedido;
 
 
-    public PedidoResumenDTO(Long id, LocalDateTime fecha, String estado, BigDecimal total, String direccionAlias) {
+
+    public PedidoResumenDTO(Long id, String numeroPedido, LocalDateTime fecha, String estado, BigDecimal total, String direccionAlias) {
         this.id = id;
+        this.numeroPedido = numeroPedido;
         this.fecha = fecha;
         this.estado = estado;
         this.total = total;
@@ -63,4 +66,14 @@ public class PedidoResumenDTO {
     public void setDireccionAlias(String direccionAlias) {
         this.direccionAlias = direccionAlias;
     }
+
+	public String getNumeroPedido() {
+		return numeroPedido;
+	}
+
+	public void setNumeroPedido(String numeroPedido) {
+		this.numeroPedido = numeroPedido;
+	}
+    
+    
 }

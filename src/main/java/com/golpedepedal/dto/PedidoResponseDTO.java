@@ -14,6 +14,7 @@ public class PedidoResponseDTO {
     private List<LineaPedidoResponseDTO> lineas;
     private DireccionDTO direccion;
     private UsuarioFacturaDTO usuario;
+    private String numeroPedido;
 
 
     
@@ -79,6 +80,14 @@ public class PedidoResponseDTO {
 
 	public void setUsuario(UsuarioFacturaDTO usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getNumeroPedido() {
+		return numeroPedido;
+	}
+
+	public void setNumeroPedido(String numeroPedido) {
+		this.numeroPedido = numeroPedido;
 	}
     
     

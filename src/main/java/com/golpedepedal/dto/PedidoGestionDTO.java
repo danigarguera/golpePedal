@@ -15,6 +15,8 @@ public class PedidoGestionDTO {
     private String fecha; 
     
     private BigDecimal total;
+    
+    private String numeroPedido;
 
 	public Long getId() {
 		return id;
@@ -62,6 +64,14 @@ public class PedidoGestionDTO {
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
+	}
+
+	public String getNumeroPedido() {
+		return numeroPedido;
+	}
+
+	public void setNumeroPedido(String numeroPedido) {
+		this.numeroPedido = numeroPedido;
 	}
     
 

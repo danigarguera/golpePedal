@@ -44,203 +44,178 @@ import com.golpedepedal.service.PedidoService;
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
-    
-    private final PedidoService service;
-    private final UsuarioRepository usuarioRepository;
-    private final ComponenteRepository componenteRepository;
-    private final PedidoRepository pedidoRepository;
-    
-    
-    public PedidoController(PedidoService service,  
-    						UsuarioRepository usuarioRepository, 
-    						DireccionRepository direccionRepository, 
-    						ComponenteRepository componenteRepository,
-    						PedidoRepository pedidoRepository) { 
-    	
-        this.service = service; 
-        this.usuarioRepository = usuarioRepository; 
-        this.componenteRepository = componenteRepository; 
-        this.pedidoRepository = pedidoRepository; 
-    }
-    
-    @GetMapping 
-    public List<Pedido> listar() {
-        return service.obtenerTodos(); 
-    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PedidoResponseDTO> get(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getPedidoDetallePorId(id));
-    }
+	private final PedidoService service;
+	private final UsuarioRepository usuarioRepository;
+	private final ComponenteRepository componenteRepository;
+	private final PedidoRepository pedidoRepository;
 
-    @PutMapping("/{id}") 
-    public Pedido actualizar(@PathVariable Long id, @RequestBody Pedido p) {
-        p.setId(id); 
-        return service.guardar(p); 
-    }
+	public PedidoController(PedidoService service, UsuarioRepository usuarioRepository,
+			DireccionRepository direccionRepository, ComponenteRepository componenteRepository,
+			PedidoRepository pedidoRepository) {
 
-    @DeleteMapping("/{id}") 
-    public void eliminar(@PathVariable Long id) {
-        service.eliminar(id); 
-    }
+		this.service = service;
+		this.usuarioRepository = usuarioRepository;
+		this.componenteRepository = componenteRepository;
+		this.pedidoRepository = pedidoRepository;
+	}
 
-    @PostMapping
-    public ResponseEntity<?> crearPedido(@RequestBody PedidoRequestDTO pedidoDTO) {
-        try {
-            PedidoResponseDTO response = service.crearPedidoDesdeDTO(pedidoDTO);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al crear el pedido: " + e.getMessage());
-        }
-    }
-    
-    @GetMapping("/mios")
-    public List<PedidoResumenDTO> obtenerPedidosResumenPorEmail(Principal principal) {
-        String email = principal.getName(); 
+	@GetMapping
+	public List<Pedido> listar() {
+		return service.obtenerTodos();
+	}
 
-        Usuario usuario = usuarioRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+	@GetMapping("/{id}")
+	public ResponseEntity<PedidoResponseDTO> get(@PathVariable Long id) {
+		return ResponseEntity.ok(service.getPedidoDetallePorId(id));
+	}
 
-        List<Pedido> pedidos = pedidoRepository.findByUsuarioAndDireccionIsNotNull(usuario);
+	@PutMapping("/{id}")
+	public Pedido actualizar(@PathVariable Long id, @RequestBody Pedido p) {
+		p.setId(id);
+		return service.guardar(p);
+	}
 
-        return pedidos.stream()
-            .map(p -> new PedidoResumenDTO(
-                p.getId(),
-                p.getFecha(),
-                p.getEstado().name(),
-                p.getTotal(),
-                p.getDireccion().getAlias()
-            ))
-            .toList();
-    }
+	@DeleteMapping("/{id}")
+	public void eliminar(@PathVariable Long id) {
+		service.eliminar(id);
+	}
 
+	@PostMapping
+	public ResponseEntity<?> crearPedido(@RequestBody PedidoRequestDTO pedidoDTO) {
+		try {
+			PedidoResponseDTO response = service.crearPedidoDesdeDTO(pedidoDTO);
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Error al crear el pedido: " + e.getMessage());
+		}
+	}
 
-    @PostMapping("/crear-empleado")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
-    public PedidoResponseDTO crearPedidoComoEmpleado(@RequestBody PedidoRequestDTO dto,
-                                                     Authentication authentication) {
-        String emailEmpleado = authentication.getName();
+	@GetMapping("/mios")
+	public List<PedidoResumenDTO> obtenerPedidosResumenPorEmail(Principal principal) {
+		String email = principal.getName();
 
-        Usuario empleado = usuarioRepository.findByEmail(emailEmpleado)
-            .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+		Usuario usuario = usuarioRepository.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        Usuario cliente = usuarioRepository.findById(dto.getUsuarioId())
-            .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+		List<Pedido> pedidos = pedidoRepository.findByUsuarioAndDireccionIsNotNull(usuario);
 
-        Pedido pedido = new Pedido();
-        pedido.setUsuario(cliente);
-        pedido.setEmpleado(empleado);
-        pedido.setFecha(LocalDateTime.now());
-        pedido.setEstado(Pedido.Estado.ENTREGADO);
-        pedido.setTotal(BigDecimal.ZERO);
-        pedido.setPedidoComponentes(new ArrayList<>()); 
+		return pedidos.stream().map(p -> new PedidoResumenDTO(p.getId(), p.getNumeroPedido(), // 👈 NUEVO campo
+				p.getFecha(), p.getEstado().name(), p.getTotal(), p.getDireccion().getAlias())).toList();
 
-        BigDecimal total = BigDecimal.ZERO;
+	}
 
-        for (LineaPedidoDTO lineaDTO : dto.getLineas()) {
-            Componente componente = componenteRepository.findById(lineaDTO.getComponenteId())
-                .orElseThrow(() -> new RuntimeException("Componente no encontrado"));
+	@PostMapping("/crear-empleado")
+	@PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
+	public PedidoResponseDTO crearPedidoComoEmpleado(@RequestBody PedidoRequestDTO dto, Authentication authentication) {
+		String emailEmpleado = authentication.getName();
 
-            PedidoComponente linea = new PedidoComponente();
-            linea.setPedido(pedido);
-            linea.setComponente(componente);
-            linea.setCantidad(lineaDTO.getCantidad());
+		Usuario empleado = usuarioRepository.findByEmail(emailEmpleado)
+				.orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
-            pedido.getPedidoComponentes().add(linea);
+		Usuario cliente = usuarioRepository.findById(dto.getUsuarioId())
+				.orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
-            BigDecimal subtotal = componente.getPrecio().multiply(BigDecimal.valueOf(lineaDTO.getCantidad()));
-            total = total.add(subtotal);
-        }
+		Pedido pedido = new Pedido();
+		pedido.setUsuario(cliente);
+		pedido.setEmpleado(empleado);
+		pedido.setFecha(LocalDateTime.now());
+		pedido.setEstado(Pedido.Estado.ENTREGADO);
+		pedido.setNumeroPedido(service.generarNumeroPedido());
+		pedido.setTotal(BigDecimal.ZERO);
+		pedido.setPedidoComponentes(new ArrayList<>());
 
-        pedido.setTotal(total);
-        Pedido guardado = pedidoRepository.save(pedido);
+		BigDecimal total = BigDecimal.ZERO;
 
-        return PedidoMapper.toDTO(guardado); 
-    }
+		for (LineaPedidoDTO lineaDTO : dto.getLineas()) {
+			Componente componente = componenteRepository.findById(lineaDTO.getComponenteId())
+					.orElseThrow(() -> new RuntimeException("Componente no encontrado"));
 
-    @GetMapping("/por-empleados")
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<VentaEmpleadoDTO> obtenerVentasPorEmpleados(
-            @RequestParam(required = false) String desde,
-            @RequestParam(required = false) String hasta,
-            @RequestParam(required = false) Long empleadoId) {
+			PedidoComponente linea = new PedidoComponente();
+			linea.setPedido(pedido);
+			linea.setComponente(componente);
+			linea.setCantidad(lineaDTO.getCantidad());
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			pedido.getPedidoComponentes().add(linea);
 
-        LocalDateTime fechaDesde = (desde != null)
-                ? LocalDate.parse(desde, formatter).atStartOfDay()
-                : LocalDateTime.MIN;
+			BigDecimal subtotal = componente.getPrecio().multiply(BigDecimal.valueOf(lineaDTO.getCantidad()));
+			total = total.add(subtotal);
+		}
 
-        LocalDateTime fechaHasta = (hasta != null)
-                ? LocalDate.parse(hasta, formatter).atTime(23, 59, 59)
-                : LocalDateTime.now();
+		pedido.setTotal(total);
+		Pedido guardado = pedidoRepository.save(pedido);
 
-        List<Pedido> pedidos;
+		return PedidoMapper.toDTO(guardado);
+	}
 
-        if (empleadoId != null) {
-            pedidos = pedidoRepository.findByEmpleadoIdAndFechaBetween(empleadoId, fechaDesde, fechaHasta);
-        } else {
-            pedidos = pedidoRepository.findByEmpleadoNotNullAndFechaBetween(fechaDesde, fechaHasta);
-        }
+	@GetMapping("/por-empleados")
+	@PreAuthorize("hasRole('ADMIN')")
+	public List<VentaEmpleadoDTO> obtenerVentasPorEmpleados(@RequestParam(required = false) String desde,
+			@RequestParam(required = false) String hasta, @RequestParam(required = false) Long empleadoId) {
 
-        return pedidos.stream().map(p -> new VentaEmpleadoDTO(
-                p.getId(),
-                p.getFecha(),
-                p.getUsuario().getNombre() + " " + p.getUsuario().getApellido1(),
-                p.getEmpleado().getNombre() + " " + p.getEmpleado().getApellido1(),
-                p.getTotal()
-        )).toList();
-    }
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    
-    @GetMapping("/por-clientes")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
-    public List<PedidoGestionDTO> obtenerPedidosDeClientes(
-            @RequestParam(required = false) String desde,
-            @RequestParam(required = false) String hasta,
-            @RequestParam(required = false) String estado
-    ) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDateTime fechaDesde = (desde != null) ? LocalDate.parse(desde, formatter).atStartOfDay()
+				: LocalDateTime.MIN;
 
-        LocalDateTime fechaDesde = (desde != null)
-                ? LocalDate.parse(desde, formatter).atStartOfDay()
-                : LocalDateTime.MIN;
+		LocalDateTime fechaHasta = (hasta != null) ? LocalDate.parse(hasta, formatter).atTime(23, 59, 59)
+				: LocalDateTime.now();
 
-        LocalDateTime fechaHasta = (hasta != null)
-                ? LocalDate.parse(hasta, formatter).atTime(23, 59, 59)
-                : LocalDateTime.now();
+		List<Pedido> pedidos;
 
-        List<Pedido> pedidos = pedidoRepository.findByDireccionNotNullAndFechaBetween(fechaDesde, fechaHasta);
+		if (empleadoId != null) {
+			pedidos = pedidoRepository.findByEmpleadoIdAndFechaBetween(empleadoId, fechaDesde, fechaHasta);
+		} else {
+			pedidos = pedidoRepository.findByEmpleadoNotNullAndFechaBetween(fechaDesde, fechaHasta);
+		}
 
-        if (estado != null && !estado.isBlank()) {
-            pedidos = pedidos.stream()
-                    .filter(p -> p.getEstado().name().equalsIgnoreCase(estado))
-                    .toList();
-        }
+		return pedidos.stream().map(p -> {
+			VentaEmpleadoDTO dto = new VentaEmpleadoDTO();
+			dto.setId(p.getId());
+			dto.setNumeroPedido(p.getNumeroPedido()); // ✅ AÑADIDO
+			dto.setFecha(p.getFecha());
+			dto.setCliente(p.getUsuario().getNombre() + " " + p.getUsuario().getApellido1());
+			dto.setEmpleado(p.getEmpleado().getNombre() + " " + p.getEmpleado().getApellido1());
+			dto.setTotal(p.getTotal());
+			return dto;
+		}).toList();
+	}
 
-        return pedidos.stream()
-                .map(PedidoMapper::toGestionDTO)
-                .toList();
-    }
+	@GetMapping("/por-clientes")
+	@PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
+	public List<PedidoGestionDTO> obtenerPedidosDeClientes(@RequestParam(required = false) String desde,
+			@RequestParam(required = false) String hasta, @RequestParam(required = false) String estado) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+		LocalDateTime fechaDesde = (desde != null) ? LocalDate.parse(desde, formatter).atStartOfDay()
+				: LocalDateTime.MIN;
 
-    @PutMapping("/{id}/estado")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
-    public ResponseEntity<?> actualizarEstado(@PathVariable Long id, @RequestBody String nuevoEstadoRaw) {
-        String estadoLimpio = nuevoEstadoRaw.replace("\"", "").trim();
+		LocalDateTime fechaHasta = (hasta != null) ? LocalDate.parse(hasta, formatter).atTime(23, 59, 59)
+				: LocalDateTime.now();
 
-        Pedido pedido = pedidoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
-        Estado nuevoEstado = Estado.valueOf(estadoLimpio);
+		List<Pedido> pedidos = pedidoRepository.findByDireccionNotNullAndFechaBetween(fechaDesde, fechaHasta);
 
-        if (!pedido.getEstado().equals(nuevoEstado)) {
-            pedido.setEstado(nuevoEstado);
-            pedidoRepository.save(pedido);
-        }
+		if (estado != null && !estado.isBlank()) {
+			pedidos = pedidos.stream().filter(p -> p.getEstado().name().equalsIgnoreCase(estado)).toList();
+		}
 
-        return ResponseEntity.ok().build();
-    }
+		return pedidos.stream().map(PedidoMapper::toGestionDTO).toList();
+	}
 
+	@PutMapping("/{id}/estado")
+	@PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
+	public ResponseEntity<?> actualizarEstado(@PathVariable Long id, @RequestBody String nuevoEstadoRaw) {
+		String estadoLimpio = nuevoEstadoRaw.replace("\"", "").trim();
 
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+		Estado nuevoEstado = Estado.valueOf(estadoLimpio);
+
+		if (!pedido.getEstado().equals(nuevoEstado)) {
+			pedido.setEstado(nuevoEstado);
+			pedidoRepository.save(pedido);
+		}
+
+		return ResponseEntity.ok().build();
+	}
 
 }

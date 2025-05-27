@@ -14,18 +14,22 @@ public class VentaEmpleadoDTO {
 	    private String empleado;
 	    
 	    private BigDecimal total;
+	    
+	    private String numeroPedido;
+
 
 		public VentaEmpleadoDTO() {
 		}
 		
 		
 
-		public VentaEmpleadoDTO(Long id, LocalDateTime fecha, String cliente, String empleado, BigDecimal total) {
+		public VentaEmpleadoDTO(Long id, LocalDateTime fecha, String cliente, String empleado, BigDecimal total, String numeroPedido) {
 			this.id = id;
 			this.fecha = fecha;
 			this.cliente = cliente;
 			this.empleado = empleado;
 			this.total = total;
+			this.numeroPedido = numeroPedido;
 		}
 
 
@@ -68,6 +72,18 @@ public class VentaEmpleadoDTO {
 
 		public void setTotal(BigDecimal total) {
 			this.total = total;
+		}
+
+
+
+		public String getNumeroPedido() {
+			return numeroPedido;
+		}
+
+
+
+		public void setNumeroPedido(String numeroPedido) {
+			this.numeroPedido = numeroPedido;
 		}
 	    
 	    

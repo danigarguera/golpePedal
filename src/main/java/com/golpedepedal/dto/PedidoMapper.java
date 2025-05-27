@@ -13,6 +13,7 @@ public class PedidoMapper {
     public static PedidoResponseDTO toDTO(Pedido pedido) {
         PedidoResponseDTO dto = new PedidoResponseDTO();
         dto.setId(pedido.getId());
+        dto.setNumeroPedido(pedido.getNumeroPedido());
         dto.setUsuarioId(pedido.getUsuario().getId());
         dto.setFecha(pedido.getFecha());
         dto.setEstado(pedido.getEstado().name());
@@ -61,6 +62,7 @@ public class PedidoMapper {
     public static PedidoGestionDTO toGestionDTO(Pedido pedido) {
         PedidoGestionDTO dto = new PedidoGestionDTO();
         dto.setId(pedido.getId());
+        dto.setNumeroPedido(pedido.getNumeroPedido()); 
         dto.setCliente(pedido.getUsuario().getNombre() + " " + pedido.getUsuario().getApellido1());
 
         if (pedido.getEmpleado() != null) {

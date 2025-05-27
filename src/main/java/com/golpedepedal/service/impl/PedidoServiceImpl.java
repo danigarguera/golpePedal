@@ -89,6 +89,9 @@ public class PedidoServiceImpl implements PedidoService {
 	    pedido.setDireccion(direccion); 
 	    pedido.setFecha(LocalDateTime.now());
 	    pedido.setEstado(Estado.PENDIENTE);
+	    
+	    pedido.setNumeroPedido(generarNumeroPedido());
+
 
 	    pedido = pedidoRepository.save(pedido);
 
@@ -121,6 +124,7 @@ public class PedidoServiceImpl implements PedidoService {
 	    PedidoResponseDTO dto = new PedidoResponseDTO();
 
 	    dto.setId(pedido.getId());
+	    dto.setNumeroPedido(pedido.getNumeroPedido());
 	    dto.setUsuarioId(pedido.getUsuario().getId());
 	    dto.setFecha(pedido.getFecha());
 	    dto.setEstado(pedido.getEstado().name());
@@ -251,9 +255,9 @@ public class PedidoServiceImpl implements PedidoService {
 	}
 
 	@Override
-	public List<Pedido> findByUsuarioAndDireccionIsNotNull(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return null;
+	public String generarNumeroPedido() {
+	    long totalPedidos = pedidoRepository.count();
+	    return String.format("PED-%04d", totalPedidos + 1);
 	}
 
 }
