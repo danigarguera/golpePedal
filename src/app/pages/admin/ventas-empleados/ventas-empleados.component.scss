@@ -1,51 +1,33 @@
-@use '../../../styles/variables' as *;
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
-// Filtros: separación entre campos en móvil
+// 🟠 Espaciado vertical en móviles
 @media (max-width: 576px) {
   .row.g-3 > div {
     margin-bottom: 1rem;
   }
 
-  .row.g-3 .text-end {
+  .row.g-3 .text-md-end {
     text-align: start !important;
   }
 }
 
-// Tabla responsive adaptada a tarjetas
-@media (max-width: 768px) {
+// 🟢 Tabla responsive clásica con scroll horizontal en móvil
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+
   .table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
+    min-width: 700px; // ajusta según tus columnas
   }
+}
 
-  .table thead {
-    display: none;
-  }
+// 🟣 Estilo de hover y puntero sobre filas y celdas
+.clickable-table tbody tr:hover {
+  background-color: $color-secundario !important;
+  transition: background-color 0.2s ease;
+}
 
-  .table tbody tr {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border: 1px solid $color-borde;
-    border-radius: 0.5rem;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  }
-
-  .table tbody td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.25rem 0;
-    border: none;
-    font-family: $fuente-secundaria;
-
-    &::before {
-      content: attr(data-label);
-      font-weight: bold;
-      color: $color-texto;
-    }
-  }
+::ng-deep table.clickable-table > tbody > tr > td {
+  cursor: pointer !important;
 }
