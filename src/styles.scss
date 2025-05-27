@@ -343,3 +343,29 @@ select.form-select {
     background-size: 1em;
     padding-right: 2.5rem !important;
 }
+.pagination {
+  .page-link {
+    color: $color-secundario;
+    border: 1px solid lighten($color-secundario, 30%);
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: $color-secundario;
+      color: white;
+      border-color: $color-secundario;
+    }
+  }
+
+  .page-item.active .page-link {
+    background-color: $color-secundario;
+    border-color: $color-secundario;
+    color: white;
+  }
+
+  .page-item.disabled .page-link {
+    color: #ccc;
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+  }
+}
