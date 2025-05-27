@@ -15,7 +15,8 @@
     </div>
     <div class="col-md-3">
       <label for="estadoFiltro" class="form-label">Estado</label>
-      <select id="estadoFiltro" [(ngModel)]="estadoFiltro" (change)="aplicarFiltroEstado()" class="form-select input-estilizado">
+      <select id="estadoFiltro" [(ngModel)]="estadoFiltro" (change)="aplicarFiltroEstado()"
+        class="form-select input-estilizado">
         <option value="">Todos</option>
         <option value="PENDIENTE">Pendiente</option>
         <option value="ENVIADO">Enviado</option>
@@ -41,25 +42,30 @@
       <thead class="table-light">
         <tr>
           <th class="sortable" (click)="ordenarPor('id')">
-            ID <i class="bi" [ngClass]="campoOrden === 'id' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
+            Pedido <i class="bi"
+              [ngClass]="campoOrden === 'id' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
           </th>
           <th class="sortable" (click)="ordenarPor('fecha')">
-            Fecha <i class="bi" [ngClass]="campoOrden === 'fecha' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
+            Fecha <i class="bi"
+              [ngClass]="campoOrden === 'fecha' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
           </th>
           <th class="sortable" (click)="ordenarPor('cliente')">
-            Cliente <i class="bi" [ngClass]="campoOrden === 'cliente' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
+            Cliente <i class="bi"
+              [ngClass]="campoOrden === 'cliente' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
           </th>
           <th class="sortable text-end" (click)="ordenarPor('total')">
-            Total <i class="bi" [ngClass]="campoOrden === 'total' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
+            Total <i class="bi"
+              [ngClass]="campoOrden === 'total' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
           </th>
           <th class="sortable" (click)="ordenarPor('estado')">
-            Estado <i class="bi" [ngClass]="campoOrden === 'estado' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
+            Estado <i class="bi"
+              [ngClass]="campoOrden === 'estado' ? (direccionOrden === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : ''"></i>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let pedido of pedidosPaginados">
-          <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.id }}</td>
+          <td (click)="irADetalle(pedido.id)" style="cursor: pointer">{{ pedido.numeroPedido }}</td>
           <td (click)="irADetalle(pedido.id)">
             <span class="fecha-link">{{ pedido.fecha | date: 'short' }}</span>
           </td>
@@ -67,8 +73,8 @@
           <td class="text-end">{{ pedido.total | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
           <td>
             <div class="estado-wrapper">
-              <select [(ngModel)]="pedido.estado" (change)="actualizarEstado(pedido)" class="form-select input-estilizado"
-                      [ngClass]="'estado-' + pedido.estado.toLowerCase()">
+              <select [(ngModel)]="pedido.estado" (change)="actualizarEstado(pedido)"
+                class="form-select input-estilizado" [ngClass]="'estado-' + pedido.estado.toLowerCase()">
                 <option value="PENDIENTE">Pendiente</option>
                 <option value="ENVIADO">Enviado</option>
                 <option value="ENTREGADO">Entregado</option>
@@ -87,7 +93,8 @@
       <li class="page-item" [class.disabled]="page === 1">
         <button class="page-link" (click)="page = page - 1" [disabled]="page === 1">&laquo;</button>
       </li>
-      <li class="page-item" *ngFor="let p of [].constructor(totalPaginas); let i = index" [class.active]="page === i + 1">
+      <li class="page-item" *ngFor="let p of [].constructor(totalPaginas); let i = index"
+        [class.active]="page === i + 1">
         <button class="page-link" (click)="page = i + 1">{{ i + 1 }}</button>
       </li>
       <li class="page-item" [class.disabled]="page === totalPaginas">

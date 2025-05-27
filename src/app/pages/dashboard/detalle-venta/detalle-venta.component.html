@@ -1,6 +1,6 @@
 <div class="container py-4" *ngIf="pedido; else cargando">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="texto-grande fw-bold">Detalle de Venta #{{ pedido.id }}</h2>
+    <h2 class="texto-grande fw-bold">Detalle de Venta #{{ pedido.numeroPedido }}</h2>
     <button class="btn btn-outline-dark d-print-none" (click)="imprimir()">
       <i class="bi bi-printer"></i> Imprimir
     </button>

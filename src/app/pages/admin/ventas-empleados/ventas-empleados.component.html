@@ -40,7 +40,7 @@
     <table *ngIf="ventas.length" class="table table-bordered table-hover clickable-table">
       <thead class="table-light">
         <tr>
-          <th class="sortable" (click)="ordenarPor('id')">ID <i *ngIf="sortField === 'id'" class="bi"
+          <th class="sortable" (click)="ordenarPor('id')">Pedido <i *ngIf="sortField === 'id'" class="bi"
               [ngClass]="{ 'bi-caret-up-fill': sortDirection === 'asc', 'bi-caret-down-fill': sortDirection === 'desc' }"></i>
           </th>
           <th class="sortable" (click)="ordenarPor('fecha')">Fecha <i *ngIf="sortField === 'fecha'" class="bi"
@@ -58,13 +58,36 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let venta of ventas" (click)="irADetalle(venta.id)">
-          <td data-label="ID">{{ venta.id }}</td>
+        <tr *ngFor="let venta of ventasPaginadas; let i = index" (click)="irADetalle(venta.id)">
+          <td data-label="Pedido">{{ (paginaActual - 1) * ventasPorPagina + i + 1 }} - {{ venta.numeroPedido }}</td>
           <td data-label="Fecha">{{ venta.fecha | date: 'short' }}</td>
           <td data-label="Cliente">{{ venta.cliente }}</td>
           <td data-label="Empleado">{{ venta.empleado }}</td>
           <td data-label="Total">{{ venta.total | currency: 'EUR':'symbol':'1.2-2':'es-ES' }}</td>
         </tr>
       </tbody>
+
     </table>
+    <!-- Paginación -->
+    <nav *ngIf="totalPaginas > 1" class="mt-3">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="paginaActual === 1">
+          <button class="page-link" (click)="cambiarPagina(paginaActual - 1)">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+        </li>
+
+        <li *ngFor="let pagina of [].constructor(totalPaginas); let i = index" class="page-item"
+          [class.active]="paginaActual === i + 1">
+          <button class="page-link" (click)="cambiarPagina(i + 1)">{{ i + 1 }}</button>
+        </li>
+
+        <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
+          <button class="page-link" (click)="cambiarPagina(paginaActual + 1)">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
   </div>

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RoleService } from '../../services/role.service';
-import { jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,21 +19,40 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     public roleService: RoleService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
+
     if (token) {
       try {
         const decoded: any = jwtDecode(token);
         this.email = decoded.sub;
-        this.rol = decoded.rol;
+
+        const rawRol = decoded.rol;
+
+        switch (rawRol) {
+          case 'ROLE_ADMIN':
+            this.rol = 'Administrador';
+            break;
+          case 'ROLE_EMPLEADO':
+            this.rol = 'Empleado';
+            break;
+          case 'ROLE_CLIENTE':
+            this.rol = 'Cliente';
+            break;
+          default:
+            this.rol = rawRol?.replace('ROLE_', '') || 'Desconocido';
+            break;
+        }
+
         console.log('📊 Dashboard cargado para:', this.email, 'con rol:', this.rol);
       } catch (e) {
         console.error('❌ Error al decodificar token');
       }
     }
   }
+
 
   logout(): void {
     localStorage.clear();

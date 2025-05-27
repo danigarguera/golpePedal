@@ -78,6 +78,19 @@ export class UsuariosComponent implements OnInit {
       }
     });
   }
+  formatearRol(nombreRol: string): string {
+  switch (nombreRol) {
+    case 'ROLE_ADMIN':
+      return 'Administrador';
+    case 'ROLE_EMPLEADO':
+      return 'Empleado';
+    case 'ROLE_CLIENTE':
+      return 'Cliente';
+    default:
+      return nombreRol?.replace('ROLE_', '') || 'Desconocido';
+  }
+}
+
 
   get usuariosPaginados(): Usuario[] {
     const start = (this.page - 1) * this.pageSize;
