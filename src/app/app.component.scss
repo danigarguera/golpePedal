@@ -6,7 +6,7 @@
 
 .banner-wrapper {
   position: fixed;
-  top: 70px; 
+  top: 70px;
   left: 0;
   right: 0;
   z-index: 2000;
@@ -18,20 +18,17 @@
 
 main {
   flex-grow: 1;
-  padding-top: 70px;
-  
-}
+  transition: padding-top 0.2s ease;
 
-
-
-@media (max-width: 768px) {
-  main {
-    padding-top: 60px;
+  @media (max-width: 575.98px) {
+    padding-top: 125px; 
   }
-}
 
-@media (min-width: 769px) {
-  main {
+  @media (min-width: 576px) and (max-width: 991.98px) {
+    padding-top: 100px;
+  }
+
+  @media (min-width: 992px) {
     padding-top: 70px;
   }
 }
