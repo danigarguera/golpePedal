@@ -44,40 +44,63 @@
   <!-- Componentes disponibles -->
   <h4 class="mt-4 mb-3"><i class="bi bi-box-seam me-2"></i> Componentes disponibles</h4>
 
-  <table class="table table-hover table-bordered align-middle sombra-suave">
-    <thead class="table-light">
-      <tr>
-        <th class="sortable" (click)="ordenarPor('nombre')">
-          Nombre
-          <i *ngIf="campoOrden === 'nombre'" class="bi"
-            [ngClass]="{ 'bi-caret-up-fill': direccionOrden === 'asc', 'bi-caret-down-fill': direccionOrden === 'desc' }"></i>
-        </th>
-        <th class="sortable" (click)="ordenarPor('marca')">
-          Marca
-          <i *ngIf="campoOrden === 'marca'" class="bi"
-            [ngClass]="{ 'bi-caret-up-fill': direccionOrden === 'asc', 'bi-caret-down-fill': direccionOrden === 'desc' }"></i>
-        </th>
-        <th class="sortable" (click)="ordenarPor('precio')">
-          Precio
-          <i *ngIf="campoOrden === 'precio'" class="bi"
-            [ngClass]="{ 'bi-caret-up-fill': direccionOrden === 'asc', 'bi-caret-down-fill': direccionOrden === 'desc' }"></i>
-        </th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let comp of componentesFiltrados">
-        <td>{{ comp.nombre }}</td>
-        <td>{{ comp.marca }}</td>
-        <td>{{ comp.precio | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
-        <td>
-          <button class="btn btn-sm btn-primario" (click)="anadirAlCarrito(comp)">
-            <i class="bi bi-cart-plus"></i> Añadir
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle sombra-suave">
+      <thead class="table-light">
+        <tr>
+          <th class="sortable" (click)="ordenarPor('nombre')">
+            Nombre
+            <i *ngIf="campoOrden === 'nombre'" class="bi"
+              [ngClass]="{ 'bi-caret-up-fill': direccionOrden === 'asc', 'bi-caret-down-fill': direccionOrden === 'desc' }"></i>
+          </th>
+          <th class="sortable" (click)="ordenarPor('marca')">
+            Marca
+            <i *ngIf="campoOrden === 'marca'" class="bi"
+              [ngClass]="{ 'bi-caret-up-fill': direccionOrden === 'asc', 'bi-caret-down-fill': direccionOrden === 'desc' }"></i>
+          </th>
+          <th class="sortable" (click)="ordenarPor('precio')">
+            Precio
+            <i *ngIf="campoOrden === 'precio'" class="bi"
+              [ngClass]="{ 'bi-caret-up-fill': direccionOrden === 'asc', 'bi-caret-down-fill': direccionOrden === 'desc' }"></i>
+          </th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comp of componentesPaginados">
+          <td>{{ comp.nombre }}</td>
+          <td>{{ comp.marca }}</td>
+          <td>{{ comp.precio | currency:'EUR':'symbol':'1.2-2':'es-ES' }}</td>
+          <td>
+            <button class="btn btn-sm btn-primario" (click)="anadirAlCarrito(comp)">
+              <i class="bi bi-cart-plus"></i> Añadir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <nav *ngIf="totalPaginas > 1" class="d-flex justify-content-center mt-3">
+    <ul class="pagination mb-0">
+      <li class="page-item" [class.disabled]="paginaActual === 1">
+        <button class="page-link" (click)="paginaActual = paginaActual - 1"
+          [disabled]="paginaActual === 1">&laquo;</button>
+      </li>
+
+      <li class="page-item" *ngFor="let p of [].constructor(totalPaginas); let i = index"
+        [class.active]="paginaActual === i + 1">
+        <button class="page-link" (click)="paginaActual = i + 1">{{ i + 1 }}</button>
+      </li>
+
+      <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
+        <button class="page-link" (click)="paginaActual = paginaActual + 1"
+          [disabled]="paginaActual === totalPaginas">&raquo;</button>
+      </li>
+    </ul>
+  </nav>
+
 
 
   <!-- Carrito -->
