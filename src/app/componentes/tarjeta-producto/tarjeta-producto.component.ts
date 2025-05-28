@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { environment } from '../../../../src/environments/environment';
 import { CarritoService } from '../../services/carrito.service';
 import { BannerService } from '../../services/banner.service';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -29,7 +31,8 @@ export class TarjetaProductoComponent {
 
   constructor(
     private carritoService: CarritoService,
-    private bannerService: BannerService
+    private bannerService: BannerService,
+    private router: Router,
   ) { }
 
   agregarAlCarrito(event: MouseEvent): void {
@@ -38,7 +41,10 @@ export class TarjetaProductoComponent {
     this.bannerService.mostrarBannerTemporal();
   }
 
-
+irADetalle(event?: MouseEvent): void {
+  if (event) event.stopPropagation(); 
+  this.router.navigate(['/componentes', this.producto.id]);
+}
   marcarImagenComoFallida(id: number): void {
     this.imagenFallida[id] = true;
   }
