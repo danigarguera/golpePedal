@@ -1,7 +1,7 @@
 <div class="container mt-4 d-flex justify-content-center">
   <div class="w-100" style="max-width: 640px;">
     <h2 class="mb-4 texto-grande fw-bold">
-      <i class="bi bi-plus-circle me-2"></i>Nuevo Componente
+      <i class="bi bi-plus-circle me-2"></i>Nuevo Artículo
     </h2>
 
     <form [formGroup]="formulario" (ngSubmit)="guardar()" class="bg-white p-4 rounded-3 sombra-suave borde-claro">
@@ -32,13 +32,13 @@
 
       <!-- Tipo de Componente -->
       <div class="mb-3">
-        <label class="form-label fw-semibold">Tipo de Componente</label>
+        <label class="form-label fw-semibold">Tipo</label>
         <select class="form-select input-estilizado" formControlName="tipoComponenteId"
           [ngClass]="{'is-invalid': formulario.get('tipoComponenteId')?.invalid && formulario.get('tipoComponenteId')?.touched}">
           <option [ngValue]="null">-- Seleccionar --</option>
           <option *ngFor="let tipo of tiposComponente" [ngValue]="tipo.id">{{ tipo.nombre }}</option>
         </select>
-        <div class="invalid-feedback">Selecciona un tipo de componente.</div>
+        <div class="invalid-feedback">Selecciona un tipo de artículo.</div>
       </div>
 
       <!-- Marca -->
@@ -66,11 +66,25 @@
       <div class="mb-3">
         <label class="form-label fw-semibold d-block">Imagen del Componente</label>
 
+        <!-- Botón estilo azul corporativo -->
         <label class="btn btn-primario">
           <i class="bi bi-upload me-2"></i> Seleccionar imagen
           <input type="file" hidden (change)="onFileSelected($event)" accept="image/*" />
         </label>
+
+        <!-- Nombre del archivo -->
+        <div *ngIf="imagenSeleccionada" class="mt-2 small text-muted">
+          Archivo seleccionado: {{ imagenSeleccionada.name }}
+        </div>
+
+        <!-- Previsualización -->
+        <div *ngIf="imagenPreview" class="mt-3">
+          <img [src]="imagenPreview" alt="Previsualización" class="img-thumbnail"
+            style="max-height: 200px; object-fit: contain;" />
+        </div>
       </div>
+
+
 
 
 

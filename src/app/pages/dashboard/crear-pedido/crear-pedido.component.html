@@ -20,7 +20,7 @@
 
       <!-- Tipo de componente -->
       <div class="col-md-4">
-        <label class="form-label">Tipo de componente</label>
+        <label class="form-label">Tipo</label>
         <select class="form-select input-estilizado" [(ngModel)]="tipoSeleccionado"
           (change)="filtrarComponentesPorTipo()" name="tipo">
           <option [ngValue]="null">-- Todos los tipos --</option>
@@ -42,7 +42,7 @@
 
 
   <!-- Componentes disponibles -->
-  <h4 class="mt-4 mb-3"><i class="bi bi-box-seam me-2"></i> Componentes disponibles</h4>
+  <h4 class="mt-4 mb-3"><i class="bi bi-box-seam me-2"></i> Artículos disponibles</h4>
 
   <div class="table-responsive">
     <table class="table table-hover table-bordered align-middle sombra-suave">
@@ -104,7 +104,7 @@
 
 
   <!-- Carrito -->
-  <h4 class="mt-5 mb-3"><i class="bi bi-clipboard-check me-2"></i> Componentes seleccionados</h4>
+  <h4 class="mt-5 mb-3"><i class="bi bi-clipboard-check me-2"></i> Artículos seleccionados</h4>
   <ul class="list-group mb-3 sombra-suave">
     <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of carrito">
       <span>

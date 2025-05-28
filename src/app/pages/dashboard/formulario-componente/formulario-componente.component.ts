@@ -80,12 +80,21 @@ export class FormularioComponenteComponent implements OnInit {
     });
   }
 
+  imagenPreview: string | null = null;
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       this.imagenSeleccionada = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenPreview = reader.result as string;
+      };
+      reader.readAsDataURL(this.imagenSeleccionada);
     }
   }
+
 
   subirImagen(componenteId: number): void {
     const formData = new FormData();
