@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ComponenteDTO, MarcaDTO } from '../../../../../src/app/services/componentes.service';
-import { UsuarioService, Usuario, PedidoComponenteDTO } from '../../../../../src/app/services/usuario.service';
-import { PedidoService, PedidoRequestDTO, PedidoResponseDTO } from '../../../../../src/app/services/pedido.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../src/environments/environment';
-import Swal
-  from 'sweetalert2';
+import { ComponenteDTO, MarcaDTO } from '../../../../../src/app/services/componentes.service';
+import { UsuarioService, Usuario, PedidoComponenteDTO } from '../../../../../src/app/services/usuario.service';
+import { PedidoService, PedidoRequestDTO } from '../../../../../src/app/services/pedido.service';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-crear-pedido',
   standalone: true,
@@ -28,19 +27,22 @@ export class CrearPedidoComponent implements OnInit {
   tipoSeleccionado: number | null = null;
   marcaSeleccionada: number | null = null;
 
-  ordenActual: { campo: string, ascendente: boolean } = { campo: 'nombre', ascendente: true };
+  campoOrden: string = '';
+  direccionOrden: 'asc' | 'desc' = 'asc';
 
   carrito: PedidoComponenteDTO[] = [];
   mensaje = '';
   error = '';
 
+  paginaActual: number = 1;
+  elementosPorPagina: number = 10;
 
   constructor(
     private usuarioService: UsuarioService,
     private pedidoService: PedidoService,
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.cargarClientes();
@@ -59,7 +61,6 @@ export class CrearPedidoComponent implements OnInit {
   cargarTiposComponente() {
     this.http.get<{ id: number, nombre: string }[]>(`${this.apiUrl}/tipos-componente`).subscribe({
       next: res => this.tiposComponente = res,
-
       error: () => this.error = 'Error cargando tipos de componente.'
     });
   }
@@ -83,13 +84,13 @@ export class CrearPedidoComponent implements OnInit {
     }
 
     this.http.get<ComponenteDTO[]>(`${this.apiUrl}/componentes/buscar?${params.toString()}`).subscribe({
-      next: (res) => this.componentesFiltrados = res,
+      next: (res) => {
+        this.componentesFiltrados = res;
+        this.paginaActual = 1;
+      },
       error: () => this.error = 'Error filtrando componentes.'
     });
   }
-
-  campoOrden: string = '';
-  direccionOrden: 'asc' | 'desc' = 'asc';
 
   ordenarPor(campo: string): void {
     if (this.campoOrden === campo) {
@@ -109,6 +110,14 @@ export class CrearPedidoComponent implements OnInit {
     });
   }
 
+  get componentesPaginados(): ComponenteDTO[] {
+    const start = (this.paginaActual - 1) * this.elementosPorPagina;
+    return this.componentesFiltrados.slice(start, start + this.elementosPorPagina);
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.componentesFiltrados.length / this.elementosPorPagina);
+  }
 
   anadirAlCarrito(componente: ComponenteDTO) {
     const existente = this.carrito.find(c => c.componenteId === componente.id);
@@ -129,11 +138,11 @@ export class CrearPedidoComponent implements OnInit {
     this.http.get<ComponenteDTO[]>(`${this.apiUrl}/componentes`).subscribe({
       next: (res) => {
         this.componentesFiltrados = res;
+        this.paginaActual = 1;
       },
       error: () => this.error = 'Error cargando los componentes.'
     });
   }
-
 
   eliminarDelCarrito(componenteId: number) {
     this.carrito = this.carrito.filter(c => c.componenteId !== componenteId);
@@ -174,7 +183,6 @@ export class CrearPedidoComponent implements OnInit {
             confirmButton: 'btn btn-primario'
           }
         }).then(() => {
-          // Navega tras cerrar el alert
           this.router.navigate(['/dashboard/detalle-venta', pedidoCreado.id], {
             state: { pedido: pedidoCreado }
           });
