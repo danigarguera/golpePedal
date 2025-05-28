@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ComponentesService } from '../../services/componentes.service';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-buscador',
@@ -18,20 +19,36 @@ export class BuscadorComponent implements OnInit {
   constructor(
     private router: Router,
     private componentesService: ComponentesService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.componentesService.obtenerComponentes().subscribe(componentes => {
-      this.tiposSugeridos = [...new Set(componentes.map(c => c.tipo).filter(Boolean))].sort();
+      this.tiposSugeridos = [...new Set(componentes.map(c => c.tipo?.toLowerCase()).filter(Boolean))].sort();
     });
   }
 
   onBuscar(): void {
-    const tipo = this.tipoInput.trim();
-    if (tipo) {
+    const tipo = this.tipoInput.trim().toLowerCase();
+    if (!tipo) return;
+
+    const existe = this.tiposSugeridos.includes(tipo);
+
+    if (existe) {
       this.router.navigate(['/componentes'], {
         queryParams: { tipo }
       });
+      this.tipoInput = '';
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Componente no encontrado',
+        text: `No existe el componente "${this.tipoInput}"`,
+        confirmButtonText: 'Aceptar'
+      });
     }
+  }
+
+  onSeleccionarSugerencia(): void {
+    this.onBuscar();
   }
 }
