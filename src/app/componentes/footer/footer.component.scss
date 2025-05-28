@@ -29,7 +29,7 @@ footer {
   font-weight: bold;
 
   &:hover {
-    text-decoration: underline; // Si quieres quitarlo en hover también, pon "none"
+    text-decoration: underline; 
   }
 }
 
@@ -61,7 +61,7 @@ footer {
       color: white;
       display: flex;
       flex-direction: column;
-      justify-content: center; // asegura buen alineado interno
+      justify-content: center; 
 
 
       ul.list-inline {

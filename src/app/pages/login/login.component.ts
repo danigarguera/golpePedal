@@ -54,7 +54,7 @@ export class LoginComponent {
     this.mensaje = '';
 
     if (form?.invalid) {
-      return; // detiene el envío si hay errores de Angular
+      return; 
     }
 
     this.registroService.registrar(this.usuario).subscribe({
@@ -70,7 +70,6 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
-    // Esto es opcional si ya controlas desde fuera cuándo mostrarlo
   }
 
   toggleRegistro(): void {

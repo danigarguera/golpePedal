@@ -1,6 +1,5 @@
 @use '../../../styles/variables' as *;
 
-// 🎨 Roles
 .rol-cliente {
   color: $color-secundario;
   font-weight: bold;
@@ -11,13 +10,11 @@
   font-weight: bold;
 }
 
-// 🔍 Buscador
 .buscador-email {
   max-width: 300px;
   margin-bottom: 1.5rem;
 }
 
-// 📱 Tabla responsive clásica con scroll horizontal (sin tarjetas)
 .table-responsive {
   width: 100%;
   overflow-x: auto;

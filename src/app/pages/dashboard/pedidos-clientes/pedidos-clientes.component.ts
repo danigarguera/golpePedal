@@ -87,7 +87,6 @@ export class PedidosClientesComponent implements OnInit {
     this.http.put(`${environment.apiUrl}/pedidos/${pedido.id}/estado`, JSON.stringify(pedido.estado), {
       headers: { 'Content-Type': 'application/json' }
     }).subscribe({
-      next: () => console.log('✅ Estado actualizado correctamente'),
       error: err => console.error('Error al actualizar estado:', err)
     });
   }

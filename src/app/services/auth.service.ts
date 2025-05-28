@@ -13,8 +13,7 @@ export interface UsuarioAuthDTO {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly apiUrl = `${environment.apiUrl}/auth/me`; // 👈 Corrige aquí la URL base
-
+  private readonly apiUrl = `${environment.apiUrl}/auth/me`; 
   constructor(private http: HttpClient) {}
 
   getUsuarioActual(): Observable<UsuarioAuthDTO> {

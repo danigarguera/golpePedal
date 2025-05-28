@@ -46,7 +46,6 @@ export class DashboardComponent implements OnInit {
             break;
         }
 
-        console.log('📊 Dashboard cargado para:', this.email, 'con rol:', this.rol);
       } catch (e) {
         console.error('❌ Error al decodificar token');
       }

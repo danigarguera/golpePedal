@@ -12,7 +12,6 @@ export class RoleService {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.rol || '';
     } catch (e) {
-      console.error('❌ Error leyendo el rol desde el token:', e);
       return '';
     }
   }
@@ -24,7 +23,6 @@ export class RoleService {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.sub || '';
     } catch (e) {
-      console.error('❌ Error leyendo el email desde el token:', e);
       return '';
     }
   }

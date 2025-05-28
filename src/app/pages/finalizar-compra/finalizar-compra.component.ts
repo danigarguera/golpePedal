@@ -67,11 +67,9 @@ finalizarCompra(): void {
     }))
   };
 
-  console.log('📦 Enviando pedido:', pedido);
 
   this.pedidoService.crearPedido(pedido).subscribe({
     next: (pedidoCreado) => {
-      console.log('✅ Pedido creado correctamente:', pedidoCreado);
       this.carritoService.vaciarCarrito();
       this.router.navigate(['/pedido', pedidoCreado.id], { state: { pedido: pedidoCreado } });
     },

@@ -44,7 +44,6 @@ export class ModificarComponenteComponent implements OnInit {
 
     this.componentesService.obtenerPorId(this.id).subscribe({
       next: (componente) => {
-        console.log('📦 Componente cargado:', componente);
 
         this.formulario.patchValue({
           nombre: componente.nombre,

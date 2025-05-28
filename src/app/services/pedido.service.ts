@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-// DTOs
 
 export interface LineaPedidoDTO {
   componenteId: number;
@@ -23,7 +22,7 @@ export interface PedidoResumenDTO {
 export interface VentaEmpleadoDTO {
   id: number;
   numeroPedido: string;
-  fecha: string; // o Date si lo parseas
+  fecha: string; 
   cliente: string;
   empleado: string;
   total: number;
@@ -31,7 +30,7 @@ export interface VentaEmpleadoDTO {
 
 export interface PedidoRequestDTO {
   usuarioId: number;
-  direccionId: number | null; // ✅ Así acepta que no se haya seleccionado dirección
+  direccionId: number | null; 
   lineas: LineaPedidoDTO[];
 }
 

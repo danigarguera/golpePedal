@@ -40,19 +40,16 @@ export class ComponentesComponent implements OnInit {
       next: (data) => {
         this.componentesOriginales = data;
 
-        // Inicializar filtros disponibles
         this.tiposDisponibles = [...new Set(data.map(c => c.tipo?.toLowerCase()).filter(Boolean))];
         this.marcasDisponibles = [...new Set(data.map(c => c.marca).filter(Boolean))];
 
-        // APLICAR FILTROS DESDE URL
         this.route.queryParams.subscribe(params => {
           this.filtroTipo = params['tipo'] || '';
           this.filtroMarca = params['marca'] || '';
-          this.aplicarFiltros(); // aplicar los filtros sobre los datos ya cargados
+          this.aplicarFiltros(); 
         });
       },
       error: (err) => {
-        console.error('❌ Error al cargar componentes:', err);
         this.error = 'No se pudieron cargar los componentes.';
       }
     });

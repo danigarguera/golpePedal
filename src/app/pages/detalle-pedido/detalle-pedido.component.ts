@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PedidoService, PedidoResponseDTO } from '../../services/pedido.service';
 import { CommonModule } from '@angular/common';
 
-declare let window: any; // Soporte para window.print()
+declare let window: any; 
 
 @Component({
   selector: 'app-detalle-pedido',
