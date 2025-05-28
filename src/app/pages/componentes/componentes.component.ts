@@ -36,17 +36,20 @@ export class ComponentesComponent implements OnInit {
   pageSize: number = 10;
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.filtroTipo = params['tipo'] || '';
-      this.filtroMarca = params['marca'] || '';
-    });
-
     this.componentesService.obtenerComponentes().subscribe({
       next: (data) => {
         this.componentesOriginales = data;
-        this.tiposDisponibles = [...new Set(data.map(c => c.tipo).filter(Boolean))];
+
+        // Inicializar filtros disponibles
+        this.tiposDisponibles = [...new Set(data.map(c => c.tipo?.toLowerCase()).filter(Boolean))];
         this.marcasDisponibles = [...new Set(data.map(c => c.marca).filter(Boolean))];
-        this.aplicarFiltros();
+
+        // APLICAR FILTROS DESDE URL
+        this.route.queryParams.subscribe(params => {
+          this.filtroTipo = params['tipo'] || '';
+          this.filtroMarca = params['marca'] || '';
+          this.aplicarFiltros(); // aplicar los filtros sobre los datos ya cargados
+        });
       },
       error: (err) => {
         console.error('❌ Error al cargar componentes:', err);
@@ -55,26 +58,34 @@ export class ComponentesComponent implements OnInit {
     });
   }
 
+
   aplicarFiltros(): void {
     this.componentes = this.componentesOriginales.filter(componente => {
-      const coincideTipo = this.filtroTipo ? componente.tipo === this.filtroTipo : true;
-      const coincideMarca = this.filtroMarca ? componente.marca === this.filtroMarca : true;
+      const coincideTipo = this.filtroTipo
+        ? componente.tipo?.toLowerCase() === this.filtroTipo.toLowerCase()
+        : true;
+
+      const coincideMarca = this.filtroMarca
+        ? componente.marca?.toLowerCase() === this.filtroMarca.toLowerCase()
+        : true;
+
       return coincideTipo && coincideMarca;
     });
 
     this.page = 1;
   }
 
-  get componentesPaginados(): Componente[] {
-    const start = (this.page - 1) * this.pageSize;
-    return this.componentes.slice(start, start + this.pageSize);
+
+  mostrarBannerDesdeTarjeta(): void {
+    this.bannerService.mostrarBannerTemporal();
   }
 
   get totalPaginas(): number {
     return Math.ceil(this.componentes.length / this.pageSize);
   }
 
-  mostrarBannerDesdeTarjeta(): void {
-    this.bannerService.mostrarBannerTemporal();
+  get componentesPaginados(): Componente[] {
+    const start = (this.page - 1) * this.pageSize;
+    return this.componentes.slice(start, start + this.pageSize);
   }
 }

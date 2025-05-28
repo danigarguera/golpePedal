@@ -6,7 +6,7 @@
     [(ngModel)]="tipoInput"
     list="sugerenciasTipos"
     (keyup.enter)="onBuscar()"
-    (change)="onBuscar()" 
+    (change)="onSeleccionarSugerencia()" 
   />
 
   <datalist id="sugerenciasTipos">
@@ -15,4 +15,3 @@
     </ng-container>
   </datalist>
 </div>
-

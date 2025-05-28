@@ -6,7 +6,9 @@
       <label for="filtroTipo" class="form-label">Filtrar por tipo</label>
       <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-select input-estilizado">
         <option value="">Todos</option>
-        <option *ngFor="let tipo of tiposDisponibles" [value]="tipo">{{ tipo }}</option>
+        <option *ngFor="let tipo of tiposDisponibles" [value]="tipo">
+          {{ tipo | titlecase }}
+        </option>
       </select>
     </div>
     <div class="col-md-6">
