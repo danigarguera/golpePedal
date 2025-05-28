@@ -1,7 +1,6 @@
 @use '../../../../styles/variables' as *;
 @use '../../../../styles/mixins' as *;
 
-// 🟠 Espaciado vertical en móviles
 @media (max-width: 576px) {
   .row.g-3 > div {
     margin-bottom: 1rem;
@@ -12,17 +11,15 @@
   }
 }
 
-// 🟢 Tabla responsive clásica con scroll horizontal en móvil
 .table-responsive {
   width: 100%;
   overflow-x: auto;
 
   .table {
-    min-width: 700px; // ajusta según tus columnas
+    min-width: 700px; 
   }
 }
 
-// 🟣 Estilo de hover y puntero sobre filas y celdas
 .clickable-table tbody tr:hover {
   background-color: $color-secundario !important;
   transition: background-color 0.2s ease;

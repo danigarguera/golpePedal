@@ -20,7 +20,6 @@ export class LoginService {
     return this.http.post<LoginResponse>(this.apiUrl, { email, password }).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
-        console.log('✅ Token guardado en localStorage:', response.token);
       })
     );
   }

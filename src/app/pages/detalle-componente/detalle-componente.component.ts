@@ -56,6 +56,6 @@ export class DetalleComponenteComponent implements OnInit {
       imagenUrl: `${this.apiUrl}/componentes/${this.componente.id}/imagen`
     });
 
-    this.bannerService.mostrarBannerTemporal(); // ✅ Banner reactivo
+    this.bannerService.mostrarBannerTemporal(); 
   }
 }

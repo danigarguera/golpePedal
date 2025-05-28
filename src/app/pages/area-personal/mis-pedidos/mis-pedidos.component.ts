@@ -23,7 +23,7 @@ export class MisPedidosComponent implements OnInit {
     this.pedidoService.getPedidosDelUsuario().subscribe({
       next: (res) => {
         this.pedidos = res;
-        this.ordenarPor('id'); // orden inicial opcional
+        this.ordenarPor('id'); 
       },
       error: (err) => {
         console.error('Error al obtener pedidos', err);

@@ -1,6 +1,5 @@
 @use '../../../styles/variables' as *;
 
-// Componente con relleno inferior para dejar respirar al footer
 :host ::ng-deep .container {
   width: 100vw !important;
   max-width: none !important;
@@ -9,7 +8,6 @@
 }
 
 
-// Tabla responsive tipo tarjetas
 @media (max-width: 768px) {
   .table {
     display: block;

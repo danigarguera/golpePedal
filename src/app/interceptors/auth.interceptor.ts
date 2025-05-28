@@ -9,10 +9,8 @@ export const AuthInterceptorFn: HttpInterceptorFn = (req, next) => {
         Authorization: `Bearer ${token}`
       }
     });
-    console.log('🔗 Interceptor funcional: token añadido a', req.url);
     return next(cloned);
   }
 
-  console.warn('⚠️ No hay token en localStorage. Solicitud sin autorización:', req.url);
   return next(req);
 };

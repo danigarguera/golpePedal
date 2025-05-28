@@ -34,7 +34,6 @@
   }
 }
 
-// Estilo para CLIENTES
 .navbar-cliente {
   background-color: $color-primario;
 
@@ -77,7 +76,6 @@
   }
 }
 
-// Estilo para ADMINISTRADORES
 .navbar-admin {
   background-color: $color-secundario;
 
@@ -116,7 +114,6 @@
   }
 }
 
-// Logo adaptable
 .logo-svg {
   width: clamp(120px, 25vw, 200px);
   height: auto;

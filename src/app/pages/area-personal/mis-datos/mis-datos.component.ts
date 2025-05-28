@@ -37,7 +37,6 @@ export class MisDatosComponent implements OnInit {
         });
       },
       error: (err: HttpErrorResponse) => {
-        console.error('❌ Error al obtener datos de usuario', err);
         this.error = 'No se pudieron cargar los datos del usuario.';
       }
     });
@@ -65,7 +64,6 @@ export class MisDatosComponent implements OnInit {
         });
       },
       error: (err: HttpErrorResponse) => {
-        console.error('❌ Error al actualizar datos:', err);
         this.mensaje = '';
 
         Swal.fire({

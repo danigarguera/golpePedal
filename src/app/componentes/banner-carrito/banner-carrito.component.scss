@@ -2,10 +2,10 @@
 
 :host {
   position: fixed;
-  top: 70px; // mismo alto que la navbar
+  top: 70px; 
   left: 0;
   right: 0;
-  z-index: 2500; // debajo de navbar, encima del resto
+  z-index: 2500; 
   pointer-events: none;
   display: flex;
   justify-content: center;
@@ -24,12 +24,10 @@
   pointer-events: auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 
-  // Estado visible
   &.visible {
     transform: translateY(0%);
   }
 
-  // Variantes por rol
   &.banner-cliente {
     background-color: $color-secundario;
   }

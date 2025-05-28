@@ -41,7 +41,6 @@ export class MisDireccionesComponent implements OnInit {
   cargarDirecciones(): void {
     this.usuarioService.getDirecciones().subscribe({
       next: (data) => this.direcciones = data,
-      error: (err) => console.error('Error al obtener direcciones', err)
     });
   }
 
@@ -77,7 +76,6 @@ export class MisDireccionesComponent implements OnInit {
         this.usuarioService.eliminarDireccion(id).subscribe({
           next: () => this.cargarDirecciones(),
           error: (err) => {
-            console.error('Error al eliminar dirección', err);
             Swal.fire({
               title: '<i class="bi bi-exclamation-triangle-fill text-danger me-2"></i> Error',
               html: 'No se pudo eliminar la dirección.',
@@ -93,7 +91,7 @@ export class MisDireccionesComponent implements OnInit {
 
   onSubmit(): void {
     if (this.formDireccion.invalid) {
-      this.formDireccion.markAllAsTouched(); // fuerza que se muestren errores
+      this.formDireccion.markAllAsTouched(); 
 
       Swal.fire({
         title: '<i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> Formulario inválido',
@@ -135,7 +133,6 @@ export class MisDireccionesComponent implements OnInit {
         });
       },
       error: (err) => {
-        console.error('Error al guardar dirección', err);
 
         Swal.fire({
           title: '<i class="bi bi-x-circle-fill text-danger me-2"></i> Error',

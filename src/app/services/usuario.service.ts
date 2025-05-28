@@ -57,12 +57,10 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  // Obtener datos del usuario logueado
   getDatosUsuario(): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.apiUrl}/usuarios/me`);
   }
 
-  // Obtener todas las direcciones del usuario
   getDirecciones(): Observable<Direccion[]> {
     return this.http.get<Direccion[]>(`${this.apiUrl}/direcciones`);
   }

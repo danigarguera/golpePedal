@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment'; // ✅ ruta relativa
+import { environment } from '../../environments/environment';
 
 export interface Componente {
   id: number;
@@ -42,7 +42,7 @@ export interface MarcaDTO {
 })
 export class ComponentesService {
 
-  private apiUrl = `${environment.apiUrl}/componentes`; // ✅ URL del entorno
+  private apiUrl = `${environment.apiUrl}/componentes`; 
 
   constructor(private http: HttpClient) { }
 

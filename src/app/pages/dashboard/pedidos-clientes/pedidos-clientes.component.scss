@@ -1,6 +1,5 @@
 @use '../../../../styles/variables' as *;
 
-// ⚙️ Responsive para filtros en móvil
 @media (max-width: 576px) {
     .row.g-3>div {
         margin-bottom: 1rem;
@@ -15,7 +14,6 @@
     }
 }
 
-// 🟢 Tabla responsive clásica con scroll horizontal
 .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -25,19 +23,16 @@
     }
 }
 
-// 🖱️ Cursor en celdas clicables (ID y Fecha)
 ::ng-deep table.clickable-pedidos>tbody>tr>td:first-child,
 ::ng-deep table.clickable-pedidos>tbody>tr>td:nth-child(2) {
     cursor: pointer !important;
 }
 
-// ✨ Hover sobre fila entera
 .clickable-pedidos tbody tr:hover {
     background-color: #f8f9fa !important;
     transition: background-color 0.2s ease;
 }
 
-// 🎯 Estilo del wrapper del select de estado
 .estado-wrapper {
     display: flex;
     align-items: center;
@@ -61,22 +56,18 @@
     }
 }
 
-// 🟡 Pendiente
 .estado-pendiente {
     background-color: #ffc107 !important;
 }
 
-// 🔵 Enviado
 .estado-enviado {
     background-color: #0d6efd !important;
 }
 
-// 🟢 Entregado
 .estado-entregado {
     background-color: #198754 !important;
 }
 
-// 🔴 Cancelado
 .estado-cancelado {
     background-color: #dc3545 !important;
 }

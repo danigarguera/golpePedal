@@ -2,7 +2,7 @@
 
 
 .logo-home svg {
-  color: $color-primario; // O secundario, según quieras
+  color: $color-primario; 
   max-width: 260px;
   height: auto;
   display: block;
@@ -33,12 +33,10 @@ p.lead {
   font-style: italic;
 }
 
-// Carrusel general
 .carousel {
   width: 100%;
 }
 
-// Tarjeta envolvente para el carrusel
 .tarjeta-carrusel {
   max-width: 800px;
   width: 90%;
@@ -52,7 +50,6 @@ p.lead {
   align-items: center;
 }
 
-// Imagen dentro de la tarjeta del carrusel
 .tarjeta-carrusel img {
   width: 100%;
   max-height: 400px;
@@ -67,7 +64,6 @@ p.lead {
   }
 }
 
-// Descripción bajo la imagen
 .descripcion-carrusel {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
@@ -78,7 +74,6 @@ p.lead {
   text-align: center;
 }
 
-// Tarjetas de componentes destacados
 .card-title {
   font-family: $fuente-principal;
   font-weight: bold;

@@ -74,7 +74,7 @@ export class CarritoComponent implements OnInit {
     } else {
       this.mostrarAvisoLogin = true;
 
-      // Oculta el aviso después de 3 segundos
+      
       setTimeout(() => {
         this.mostrarAvisoLogin = false;
       }, 1500);

@@ -27,13 +27,11 @@
   }
 }
 
-// Estilo responsive para la tabla
 .table-responsive {
   overflow-x: auto;
   border-radius: 0.5rem;
 }
 
-// Ajustes para filas y celdas en pantallas pequeñas
 @media (max-width: 576px) {
   .table {
     font-size: 0.875rem;
@@ -46,7 +44,7 @@
   }
 
   .table thead {
-    display: none; // oculta cabecera en móvil
+    display: none; 
   }
 
   .table tbody tr {
@@ -72,7 +70,6 @@
   }
 }
 
-// Estilo para total + botones
 @media (max-width: 768px) {
   .total-carrito {
     flex-direction: column;
@@ -90,7 +87,6 @@
   }
 }
 
-// ✅ Estilos para botones de SweetAlert2 dentro del componente carrito
 ::ng-deep .swal2-confirm {
   @include boton-estandar($color-primario);
   border: 1px solid transparent;

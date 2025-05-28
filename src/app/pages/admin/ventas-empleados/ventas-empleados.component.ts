@@ -43,7 +43,6 @@ export class VentasEmpleadosComponent implements OnInit {
         this.empleados = data;
       },
       error: (err) => {
-        console.error('Error al cargar empleados:', err);
       }
     });
   }
@@ -53,12 +52,10 @@ export class VentasEmpleadosComponent implements OnInit {
     return this.ventas.slice(inicio, inicio + this.ventasPorPagina);
   }
 
-  // Total de páginas calculado dinámicamente
   get totalPaginas(): number {
     return Math.ceil(this.ventas.length / this.ventasPorPagina);
   }
 
-  // Cambiar de página
   cambiarPagina(pagina: number): void {
     if (pagina >= 1 && pagina <= this.totalPaginas) {
       this.paginaActual = pagina;
@@ -78,7 +75,6 @@ export class VentasEmpleadosComponent implements OnInit {
         this.cargando = false;
       },
       error: (err) => {
-        console.error('Error al cargar ventas:', err);
         this.cargando = false;
       }
     });

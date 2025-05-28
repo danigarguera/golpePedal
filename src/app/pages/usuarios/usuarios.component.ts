@@ -59,7 +59,7 @@ export class UsuariosComponent implements OnInit {
     this.usuariosFiltrados = this.usuarios.filter(u =>
       u.email.toLowerCase().includes(texto)
     );
-    this.page = 1; // Reiniciar a la primera página si se filtra
+    this.page = 1; 
   }
 
   cambiarRol(usuario: Usuario): void {
