@@ -4,7 +4,6 @@ public class TipoBicicletaDTO {
     private Long id;
     private String nombre;
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }

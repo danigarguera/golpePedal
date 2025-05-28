@@ -9,7 +9,6 @@ public class LineaPedidoResponseDTO {
     private BigDecimal precioUnitario;
     private int cantidad;
 
-    // Getters y setters
     public Long getComponenteId() {
         return componenteId;
     }

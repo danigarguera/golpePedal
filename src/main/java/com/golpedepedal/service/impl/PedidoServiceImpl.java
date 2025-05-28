@@ -130,7 +130,6 @@ public class PedidoServiceImpl implements PedidoService {
 	    dto.setEstado(pedido.getEstado().name());
 	    dto.setTotal(pedido.getTotal());
 
-	    // Usuario → UsuarioFacturaDTO
 	    UsuarioFacturaDTO usuarioDTO = new UsuarioFacturaDTO();
 	    usuarioDTO.setNombre(pedido.getUsuario().getNombre());
 	    usuarioDTO.setApellido1(pedido.getUsuario().getApellido1());
@@ -140,7 +139,6 @@ public class PedidoServiceImpl implements PedidoService {
 	    
 	    dto.setUsuario(usuarioDTO);
 
-	    // Dirección
 	    if (pedido.getDireccion() != null) {
 	        DireccionDTO direccionDTO = new DireccionDTO();
 	        direccionDTO.setAlias(pedido.getDireccion().getAlias());
@@ -155,7 +153,6 @@ public class PedidoServiceImpl implements PedidoService {
 	        dto.setDireccion(direccionDTO);
 	    }
 
-	    // Líneas de pedido
 	    List<LineaPedidoResponseDTO> lineasDTO = new ArrayList<>();
 
 	    if (pedido.getPedidoComponentes() != null) {
@@ -226,9 +223,9 @@ public class PedidoServiceImpl implements PedidoService {
 	    pedido.setDireccion(direccion);
 	    pedido.setFecha(LocalDateTime.now());
 	    pedido.setEstado(Estado.PENDIENTE);
-	    pedido.setTotal(BigDecimal.ZERO); // se ajustará después
+	    pedido.setTotal(BigDecimal.ZERO); 
 
-	    pedido = pedidoRepository.save(pedido); // guarda primero para asociar en componentes
+	    pedido = pedidoRepository.save(pedido); 
 
 	    BigDecimal total = BigDecimal.ZERO;
 

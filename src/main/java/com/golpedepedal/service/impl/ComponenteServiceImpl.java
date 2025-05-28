@@ -100,9 +100,8 @@ public class ComponenteServiceImpl implements ComponenteService {
 	    var bici = tipoBicicletaRepository.findById(dto.getTipoBicicletaId())
 	        .orElseThrow(() -> new IllegalArgumentException("Tipo de bicicleta no encontrado"));
 
-	    // Reutilizamos el mapper
 	    Componente actualizado = ComponenteMapper.fromDTO(dto, tipo, marca, bici);
-	    actualizado.setId(id); // aseguramos el ID
+	    actualizado.setId(id); 
 
 	    return componenteRepository.save(actualizado);
 	}

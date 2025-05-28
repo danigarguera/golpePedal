@@ -25,7 +25,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         String roleName = usuario.getRol().getNombre();  
         
-        System.out.println("Logueando usuario: " + usuario.getEmail() + " con rol: " + roleName);
 
 
         return User.builder()

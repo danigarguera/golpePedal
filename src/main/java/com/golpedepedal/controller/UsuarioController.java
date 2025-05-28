@@ -74,7 +74,6 @@ public class UsuarioController {
 
         Role rol = roleRepository.findById(request.getRolId())
             .orElseThrow(() -> new RuntimeException("Rol no válido"));
-        System.out.println("ID del rol asignado: " + rol.getId());
 
         usuarioExistente.setRol(rol);
 

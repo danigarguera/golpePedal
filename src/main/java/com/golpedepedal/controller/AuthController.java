@@ -61,7 +61,6 @@ public class AuthController {
         usuario.setRol(clienteRole);
         usuarioRepository.save(usuario);
 
-        // 🔐 Generar token tras registro
         String token = jwtUtil.generateToken(
         		usuario.getId(),
         	    usuario.getEmail(),
@@ -105,7 +104,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autenticado");
         }
 
-        String email = authentication.getName(); // viene del subject del token
+        String email = authentication.getName(); 
         Usuario usuario = usuarioRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 

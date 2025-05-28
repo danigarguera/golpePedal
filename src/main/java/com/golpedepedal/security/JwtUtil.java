@@ -10,8 +10,8 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String secret = "claveultrasecretademomentoparajwtspringbootgolpedepedal"; // Cambiar por algo mejor luego
-    private final long expirationMillis = 86400000; // 24 horas de duuracion para el token
+    private final String secret = "claveultrasecretademomentoparajwtspringbootgolpedepedal"; 
+    private final long expirationMillis = 86400000; 
 
     private Key getKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
@@ -20,7 +20,7 @@ public class JwtUtil {
     public String generateToken(Long id, String email, String rol) {
         return Jwts.builder()
             .setSubject(email)
-            .claim("id", id) // ⬅️ ¡Esto es lo que falta!
+            .claim("id", id) 
             .claim("rol", rol)
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))

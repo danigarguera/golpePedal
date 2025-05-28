@@ -54,7 +54,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public Usuario buscarPorEmail(String email) {
 		return usuarioRepository.findByEmail(email).
-				orElse(null); // se puede cambiar por un elseThrow para meter una exepcion mas adelante
+				orElse(null); 
 		}
 
 	@Override

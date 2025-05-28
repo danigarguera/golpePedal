@@ -100,7 +100,7 @@ public class PedidoController {
 
 		List<Pedido> pedidos = pedidoRepository.findByUsuarioAndDireccionIsNotNull(usuario);
 
-		return pedidos.stream().map(p -> new PedidoResumenDTO(p.getId(), p.getNumeroPedido(), // 👈 NUEVO campo
+		return pedidos.stream().map(p -> new PedidoResumenDTO(p.getId(), p.getNumeroPedido(), 
 				p.getFecha(), p.getEstado().name(), p.getTotal(), p.getDireccion().getAlias())).toList();
 
 	}
@@ -172,7 +172,7 @@ public class PedidoController {
 		return pedidos.stream().map(p -> {
 			VentaEmpleadoDTO dto = new VentaEmpleadoDTO();
 			dto.setId(p.getId());
-			dto.setNumeroPedido(p.getNumeroPedido()); // ✅ AÑADIDO
+			dto.setNumeroPedido(p.getNumeroPedido()); 
 			dto.setFecha(p.getFecha());
 			dto.setCliente(p.getUsuario().getNombre() + " " + p.getUsuario().getApellido1());
 			dto.setEmpleado(p.getEmpleado().getNombre() + " " + p.getEmpleado().getApellido1());

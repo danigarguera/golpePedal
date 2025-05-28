@@ -19,7 +19,6 @@ public class PedidoMapper {
         dto.setEstado(pedido.getEstado().name());
         dto.setTotal(pedido.getTotal());
 
-        // Usuario
         Usuario u = pedido.getUsuario();
         UsuarioFacturaDTO usuarioDTO = new UsuarioFacturaDTO();
         usuarioDTO.setNombre(u.getNombre());
@@ -29,7 +28,6 @@ public class PedidoMapper {
         usuarioDTO.setTelefono(u.getTelefono());
         dto.setUsuario(usuarioDTO);
 
-        // Dirección (si existe)
         if (pedido.getDireccion() != null) {
             Direccion d = pedido.getDireccion();
             DireccionDTO dirDTO = new DireccionDTO();
@@ -44,7 +42,6 @@ public class PedidoMapper {
             dto.setDireccion(dirDTO);
         }
 
-        // Líneas
         List<LineaPedidoResponseDTO> lineas = pedido.getPedidoComponentes().stream().map(pc -> {
             Componente comp = pc.getComponente();
             LineaPedidoResponseDTO l = new LineaPedidoResponseDTO();

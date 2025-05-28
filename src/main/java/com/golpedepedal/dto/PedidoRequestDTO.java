@@ -9,7 +9,6 @@ public class PedidoRequestDTO {
 
     private List<LineaPedidoDTO> lineas;
 
-    // Getters y Setters
     public Long getUsuarioId() {
         return usuarioId;
     }
