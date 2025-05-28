@@ -10,8 +10,29 @@
   right: 0;
   z-index: 3000;
   width: 100%;
-}
 
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+
+  .navbar-brand {
+    padding: 0.5rem 1rem;
+  }
+
+  .buscador-navbar {
+    order: 2;
+    width: 100%;
+    padding: 0.5rem 1rem;
+
+    @media (min-width: 768px) {
+      order: 0;
+      width: auto;
+      margin-left: auto;
+      padding: 0;
+    }
+  }
+}
 
 // Estilo para CLIENTES
 .navbar-cliente {
