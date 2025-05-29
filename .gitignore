@@ -1,10 +1,57 @@
-HELP.md
+# === FRONTEND (Angular + Node) ===
+
+# Node modules and logs
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# Angular output
+/tmp
+/out-tsc
+/bazel-out
+/.angular/cache
+
+# Build output (permitimos la carpeta de producción)
+#/dist ← COMENTADO PARA permitir build
+!dist/golpe-pedal-frontend/browser/
+!dist/golpe-pedal-frontend/browser/**
+
+# Vercel deployment
+.vercel
+
+# === BACKEND (Spring Boot + Java) ===
+
+# Maven output
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+# Gradle output (si se llegara a usar)
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Logs & compiled files
+*.log
+*.class
+*.jar
+*.war
+
+# Spring config (local, no subir)
+application.properties
+application.yml
+
+# === IDEs & Editor Configs ===
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# STS (Spring Tool Suite)
 .apt_generated
 .classpath
 .factorypath
@@ -13,21 +60,25 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
+# IntelliJ IDEA
 .idea
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# Misc
+.DS_Store
+Thumbs.db
+.history/
+.sass-cache/
+.connect.lock
+testem.log
+libpeerconnection.log
+typings/
