@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,6 +31,11 @@ public class Pedido {
     @JsonIgnoreProperties("pedidos")
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+    
+    @ManyToOne
+    @JoinColumn(name = "empleado_id")
+    private Usuario empleado;
+
 
     @NotNull
     private LocalDateTime fecha;
@@ -39,6 +45,10 @@ public class Pedido {
     private Estado estado;
 
     private BigDecimal total;
+    
+    @Column(name = "numero_pedido", unique = true)
+    private String numeroPedido;
+
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoComponente> pedidoComponentes;
@@ -47,6 +57,11 @@ public class Pedido {
         PENDIENTE, ENVIADO, ENTREGADO, CANCELADO
     }
 
+    @ManyToOne
+    @JoinColumn(name = "direccion_id")
+    private Direccion direccion;
+
+    
 	public Pedido() {
 		
 	}
@@ -97,6 +112,30 @@ public class Pedido {
 
 	public void setPedidoComponentes(List<PedidoComponente> pedidoComponentes) {
 		this.pedidoComponentes = pedidoComponentes;
+	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
+
+	public Usuario getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(Usuario empleado) {
+		this.empleado = empleado;
+	}
+
+	public String getNumeroPedido() {
+		return numeroPedido;
+	}
+
+	public void setNumeroPedido(String numeroPedido) {
+		this.numeroPedido = numeroPedido;
 	}
     
     

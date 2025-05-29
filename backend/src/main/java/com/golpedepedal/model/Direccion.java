@@ -2,6 +2,7 @@ package com.golpedepedal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +25,8 @@ public class Direccion {
     private String provincia;
     private String codigoPostal;
     private String pais;
+    @Column(nullable = false)
+    private boolean eliminada = false;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -112,6 +115,14 @@ public class Direccion {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public boolean isEliminada() {
+		return eliminada;
+	}
+
+	public void setEliminada(boolean eliminada) {
+		this.eliminada = eliminada;
 	}
     
     

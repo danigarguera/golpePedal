@@ -2,6 +2,7 @@ package com.golpedepedal.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class RegistroRequest {
@@ -23,7 +24,9 @@ public class RegistroRequest {
 
     @NotBlank
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
+    @Pattern(regexp = "^[^\\s]+$", message = "La contraseña no puede contener espacios")
     private String password;
+
 
     @NotBlank
     private String telefono;

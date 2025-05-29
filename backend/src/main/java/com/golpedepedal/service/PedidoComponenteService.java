@@ -14,4 +14,8 @@ public interface PedidoComponenteService {
     Optional<PedidoComponente> buscarPorId(Long id);
     
     void eliminar(Long id);
+    
+    List<PedidoComponente> obtenerPorPedidoId(Long pedidoId);
+
+
 }

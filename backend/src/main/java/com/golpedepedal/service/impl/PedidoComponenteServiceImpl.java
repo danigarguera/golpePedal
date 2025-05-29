@@ -42,4 +42,9 @@ public class PedidoComponenteServiceImpl implements PedidoComponenteService {
 		pedidoComponenteRepository.deleteById(id);		
 	}
 
+	@Override
+	public List<PedidoComponente> obtenerPorPedidoId(Long pedidoId) {
+	    return pedidoComponenteRepository.findByPedidoId(pedidoId);
+	}
+
 }
