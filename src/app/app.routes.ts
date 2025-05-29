@@ -82,9 +82,13 @@ export const routes: Routes = [
   },
   {
     path: 'admin/ventas',
-    loadComponent: () => import('./pages/admin/ventas-empleados/ventas-empleados.component')
-      .then(m => m.VentasEmpleadosComponent)
+    loadComponent: () =>
+      import('./pages/admin/ventas-empleados/ventas-empleados.component')
+        .then(m => m.VentasEmpleadosComponent),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] }
   },
+
 
   {
     path: 'dashboard/componentes',
@@ -107,14 +111,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/dashboard/modificar-componente/modificar-componente.component')
       .then(m => m.ModificarComponenteComponent)
   },
-{
-  path: 'dashboard/pedidos-clientes',
-  loadComponent: () =>
-    import('./pages/dashboard/pedidos-clientes/pedidos-clientes.component')
-      .then(m => m.PedidosClientesComponent),
-  canActivate: [RoleGuard],
-  data: { roles: ['ROLE_ADMIN', 'ROLE_EMPLEADO'] }
-},
+  {
+    path: 'dashboard/pedidos-clientes',
+    loadComponent: () =>
+      import('./pages/dashboard/pedidos-clientes/pedidos-clientes.component')
+        .then(m => m.PedidosClientesComponent),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_EMPLEADO'] }
+  },
 
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
